@@ -25,7 +25,12 @@ module.exports = {
     'space-before-function-paren': 0,
     indent: 'off',
   },
-
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto"
+    },
+  ],
   overrides: [
     {
       files: ['**/*.js', '**/*.jsx'],

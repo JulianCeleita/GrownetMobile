@@ -9,7 +9,7 @@ import {
 import React, { useEffect } from 'react'
 import { ApiSuppliers } from '../../config/urls.config'
 import { SuppliersStyle } from '../../styles/SupplierStyle'
-import axios from '../../../axiosConfig.'
+import axios from '../../../axiosConfig'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
 import { Ionicons } from '@expo/vector-icons'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import axios from '../../../axiosConfig.'
+import axios from '../../../axiosConfig'
 import ProductCategories from '../../components/buyingProcess/ProductCategories'
 import Favorites from '../../components/buyingProcess/Favorites'
 import ProductCard from '../../components/buyingProcess/ProductCards'
