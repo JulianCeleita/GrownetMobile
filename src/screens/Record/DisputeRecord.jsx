@@ -7,74 +7,12 @@ import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import { useTranslation } from 'react-i18next'
 import UploadFile from '../../components/UploadFile'
-import useRecordStore from '../../store/useRecordStore'
-import axios from 'axios'
 
 function DisputeRecord() {
-  const [activeTab, setActiveTab] = useState('1')
+  const [activeTab, setActiveTab] = useState('first')
   const { t } = useTranslation()
-  const [description, setDescription] = useState('')
-  const [quantityDispute, setQuantityDispute] = useState('')
-  const [motive, setMotive] = useState('1')
-  const { selectedPendingOrder } = useRecordStore()
-  const [solutionSelected, setSolutionSelected] = useState('1')
-  console.log("SELECTED OPTION", solutionSelected)
-
-  const resetFormData = () => {
-    setDescription('')
-    setQuantityDispute('')
-  }
-
-  const handleQuantityChange = (e) => {
-    const inputValue = e.target.value;
-    const re = /^[0-9\b]+$/;
-    if (inputValue === "" || re.test(inputValue)) {
-      setQuantityDispute(inputValue);
-    }
-  };
-
-  const onToggleCheckbox = (value) => {
-    setSolutionSelected(value)
-  }
-
-  // ENVIAR LA DISPUTA
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setShow(true);
-    const formData = new FormData();
-
-    const disputeBody = {
-      order: selectedPendingOrder,
-      motive: motive,
-      id_solutionsDisputes: solutionSelected,
-      product_id: id,
-      description: description,
-      quantity: quantityDispute,
-    };
-    for (let key in disputeBody) {
-      if (disputeBody.hasOwnProperty(key)) {
-        formData.append(key, disputeBody[key]);
-      }
-    }
-
-    axios
-      .post(createDisputeOrder, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al crear la disputa:", error);
-      });
-  };
-
-
   const renderContent = () => {
-    if (activeTab === '1') {
+    if (activeTab === 'first') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -99,9 +37,9 @@ function DisputeRecord() {
               <Checkbox.Item
                 label=""
                 status={
-                  solutionSelected === '1' ? 'checked' : 'unchecked'
+                  selectedOption === 'sendNextOrder' ? 'checked' : 'unchecked'
                 }
-                onPress={() => onToggleCheckbox('1')}
+                onPress={() => onToggleCheckbox('sendNextOrder')}
               />
             </View>
             <View style={DisputeStyle.optionForm}>
@@ -111,15 +49,15 @@ function DisputeRecord() {
               <Checkbox.Item
                 label=""
                 status={
-                  solutionSelected === '2' ? 'checked' : 'unchecked'
+                  selectedOption === 'creditNote' ? 'checked' : 'unchecked'
                 }
-                onPress={() => onToggleCheckbox('2')}
+                onPress={() => onToggleCheckbox('creditNote')}
               />
             </View>
           </View>
         </View>
       )
-    } else if (activeTab === '2') {
+    } else if (activeTab === 'second') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -142,37 +80,11 @@ function DisputeRecord() {
             />
           </View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
-            <View style={DisputeStyle.optionForm}>
-              <Text style={DisputeStyle.text}>
-                {t('disputeRecord.sendNextOrder')}
-              </Text>
-              <Checkbox.Item
-                label=""
-                status={
-                  solutionSelected === '1' ? 'checked' : 'unchecked'
-                }
-                onPress={() => onToggleCheckbox('1')}
-              />
-            </View>
-            <View style={DisputeStyle.optionForm}>
-              <Text style={DisputeStyle.text}>
-                {t('disputeRecord.creditNote')}
-              </Text>
-              <Checkbox.Item
-                label=""
-                status={
-                  solutionSelected === '2' ? 'checked' : 'unchecked'
-                }
-                onPress={() => onToggleCheckbox('2')}
-              />
-            </View>
-          </View>
-          <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <UploadFile />
           </View>
         </View>
       )
-    } else if (activeTab === '3') {
+    } else if (activeTab === 'third') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -199,7 +111,11 @@ function DisputeRecord() {
     borderRadius: 10,
     margin: 8,
   }
+  const [selectedOption, setSelectedOption] = useState('sendNextOrder')
 
+  const onToggleCheckbox = (value) => {
+    setSelectedOption(value)
+  }
   return (
     <SafeAreaView style={DisputeStyle.dispute}>
       <ScrollView>
@@ -213,27 +129,27 @@ function DisputeRecord() {
         <View style={DisputeStyle.dispute}>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardTabs]}>
             <Button
-              mode={activeTab === '1' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('1')}
-              style={activeTab === '1' ? activeButtonColor : null}
+              mode={activeTab === 'first' ? 'contained' : 'text'}
+              onPress={() => setActiveTab('first')}
+              style={activeTab === 'first' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.wrongQuantity')}
               </Text>
             </Button>
             <Button
-              mode={activeTab === '2' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('2')}
-              style={activeTab === '2' ? activeButtonColor : null}
+              mode={activeTab === 'second' ? 'contained' : 'text'}
+              onPress={() => setActiveTab('second')}
+              style={activeTab === 'second' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.defective')}
               </Text>
             </Button>
             <Button
-              mode={activeTab === '3' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('3')}
-              style={activeTab === '3' ? activeButtonColor : null}
+              mode={activeTab === 'third' ? 'contained' : 'text'}
+              onPress={() => setActiveTab('third')}
+              style={activeTab === 'third' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>{t('disputeRecord.other')}</Text>
             </Button>

@@ -9,7 +9,7 @@ import {
 import React, { useEffect } from 'react'
 import { ApiSuppliers } from '../../config/urls.config'
 import { SuppliersStyle } from '../../styles/SupplierStyle'
-import axios from '../../../axiosConfig'
+import axios from '../../../axiosConfig.'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
 import { Ionicons } from '@expo/vector-icons'
@@ -32,10 +32,6 @@ const Suppliers = () => {
   const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
 
   useEffect(() => {
-    if (selectedRestaurant === null) {
-      navigation.navigate('restaurants')
-      return
-    }
     async function fetchData() {
       const requestBody = {
         accountNumber: selectedRestaurant.accountNumber,
@@ -66,7 +62,7 @@ const Suppliers = () => {
   }
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' })
+    navigation.navigate('TabNavigator', { screen: 'Chat' });
   }
 
   return (

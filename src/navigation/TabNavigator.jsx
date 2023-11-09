@@ -14,7 +14,6 @@ import Suppliers from '../screens/buyingProcess/Suppliers'
 import DisputeRecord from '../screens/Record/DisputeRecord'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { useTranslation } from 'react-i18next'
-import Faq from '../screens/settings/Faq'
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
@@ -64,18 +63,6 @@ function SettingsStack() {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
             color: '#026CD2',
-          },
-        }}
-      />
-      <Stack.Screen
-        name="Faq"
-        component={Faq}
-        options={{
-          headerBackTitleVisible: false,
-
-          headerStyle: {
-            backgroundColor: 'white',
-            height: StatusBar.currentHeight + 0,
           },
         }}
       />

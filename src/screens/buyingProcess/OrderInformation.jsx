@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import axios from '../../../axiosConfig'
+import axios from '../../../axiosConfig.'
 import { createStorageOrder } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
@@ -42,7 +42,6 @@ const OrderInformation = () => {
   const handleChangeDate = async (event, newDate) => {
     if (event.type === 'set') {
       setDeliveryData(newDate)
-      console.log('Fecha de entrega', deliveryData.toLocaleDateString('en-CA')) 
     }
     setShowDatePicker(false)
   }
@@ -59,7 +58,7 @@ const OrderInformation = () => {
     }))
     const jsonOrderData = {
       id_suppliers: selectedSupplier.id,
-      date_delivery: deliveryData.toLocaleDateString('en-CA'),
+      date_delivery: deliveryData.toLocaleDateString(),
       address_delivery: selectedRestaurant.address,
       accountNumber_customers: selectedRestaurant.accountNumber,
       observation: specialRequirements,
@@ -68,7 +67,6 @@ const OrderInformation = () => {
       total_tax: totalTaxes,
       products: jsonProducts,
     }
-    console.log('este es  :DDD', jsonOrderData)
 
     try {
       const response = await axios.post(createStorageOrder, jsonOrderData, {

@@ -1,11 +1,15 @@
+import { Text, View, Image } from 'react-native'
 import React from 'react'
+import { ChatStyle } from '../styles/ChatStyle'
+import { useTranslation } from 'react-i18next'
 import { WebView } from 'react-native-webview'
 import useOrderStore from '../store/useOrderStore'
 
 const Chat = () => {
+  const { t } = useTranslation()
   const { selectedRestaurant } = useOrderStore()
 
-  const userName = selectedRestaurant?.accountName || 'Chef'
+  const userName = selectedRestaurant?.accountName || "Chef";
 
   return (
     <WebView
@@ -23,14 +27,17 @@ const Chat = () => {
 
 export default Chat
 
-/* <WebView
+{
+  /* <WebView
       source={{ uri: 'https://github.com/JulianCeleita' }}
       startInLoadingState={true}
       javaScriptEnabled={true}
       domStorageEnabled={true}
     /> */
+}
 
-/* <View style={ChatStyle.chat}>
+{
+  /* <View style={ChatStyle.chat}>
       <Image
         source={require('../../assets/img/img-succesful.png')}
         resizeMode="cover"
@@ -40,4 +47,5 @@ export default Chat
       <Text style={ChatStyle.text}>
         Soon we will have the chat service up and running again.
       </Text>
-  </View> */
+    </View> */
+}

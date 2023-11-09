@@ -8,7 +8,6 @@ import {
 } from 'react-native'
 import { ModalStyle } from '../styles/LoginStyle'
 import { MaterialIcons } from '@expo/vector-icons'
-import { GlobalStyles } from '../styles/Styles'
 
 const ModalAlert = ({
   message = '',
@@ -43,14 +42,8 @@ const ModalAlert = ({
               <Text style={ModalStyle.modalText2}>
                 {`${countryCode} ${phoneNumber}`}
               </Text>
-              <TouchableOpacity
-                onPress={closeModal}
-                style={[GlobalStyles.btnPrimary, ModalStyle.space]}
-              >
-                <Text style={GlobalStyles.textBtnSecundary}>{message2}</Text>
-              </TouchableOpacity>
 
-              {/*<TouchableOpacity
+              <TouchableOpacity
                 onPress={closeModal}
                 style={isOtp ? ModalStyle.bgInt : ''}
               >
@@ -59,7 +52,7 @@ const ModalAlert = ({
                 >
                   {message2}
                 </Text>
-  </TouchableOpacity>*/}
+              </TouchableOpacity>
             </View>
           </View>
         </View>

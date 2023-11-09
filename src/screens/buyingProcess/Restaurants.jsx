@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { availableRestaurants } from '../../config/urls.config'
 import { RestaurantStyle } from '../../styles/RestaurantsStyle'
-import axios from '../../../axiosConfig'
+import axios from '../../../axiosConfig.'
 import useTokenStore from '../../store/useTokenStore'
 import useOrderStore from '../../store/useOrderStore'
 import { Ionicons } from '@expo/vector-icons'
@@ -53,7 +53,7 @@ const Restaurants = () => {
   const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' })
+    navigation.navigate('TabNavigator', { screen: 'Chat' });
   }
   const onPressSuppliers = (restaurant) => {
     setSelectedRestaurant(restaurant)
