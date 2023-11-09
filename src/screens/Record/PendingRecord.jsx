@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { Button, Checkbox } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { PendingStyle } from '../../styles/PendingRecordStyle'
+import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import useTokenStore from '../../store/useTokenStore'
@@ -14,6 +14,7 @@ import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
 import CheckList from '../../components/CheckList'
+import UploadFile from '../../components/UploadFile'
 
 function PendingRecord({ navigation }) {
   const { t } = useTranslation()
@@ -205,6 +206,9 @@ function PendingRecord({ navigation }) {
                   </View>
                 </View>
               ))}
+              <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
+                <UploadFile />
+              </View>
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onCloseOrder(e)}

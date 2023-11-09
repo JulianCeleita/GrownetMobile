@@ -79,17 +79,13 @@ function DisputeRecord() {
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <Text style={DisputeStyle.text}>
-              {t('disputeRecord.enterQuantityDelivered')}
+              {t('disputeRecord.quantityDelivered')}
             </Text>
             <TextInput
               style={DisputeStyle.input}
-              placeholder="11 total received"
+              placeholder="Total received"
               required
-            />
-            <Text style={DisputeStyle.text}>
-              {t('disputeRecord.addComment')}
-            </Text>
-            <TextInput style={DisputeStyle.input} multiline />
+            />            
           </View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <View style={DisputeStyle.optionForm}>
@@ -124,21 +120,12 @@ function DisputeRecord() {
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <Text style={DisputeStyle.text}>
-              {t('disputeRecord.enterQuantityDelivered')}
+              {t('disputeRecord.quantityDefective')}
             </Text>
             <TextInput
               style={DisputeStyle.input}
-              placeholder="11 total received"
+              placeholder="Total defective"
               required
-            />
-            <Text style={DisputeStyle.text}>
-              {t('disputeRecord.addComment')}
-            </Text>
-            <TextInput
-              style={DisputeStyle.input}
-              editable
-              multiline
-              numberOfLines={4}
             />
           </View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -166,28 +153,6 @@ function DisputeRecord() {
                 onPress={() => onToggleCheckbox('2')}
               />
             </View>
-          </View>
-          <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
-            <UploadFile />
-          </View>
-        </View>
-      )
-    } else if (activeTab === '3') {
-      return (
-        <View>
-          <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
-            <Text style={DisputeStyle.text}>
-              {t('disputeRecord.addComment')}
-            </Text>
-            <TextInput
-              style={DisputeStyle.input}
-              editable
-              multiline
-              numberOfLines={4}
-            />
-          </View>
-          <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
-            <UploadFile />
           </View>
         </View>
       )
@@ -230,17 +195,7 @@ function DisputeRecord() {
                 {t('disputeRecord.defective')}
               </Text>
             </Button>
-            <Button
-              mode={activeTab === '3' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('3')}
-              style={activeTab === '3' ? activeButtonColor : null}
-            >
-              <Text style={DisputeStyle.text}>{t('disputeRecord.other')}</Text>
-            </Button>
           </View>
-          <Text style={DisputeStyle.text}>
-            {t('disputeRecord.leaveYourCommentsHere')}
-          </Text>
           {renderContent()}
           <Button style={[GlobalStyles.btnPrimary, DisputeStyle.space]}>
             <Text style={GlobalStyles.textBtnSecundary}>

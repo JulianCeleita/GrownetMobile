@@ -88,7 +88,8 @@ const ptTranslations = {
     noOrdersDate: 'Sem pedidos nesta data',
   },
   disputeRecord: {
-    enterQuantityDelivered: 'Digite a quantidade entregue:',
+    quantityDelivered: 'Digite a quantidade entregue:',
+    quantityDefective: 'Digite a quantidade defeituosa:',
     addComment: 'Adicionar um comentário:',
     sendNextOrder: 'Enviar o próximo pedido',
     creditNote: 'Nota de crédito',
