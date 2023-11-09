@@ -105,20 +105,19 @@ export default function Products() {
       if (articlesToPay && articlesToPay.length > 0) {
         setArticles(articlesToPay)
         setProducts(articlesToPay)
-        setIsLoading(false) // Cambio de estado cuando ya hay datos para mostrar
-      } else {
-        if (hasMore && !isFetchingMore) {
-          setIsFetchingMore(true)
-          fetchProducts(currentPage)
-            .then(() => {
-              setIsFetchingMore(false)
-              setIsLoading(false) // Cambio de estado cuando se han cargado los datos
-            })
-            .catch((error) => {
-              console.error('Error al cargar más productos:', error)
-              setIsFetchingMore(false)
-              setIsLoading(false) // Cambio de estado en caso de error
-            })
+        setIsLoading(false)
+      }
+
+      if (hasMore && !isFetchingMore) {
+        setIsFetchingMore(true)
+        try {
+          await fetchProducts(currentPage)
+          setIsFetchingMore(false)
+          setIsLoading(false)
+        } catch (error) {
+          console.error('Error al cargar más productos:', error)
+          setIsFetchingMore(false)
+          setIsLoading(false)
         }
       }
     }
