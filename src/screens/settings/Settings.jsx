@@ -1,22 +1,31 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import React, { useState, useRef } from 'react'
-import { SafeAreaView, TouchableOpacity, View, Animated } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Animated, SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { Iconify } from 'react-native-iconify'
 import { Card, Text } from 'react-native-paper'
+import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
 import { SettingsStyle } from '../../styles/SettingsStyle'
-import AccordionListItem from './AccordionListItem'
-import { Iconify } from 'react-native-iconify'
-import { useTranslation } from 'react-i18next'
 import { GlobalStyles } from '../../styles/Styles'
+import AccordionListItem from './AccordionListItem'
 
 const Settings = () => {
   const { t, i18n } = useTranslation()
   const navigation = useNavigation()
   const { setToken } = useTokenStore()
+  const { selectedRestaurant } = useOrderStore()
 
   const [isListOpen, setListOpen] = useState(false)
   const logoutButtonPosition = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    if (selectedRestaurant === null) {
+      navigation.navigate('restaurants')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const changeLanguage = (language) => {
     i18n.changeLanguage(language)
@@ -37,6 +46,9 @@ const Settings = () => {
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
     }
+  }
+  const navigateFaq = () => {
+    navigation.navigate('Faq')
   }
   const navigateTermnsAndConditions = () => {
     navigation.navigate('Terms&Conditions')
@@ -118,7 +130,10 @@ const Settings = () => {
         <View
           style={[SettingsStyle.containerFaqAndTerms, GlobalStyles.boxShadow]}
         >
-          <TouchableOpacity style={SettingsStyle.FaqAndTerms}>
+          <TouchableOpacity
+            style={SettingsStyle.FaqAndTerms}
+            onPress={navigateFaq}
+          >
             <Text style={SettingsStyle.styleTextTitle}>
               {' '}
               {t('settings.faq')}

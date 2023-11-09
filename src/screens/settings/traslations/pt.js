@@ -83,6 +83,9 @@ const ptTranslations = {
     order: '#Pedido',
     amount: 'Valor',
     date: 'Data',
+    noOrders: 'Ainda não há pedidos',
+    bttnNoOrders: 'Faça um pedido agora',
+    noOrdersDate: 'Sem pedidos nesta data',
   },
   disputeRecord: {
     enterQuantityDelivered: 'Digite a quantidade entregue:',
@@ -148,6 +151,25 @@ const ptTranslations = {
     areYouSureToDelete: 'Tem certeza de que deseja excluir',
     cancel: 'Cancelar',
     delete: 'Excluir',
+  },
+  settingsFaq: {
+    tittle1: 'Como o ',
+    tittle2: 'podemos ajudar?',
+    question1: 'Como eu adiciono outro restaurante?',
+    question2: 'Como eu adiciono um fornecedor?',
+    question3: 'O que é o Grownet?',
+    question4: 'Onde vejo meus pedidos atuais?',
+    question5: 'Um pedido recebido está incompleto. O que devo fazer?',
+    answer1:
+      'Entre em contato conosco através do nosso chat e informe o nome do restaurante que deseja adicionar.',
+    answer2:
+      'Entre em contato através do nosso chat para adicionar o fornecedor que você precisa. Lembre-se de que temos os melhores fornecedores de legumes, frutas, bebidas, carnes e muito mais.',
+    answer3:
+      'Descubra o Grownet: a solução de suprimentos para o seu restaurante. Facilitamos a obtenção de suprimentos, conectando-o aos principais fornecedores do mercado de Londres para obter produtos frescos e de alta qualidade a excelentes preços. Gerencie vários locais de restaurante, otimize suas compras e concentre-se no que mais importa: proporcionar uma excelente experiência gastronômica. Junte-se à revolução na gestão de suprimentos com o Grownet e eleve o seu negócio restaurante hoje!',
+    answer4:
+      "Acesse o menu e vá para a seção 'Registro'. Lá, você encontrará seus pedidos atuais e anteriores. Você pode filtrar por data e acessar mais detalhes sobre todos os seus produtos.",
+    answer5:
+      "Vá para o menu e acesse a seção 'Registro'. Procure o pedido na categoria de 'Pedidos Atuais', onde você pode filtrar por data ou fazer uma busca manual. Selecione 'Ver detalhes' e abra uma disputa para o produto que chegou incompleto.",
   },
 }
 

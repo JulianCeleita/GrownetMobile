@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -6,7 +6,6 @@ import { GlobalStyles } from '../../styles/Styles'
 import axios from 'axios'
 import useTokenStore from '../../store/useTokenStore'
 import useRecordStore from '../../store/useRecordStore'
-import { useEffect, useState } from 'react'
 import { selectedStorageOrder } from '../../config/urls.config'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
@@ -30,6 +29,7 @@ function PastRecord() {
       .catch((error) => {
         console.log(error)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -54,7 +54,7 @@ function PastRecord() {
               {t('pastRecord.productDetails')}
             </Text>
             {detailsToShow.products?.map((product) => (
-              <View>
+              <View key={product.id}>
                 <View style={PastStyle.products}>
                   <Text style={PastStyle.subtittle}>{product.name}</Text>
                   <Text style={PastStyle.subtittle}>£{product.price}</Text>

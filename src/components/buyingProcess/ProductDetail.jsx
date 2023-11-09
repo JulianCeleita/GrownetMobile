@@ -81,11 +81,16 @@ export default function ProductDetail({
   }
 
   // CALCULAR TAXES
-  const calculateItemTaxes = (prices, tax, amount, uomToPay) => {
-    const selectedPrice = prices.find((price) => price.nameUoms === uomToPay)
-    const taxes = selectedPrice.price * tax * amount
-    return parseFloat(taxes.toFixed(2))
-  }
+   // CALCULAR TAXES 
+   const calculateItemTaxes = (prices, tax, amount, uomToPay) => {
+    const selectedPrice = prices.find((price) => price.nameUoms === uomToPay);
+    if (!selectedPrice || isNaN(tax) || isNaN(amount)) {
+      return 0;
+    }
+    const taxes = selectedPrice.price * tax * amount;
+    const parsedTaxes = parseFloat(taxes.toFixed(2));
+  return isNaN(parsedTaxes) ? 0 : parsedTaxes;
+  };
 
   const calculateTotalTaxes = (articls) => {
     const totalTaxes = articls.reduce((total, article) => {
@@ -108,7 +113,7 @@ export default function ProductDetail({
     const total = selectedPrice.priceWithTax * amount
     const totalItemToPay = parseFloat(total.toFixed(2))
 
-    const selectedPriceWithTax = selectedPrice.priceWithTax;
+    const selectedPriceWithTax = selectedPrice.priceWithTax
 
     if ('totalItemToPay' in article) {
       article.totalItemToPay = totalItemToPay
@@ -116,12 +121,12 @@ export default function ProductDetail({
       Object.assign(article, { totalItemToPay })
     }
 
-    if ("selectedPriceWithTax" in article) {
-      article.selectedPriceWithTax = selectedPriceWithTax;
+    if ('selectedPriceWithTax' in article) {
+      article.selectedPriceWithTax = selectedPriceWithTax
     } else {
-      Object.assign(article, { selectedPriceWithTax });
+      Object.assign(article, { selectedPriceWithTax })
     }
-    
+
     return totalItemToPay
   }
 

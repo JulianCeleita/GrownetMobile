@@ -74,6 +74,8 @@ export const DisputeStyle = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'column',
     justifyContent: 'space-around',
+    margin: 10,
+    marginTop: 0,
     marginBottom: 20,
   },
   text: {

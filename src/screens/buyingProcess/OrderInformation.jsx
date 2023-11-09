@@ -42,6 +42,7 @@ const OrderInformation = () => {
   const handleChangeDate = async (event, newDate) => {
     if (event.type === 'set') {
       setDeliveryData(newDate)
+      console.log('Fecha de entrega', deliveryData.toLocaleDateString('en-CA')) 
     }
     setShowDatePicker(false)
   }
@@ -58,7 +59,7 @@ const OrderInformation = () => {
     }))
     const jsonOrderData = {
       id_suppliers: selectedSupplier.id,
-      date_delivery: deliveryData.toLocaleDateString(),
+      date_delivery: deliveryData.toLocaleDateString('en-CA'),
       address_delivery: selectedRestaurant.address,
       accountNumber_customers: selectedRestaurant.accountNumber,
       observation: specialRequirements,
@@ -67,6 +68,7 @@ const OrderInformation = () => {
       total_tax: totalTaxes,
       products: jsonProducts,
     }
+    console.log('este es  :DDD', jsonOrderData)
 
     try {
       const response = await axios.post(createStorageOrder, jsonOrderData, {

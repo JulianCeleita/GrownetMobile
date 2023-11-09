@@ -23,6 +23,7 @@ import { useNavigation } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import OrderDetail from '../screens/buyingProcess/OrderDetail'
 import OrderInformation from '../screens/buyingProcess/OrderInformation'
+import TermsAndConditions from '../screens/TermsAndConditions'
 
 const Stack = createStackNavigator()
 
@@ -154,18 +155,18 @@ function AuthNavigator() {
             name="products"
             component={Products}
             options={{
-              headerShown: true,
+              headerShown: false,
 
               title: t('stackNavigator.makeYourOrder'),
               headerStyle: {
                 backgroundColor: 'white',
-                height: StatusBar.currentHeight + 60,
+                height: StatusBar.currentHeight + 50,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 24,
+                fontSize: 22,
               },
               headerLeft: () => HeaderLeft3(),
             }}
@@ -185,7 +186,7 @@ function AuthNavigator() {
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 24,
+                fontSize: 22,
               },
               headerLeft: () => HeaderLeft2(),
             }}
@@ -206,7 +207,7 @@ function AuthNavigator() {
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 24,
+                fontSize: 22,
               },
               headerLeft: () => HeaderLeft(),
             }}
@@ -228,6 +229,24 @@ function AuthNavigator() {
             name="otp"
             component={OTP}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Terms&Conditions"
+            component={TermsAndConditions}
+            options={{
+              headerShown: true,
+              title: 'Terms & Conditions',
+              headerStyle: {
+                backgroundColor: '#f2f2f2',
+                height: StatusBar.currentHeight + 60,
+              },
+              headerTintColor: '#04444F',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'PoppinsSemi',
+                fontSize: 22,
+              },
+            }}
           />
         </>
       )}

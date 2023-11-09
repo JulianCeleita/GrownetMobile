@@ -83,7 +83,9 @@ const Home = () => {
         >
           <Text style={GlobalStyles.textBtnW}> {t('home.login')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('login')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Terms&Conditions')}
+        >
           <Text style={GlobalStyles.linkWhite}>{t('home.tandc')}</Text>
         </TouchableOpacity>
       </View>

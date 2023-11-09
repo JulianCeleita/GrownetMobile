@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Image, TouchableOpacity, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import PhoneInput from 'react-native-phone-number-input'
 import axios from '../../../axiosConfig'
@@ -10,6 +10,7 @@ import { validationApiUrl, onlyCountries } from '../../config/urls.config'
 import useTokenStore from '../../store/useTokenStore'
 import { useTranslation } from 'react-i18next'
 import ModalAlert from '../../components/ModalAlert'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -86,8 +87,23 @@ const LoginPage = () => {
   const handleOutsidePress = () => {
     closeModal()
   }
+
+  const ContainerComponent =
+    Platform.OS === 'ios' ? KeyboardAwareScrollView : View
+
+  const containerProps =
+    Platform.OS === 'ios'
+      ? {
+          resetScrollToCoords: { x: 0, y: 0 },
+          contentContainerStyle: LoginStyle.container,
+          scrollEnabled: true,
+        }
+      : {
+          style: LoginStyle.container,
+        }
+
   return (
-    <View style={LoginStyle.container}>
+    <ContainerComponent {...containerProps}>
       <Image
         style={LoginStyle.tinyLogo2}
         source={require('../../../assets/logo.png')}
@@ -143,9 +159,10 @@ const LoginPage = () => {
         handleOutsidePress={handleOutsidePress}
         Title={t('login.modalTitle_2')}
         message={t('login.secondModalMessage')}
+        message2={t('codeOtp.code')}
         Top
       />
-    </View>
+    </ContainerComponent>
   )
 }
 

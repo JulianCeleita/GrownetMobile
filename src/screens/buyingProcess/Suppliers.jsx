@@ -32,6 +32,10 @@ const Suppliers = () => {
   const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
 
   useEffect(() => {
+    if (selectedRestaurant === null) {
+      navigation.navigate('restaurants')
+      return
+    }
     async function fetchData() {
       const requestBody = {
         accountNumber: selectedRestaurant.accountNumber,
@@ -62,7 +66,7 @@ const Suppliers = () => {
   }
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' });
+    navigation.navigate('TabNavigator', { screen: 'Chat' })
   }
 
   return (
