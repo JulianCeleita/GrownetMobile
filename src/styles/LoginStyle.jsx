@@ -131,6 +131,7 @@ export const ModalStyle = StyleSheet.create({
     fontFamily: 'PoppinsSemi',
     fontSize: 25,
     color: '#04444f',
+    textAlign: 'center',
   },
   modalText: {
     fontFamily: 'PoppinsRegular',
@@ -161,5 +162,10 @@ export const ModalStyle = StyleSheet.create({
     borderRadius: 51,
     width: '50%',
   },
-  space: {},
+  space: {
+    marginRight: 5,
+  },
+  buttons: {
+    flexDirection: 'row',
+  },
 })

@@ -114,6 +114,12 @@ const ptTranslations = {
     checkYourProducts: 'Verifique seus produtos',
     openDispute: 'Abrir disputa',
     confirmOrder: 'Confirmar pedido',
+    warningTitle: 'Você tem uma disputa aberta',
+    warningFirstPart: 'Confirmando o pedido ',
+    warningSecondPart: 'a disputa será encerrada ',
+    warningThirdPart: 'e confirme se tudo está resolvido.',
+    warningConfirm: 'Confirmar pedido',
+    warningCancel: 'Cancelar',
   },
   stackRecord: {
     yourOrders: 'Seus pedidos',

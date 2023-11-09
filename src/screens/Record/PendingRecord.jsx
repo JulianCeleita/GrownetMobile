@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
 import CheckList from '../../components/CheckList'
 import UploadFile from '../../components/UploadFile'
+import ModalAlert, { ModalErrorDispute } from '../../components/ModalAlert'
 
 function PendingRecord({ navigation }) {
   const { t } = useTranslation()
@@ -72,10 +73,36 @@ function PendingRecord({ navigation }) {
         console.log('Error al cerrar la orden', error)
       })
   }
-
+  const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const closeModal = () => {
+    setShowErrorDispute(false)
+  }
+  const openModal = () => {
+    setShowErrorDispute(true)
+  }
+  const handleOutsidePress = () => {
+    closeModal()
+  }
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
+        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
+          hola
+        </Button>
+        <ModalErrorDispute
+          showModal={showErrorDispute}
+          closeModal={closeModal}
+          handleOutsidePress={handleOutsidePress}
+          Title={t('pendingRecord.warningTitle')}
+          message={t('pendingRecord.warningFirstPart')}
+          messagep2={t('pendingRecord.warningSecondPart')}
+          messagep3={t('pendingRecord.warningThirdPart')}
+          message2="
+          Continuar"
+          btnClose="
+          Close"
+        />
+
         <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
           <TouchableOpacity
             style={[
