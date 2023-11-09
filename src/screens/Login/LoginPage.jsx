@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, View, Image, TouchableOpacity, Platform } from 'react-native'
+import { Text, View, Image, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import PhoneInput from 'react-native-phone-number-input'
 import axios from '../../../axiosConfig'
@@ -10,7 +10,6 @@ import { validationApiUrl, onlyCountries } from '../../config/urls.config'
 import useTokenStore from '../../store/useTokenStore'
 import { useTranslation } from 'react-i18next'
 import ModalAlert from '../../components/ModalAlert'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -87,73 +86,7 @@ const LoginPage = () => {
   const handleOutsidePress = () => {
     closeModal()
   }
-
-  return Platform === 'ios' ? (
-    <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={LoginStyle.container}
-      scrollEnabled
-    >
-      <Image
-        style={LoginStyle.tinyLogo2}
-        source={require('../../../assets/logo.png')}
-        resizeMode="contain"
-      />
-
-      <Text style={GlobalStyles.p}>{t('login.enterMobileNumber')}</Text>
-      <View style={LoginStyle.inputCountry}>
-        {countries.length > 0 ? (
-          <PhoneInput
-            countryPickerProps={{
-              countryCodes: countries,
-            }}
-            defaultCode={'GB'}
-            placeholder={t('login.phoneNumber')}
-            defaultValue={phoneNumber}
-            onChangeText={(text) => {
-              setPhoneNumber(text)
-            }}
-            countryCode={(info) => {
-              setPhoneDos(info)
-            }}
-            onChangeFormattedText={(text) => {
-              setPhoneDos(text)
-            }}
-          />
-        ) : null}
-      </View>
-      <TouchableOpacity
-        style={GlobalStyles.btnSecundary}
-        onPress={handleChange}
-      >
-        <Text style={GlobalStyles.textBtnSecundary}>
-          {t('login.letsBegin')}
-        </Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-
-      <ModalAlert
-        showModal={showModal}
-        closeModal={closeModal}
-        handleOutsidePress={handleOutsidePress}
-        Title={t('login.modalTitle_1')}
-        message={t('login.FirstModalmessage')}
-        countryCode={`+${countryCode}`}
-        phoneNumber={phoneNumber}
-        message2={t('login.FirstModalmessage2')}
-      />
-
-      <ModalAlert
-        showModal={showEmptyInputModal}
-        closeModal={closeModal}
-        handleOutsidePress={handleOutsidePress}
-        Title={t('login.modalTitle_2')}
-        message={t('login.secondModalMessage')}
-        message2={t('codeOtp.code')}
-        Top
-      />
-    </KeyboardAwareScrollView>
-  ) : (
+  return (
     <View style={LoginStyle.container}>
       <Image
         style={LoginStyle.tinyLogo2}
@@ -210,7 +143,6 @@ const LoginPage = () => {
         handleOutsidePress={handleOutsidePress}
         Title={t('login.modalTitle_2')}
         message={t('login.secondModalMessage')}
-        message2={t('codeOtp.code')}
         Top
       />
     </View>

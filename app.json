@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Grownet",
+    "name": "grownet-app",
     "slug": "grownet",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,8 +17,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/grownet_icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
       "permissions": ["INTERNET", "CAMERA", "ACCESS_FINE_LOCATION", "STORAGE"],
       "package": "com.heinera.grownetapp"

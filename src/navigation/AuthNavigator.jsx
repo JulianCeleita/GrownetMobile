@@ -154,18 +154,18 @@ function AuthNavigator() {
             name="products"
             component={Products}
             options={{
-              headerShown: false,
+              headerShown: true,
 
               title: t('stackNavigator.makeYourOrder'),
               headerStyle: {
                 backgroundColor: 'white',
-                height: StatusBar.currentHeight + 50,
+                height: StatusBar.currentHeight + 60,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 22,
+                fontSize: 24,
               },
               headerLeft: () => HeaderLeft3(),
             }}
@@ -185,7 +185,7 @@ function AuthNavigator() {
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 22,
+                fontSize: 24,
               },
               headerLeft: () => HeaderLeft2(),
             }}
@@ -206,7 +206,7 @@ function AuthNavigator() {
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
-                fontSize: 22,
+                fontSize: 24,
               },
               headerLeft: () => HeaderLeft(),
             }}

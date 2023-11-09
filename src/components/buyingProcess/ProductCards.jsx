@@ -1,117 +1,49 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { GlobalStyles } from '../../styles/Styles'
 import { Dropdown } from 'react-native-element-dropdown'
 import SelectQuantity from './SelectQuantity'
-import axios from '../../../axiosConfig'
+import { useFavoritesStore } from '../../store/useFavoriteStore'
 import { ProductsStyle } from '../../styles/ProductsStyle'
-import { addFavorites } from '../../config/urls.config'
-import useOrderStore from '../../store/useOrderStore'
-import useTokenStore from '../../store/useTokenStore'
 
-const ProductCards = ({
-  productData,
-  onAmountChange,
-  onUomChange,
-  fetchFavorites,
-  opacity,
-}) => {
-  const { id, name, image, prices, uomToPay, active } = productData
+const ProductCards = ({ productData, onAmountChange, onUomChange }) => {
+  const { id, name, image, prices, uomToPay } = productData
 
-  const { selectedSupplier, selectedRestaurant } = useOrderStore()
-  const { token } = useTokenStore()
   const [isFocus, setIsFocus] = useState(false)
+  const { favorites, addFavorite, removeFavorite } = useFavoritesStore()
+  const isFavorite = favorites.includes(id, name, image)
+  const counter = 0
 
-  const [productState, setProductState] = useState({
-    isFavorite: active === 1,
-    isFavoritePending: false,
-    isBeingUpdated: false,
-  })
+  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
+  const selectedUom = prices.find((price) => price.nameUoms === uomToPay)
 
-  const handleToggleFavorite = useCallback(async () => {
-    if (productState.isFavoritePending) return
-
-    try {
-      setProductState((prevState) => ({
-        ...prevState,
-        isFavoritePending: true,
-      }))
-
-      const newFavoriteState = !productState.isFavorite
-
-      setProductState((prevState) => ({
-        ...prevState,
-        isFavorite: newFavoriteState,
-        isBeingUpdated: !newFavoriteState,
-      }))
-
-      const requestData = {
-        customer_id: selectedRestaurant.accountNumber,
-        product_id: productData.id,
-        supplier_id: selectedSupplier.id,
-        active: newFavoriteState ? 1 : 0,
-      }
-
-      const response = await axios.post(addFavorites, requestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      setProductState((prevState) => ({
-        ...prevState,
-        isFavoritePending: false,
-      }))
-
-      console.log('Toggle favorite response:', response.data)
-
-      await fetchFavorites()
-    } catch (error) {
-      setProductState((prevState) => ({
-        ...prevState,
-        isFavorite: !prevState.isFavorite,
-        isFavoritePending: false,
-        isBeingUpdated: false,
-      }))
-
-      console.error('Error al gestionar el favorito:', error)
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      console.log('remove', id)
+      removeFavorite(id)
+    } else {
+      console.log('add  ', id)
+      addFavorite(id)
     }
-  }, [
-    fetchFavorites,
-    productData,
-    productState.isFavorite,
-    productState.isFavoritePending,
-    selectedRestaurant.accountNumber,
-    selectedSupplier.id,
-    token,
-  ])
+  }
 
-  const handleUomToPayChange = useCallback(
-    (event) => {
-      console.log('newUomToPay:', event)
-      try {
-        const { nameUoms } = event
-        onUomChange(id, nameUoms)
-      } catch (error) {
-        console.error('Error al procesar la promesa:', error)
-      }
-    },
-    [id, onUomChange],
-  )
+  function handleUomToPayChange(event) {
+    console.log('newUomToPay:', event)
+    try {
+      const { nameUoms } = event
+      onUomChange(id, nameUoms)
+    } catch (error) {
+      console.error('Error al procesar la promesa:', error)
+    }
+  }
 
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
-      <View
-        style={[
-          ProductsStyle.container,
-          GlobalStyles.boxShadow,
-          opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
-        ]}
-      >
+      <View style={[ProductsStyle.container, GlobalStyles.boxShadow]}>
         <View style={ProductsStyle.containerImage}>
           <Image
-            source={{ uri: process.env.EXPO_PUBLIC_BASE_IMG + image }}
+            source={{ uri: urlImg + image }}
             style={ProductsStyle.ImageCardProduct}
             resizeMode="contain"
           />
@@ -119,22 +51,16 @@ const ProductCards = ({
         <View>
           <View style={ProductsStyle.containName}>
             <View>
-              <Text style={ProductsStyle.textName}>
-                {name}{' '}
-                {prices.find((price) => price.nameUoms === uomToPay).name}
-              </Text>
+              <Text style={ProductsStyle.textName}>{name}</Text>
+              <Text style={ProductsStyle.textName1}>{selectedUom.name}</Text>
               <Text style={ProductsStyle.textPrice}>
-                £
-                {
-                  prices.find((price) => price.nameUoms === uomToPay)
-                    .priceWithTax
-                }
+                £{selectedUom.priceWithTax}
               </Text>
             </View>
 
             <TouchableOpacity onPress={handleToggleFavorite}>
               <Icon
-                name={productState.isFavorite ? 'heart' : 'heart-o'}
+                name={isFavorite ? 'heart' : 'heart-o'}
                 size={24}
                 color="#62C471"
                 style={{ marginTop: 5 }}
@@ -145,7 +71,7 @@ const ProductCards = ({
             <SelectQuantity
               productData={productData}
               onAmountChange={onAmountChange}
-              counter={0}
+              counter={counter}
             />
             <View style={ProductsStyle.containerDrop}>
               <Dropdown
@@ -172,7 +98,6 @@ const ProductCards = ({
 }
 
 export default ProductCards
-
 const styles = StyleSheet.create({
   dropdown: {
     height: 45,

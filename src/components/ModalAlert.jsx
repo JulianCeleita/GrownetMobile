@@ -107,7 +107,7 @@ export const ModalErrorDispute = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={closeModal}
-                  style={[GlobalStyles.btnOutline, ModalStyle.space]}
+                  style={GlobalStyles.btnOutline}
                 >
                   <Text style={GlobalStyles.textBtnOutline}>{btnClose}</Text>
                 </TouchableOpacity>

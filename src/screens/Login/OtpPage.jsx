@@ -21,7 +21,7 @@ const Otp = () => {
 
   const [showModal, setShowModal] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
-  const [OtpValue, setOtpValue] = useState('')
+  const [Otp, setOtp] = useState('')
 
   const pin1Ref = useRef()
   const pin2Ref = useRef()
@@ -39,7 +39,7 @@ const Otp = () => {
   const enviarOTP = async () => {
     const otp = pin1 + pin2 + pin3 + pin4
 
-    setOtpValue(otp)
+    setOtp(otp)
     const formData = route.params
     if (otp.length !== 4) {
       setShowEmptyInputModal(true)
@@ -148,7 +148,7 @@ const Otp = () => {
         handleOutsidePress={handleOutsidePress}
         Title={t('codeOtp.title')}
         message={t('codeOtp.message')}
-        countryCode={OtpValue}
+        countryCode={Otp}
         message2={t('codeOtp.code')}
         isOtp
       />
@@ -159,7 +159,6 @@ const Otp = () => {
         handleOutsidePress={handleOutsidePress}
         Title={t('login.modalTitle_2')}
         message={t('codeOtp.message2Modal')}
-        message2={t('codeOtp.code')}
         Top
       />
     </SafeAreaView>
