@@ -205,11 +205,6 @@ export const ProductsStyles = StyleSheet.create({
 
   containerCards: { flex: 1, marginTop: 10 },
   // PRODUCT CATEGORIES
-  fixedContainer: {
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-  },
   contenImage: {
     justifyContent: 'center',
     backgroundColor: 'white',

@@ -13,6 +13,7 @@ const esTranslations = {
     FirstModalmessage2: 'Cambiar número de móvil',
     modalTitle_2: '¡Hola 👋!',
     secondModalMessage: '¡Por favor ingresa un número de teléfono!',
+    secondModalMessage2: 'El código que ingresaste es incorrecto',
   },
   codeOtp: {
     enterVerificationCode: 'Ingresa tu código de verificación',
@@ -77,12 +78,15 @@ const esTranslations = {
   },
   record: {
     searchPlaceholder: 'Buscar productos',
-    pastOrders: 'Órdenes anteriores',
-    pendingOrders: 'Órdenes pendientes',
+    pastOrders: 'Pedidos anteriores',
+    pendingOrders: 'Pedidos actuales',
     viewDetails: 'Ver detalles',
     order: '#Orden',
     amount: 'Monto',
     date: 'Fecha',
+    noOrders: 'Aún no hay pedidos',
+    bttnNoOrders: 'Ordena ya',
+    noOrdersDate: 'No tienes órdenes en esta fecha',
   },
   disputeRecord: {
     enterQuantityDelivered: 'Ingrese la cantidad entregada:',
@@ -154,6 +158,25 @@ const esTranslations = {
     areYouSureToDelete: '¿Estás seguro de eliminar',
     cancel: 'Cancelar',
     delete: 'Eliminar',
+  },
+  settingsFaq: {
+    tittle1: '¿Cómo ',
+    tittle2: 'podemos ayudarte?',
+    question1: '¿Cómo puedo agregar otro restaurante?',
+    question2: '¿Cómo puedo agregar un proveedor?',
+    question3: '¿Qué es Grownet?',
+    question4: '¿Dónde puedo ver mis pedidos actuales?',
+    question5: '¿Qué debo hacer si mi pedido llega incompleto?',
+    answer1:
+      'Contáctate a través de nuestro chat y proporciona el nombre del restaurante que deseas agregar.',
+    answer2:
+      'Comunícate a través de nuestro chat para agregar al proveedor que necesites. Contamos con los mejores proveedores de vegetales, frutas, bebidas, carnes y mucho más.',
+    answer3:
+      'Grownet es tu solución para el abastecimiento de tu restaurante. Facilitamos la obtención de suministros, conectándote con los principales proveedores del mercado de Londres para obtener productos frescos y de alta calidad a excelentes precios. Gestiona múltiples locales de restaurante, optimiza tus compras y enfócate en lo que más importa: brindar una excelente experiencia gastronómica. Únete a la revolución en la gestión de suministros con Grownet ¡y haz crecer tu negocio restaurantero hoy!',
+    answer4:
+      "Dirígete al menú y accede a la sección de 'Historial'. Allí encontrarás tus pedidos actuales y anteriores. Puedes filtrar por fecha y acceder a más detalles sobre todos tus productos.",
+    answer5:
+      "Ve al menú y accede a la sección de 'Historial'. Busca el pedido en la categoría de 'Pedidos Actuales' donde puedes filtrar por fecha o realizar una búsqueda manual. Selecciona 'Ver detalles' y abre una disputa para el producto que te llegó incompleto.",
   },
 }
 

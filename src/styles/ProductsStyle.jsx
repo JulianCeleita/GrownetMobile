@@ -34,12 +34,12 @@ export const ProductsStyle = StyleSheet.create({
   // PRODUCT CARD
   container: {
     backgroundColor: 'white',
-    marginVertical: 10,
+    marginVertical: 5,
     flexDirection: 'row',
     borderRadius: 20,
     height: 'auto',
     width: '85%',
-    padding: 18,
+    padding: 15,
   },
   containerImage: {
     width: '40%',
@@ -47,8 +47,8 @@ export const ProductsStyle = StyleSheet.create({
   },
   ImageCardProduct: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    height: '90%',
   },
   containName: {
     flexDirection: 'row',
@@ -101,7 +101,7 @@ export const ProductsStyle = StyleSheet.create({
   },
   containerSelect: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 2,
     marginRight: 10,
   },
   containerDrop: {
@@ -109,19 +109,21 @@ export const ProductsStyle = StyleSheet.create({
   },
   textName: {
     color: '#04444f',
-    fontSize: 16,
+    fontSize: 15,
     width: 120,
     fontFamily: 'PoppinsMedium',
   },
   textName1: {
     color: '#868686',
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'PoppinsRegular',
+    marginTop: -5,
   },
   textPrice: {
     color: '#026cd2',
     fontFamily: 'PoppinsMedium',
-    fontSize: 16,
+    fontSize: 15,
+    marginTop: -5,
   },
 
   containerCards: { flex: 1, marginTop: 10 },
@@ -131,16 +133,24 @@ export const ProductsStyle = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  textButton: {
+    fontFamily: 'PoppinsSemi',
+    fontSize: 14,
+    color: 'white',
+  },
   contenImage: {
     justifyContent: 'center',
     backgroundColor: 'white',
-    width: 100,
-    height: 100,
-    borderRadius: 25,
-    margin: 10,
+    borderRadius: 15,
+    margin: 5,
+    padding: 15,
     alignItems: 'center',
     shadowColor: '#144D56',
     elevation: 4,
+  },
+  activeCategory: {
+    backgroundColor: '#62C471',
+    color: 'white',
   },
   text: { color: '#04444f', textAlign: 'center', fontFamily: 'PoppinsSemi' },
   bgContinue: {

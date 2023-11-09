@@ -279,7 +279,7 @@ const OrderSuccessful = () => {
     }
   }
   const rocordsNavigate = () => {
-    navigation.navigate('Records')
+    navigation.navigate('Records', { screen: 'recordsStack' })
   }
   return (
     <View style={OrderSuccessfulStyle.container}>

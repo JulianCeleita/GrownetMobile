@@ -53,7 +53,7 @@ const Restaurants = () => {
   const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' });
+    navigation.navigate('TabNavigator', { screen: 'Chat' })
   }
   const onPressSuppliers = (restaurant) => {
     setSelectedRestaurant(restaurant)

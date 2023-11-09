@@ -136,10 +136,13 @@ export const ModalStyle = StyleSheet.create({
   modalText: {
     fontFamily: 'PoppinsRegular',
     color: '#04444f',
+    fontSize: 15,
   },
   modalText2: {
-    fontFamily: 'PoppinsRegular',
+    fontFamily: 'PoppinsSemi',
     color: '#026CD2',
+    fontSize: 15,
+    marginBottom: 5,
   },
   TextChange: {
     fontFamily: 'PoppinsRegular',
