@@ -14,8 +14,12 @@ import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
 import CheckList from '../../components/CheckList'
+import ModalAlert, {
+  ModalConfirmOrder,
+  ModalErrorDispute,
+  ModalOpenDispute,
+} from '../../components/ModalAlert'
 import UploadFile from '../../components/UploadFile'
-import ModalAlert, { ModalErrorDispute } from '../../components/ModalAlert'
 
 function PendingRecord({ navigation }) {
   const { t } = useTranslation()
@@ -77,10 +81,16 @@ function PendingRecord({ navigation }) {
       })
   }
   const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const [showOpenDispute, setShowOpenDispute] = useState(false)
+  const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const closeModal = () => {
+    setShowOpenDispute(false)
+    setShowConfirmOder(false)
     setShowErrorDispute(false)
   }
   const openModal = () => {
+    setShowOpenDispute(true)
+    setShowConfirmOder(true)
     setShowErrorDispute(true)
   }
   const handleOutsidePress = () => {
@@ -89,23 +99,6 @@ function PendingRecord({ navigation }) {
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
-        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
-          hola
-        </Button>
-        <ModalErrorDispute
-          showModal={showErrorDispute}
-          closeModal={closeModal}
-          handleOutsidePress={handleOutsidePress}
-          Title={t('pendingRecord.warningTitle')}
-          message={t('pendingRecord.warningFirstPart')}
-          messagep2={t('pendingRecord.warningSecondPart')}
-          messagep3={t('pendingRecord.warningThirdPart')}
-          message2="
-          Continuar"
-          btnClose="
-          Close"
-        />
-
         <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
           <TouchableOpacity
             style={[
@@ -248,6 +241,41 @@ function PendingRecord({ navigation }) {
             </View>
           )}
         </View>
+        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
+          tiene disputa
+        </Button>
+        {
+          <ModalErrorDispute
+            showModal={showErrorDispute}
+            closeModal={closeModal}
+            handleOutsidePress={handleOutsidePress}
+            Title={t('pendingRecord.warningTitle')}
+            message={t('pendingRecord.warningFirstPart')}
+            messagep2={t('pendingRecord.warningSecondPart')}
+            messagep3={t('pendingRecord.warningThirdPart')}
+            message2={t('pendingRecord.modalButton')}
+            btnClose={t('pendingRecord.warningCancel')}
+          />
+        }
+        {/*
+          <ModalOpenDispute
+            showModal={showOpenDispute}
+            closeModal={closeModal}
+            handleOutsidePress={handleOutsidePress}
+            Title={t('disputeRecord.modalTittle')}
+            message={t('disputeRecord.modalText')}
+            message2={t('pendingRecord.modalButton')}
+          />
+        */}
+        {/* <ModalConfirmOrder
+          showModal={showConfirmOrder}
+          closeModal={closeModal}
+          handleOutsidePress={handleOutsidePress}
+          Title={t('pendingRecord.modalTittle')}
+          Title2="Grownet"
+          message={t('pendingRecord.modalText')}
+          message2={t('pendingRecord.modalButton')}
+        />*/}
       </ScrollView>
     </SafeAreaView>
   )
