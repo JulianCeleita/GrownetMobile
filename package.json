@@ -44,6 +44,7 @@
     "react-native-file-picker": "^0.0.21",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-iconify": "^0.2.10",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^5.9.1",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-safe-area-context": "4.6.3",
@@ -52,9 +53,10 @@
     "react-native-svg": "13.9.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-web": "~0.19.6",
+    "react-native-webview": "13.2.2",
     "zustand": "^4.4.1",
     "zustand-persist": "^0.4.0",
-    "react-native-webview": "13.2.2"
+    "expo-linear-gradient": "~12.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

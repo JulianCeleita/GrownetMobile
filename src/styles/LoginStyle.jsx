@@ -129,7 +129,7 @@ export const ModalStyle = StyleSheet.create({
   },
   modalTextTitle: {
     fontFamily: 'PoppinsSemi',
-    fontSize: 25,
+    fontSize: 22,
     color: '#04444f',
     textAlign: 'center',
   },

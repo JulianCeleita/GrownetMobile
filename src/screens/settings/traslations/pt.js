@@ -97,6 +97,9 @@ const ptTranslations = {
     other: 'Outro',
     leaveYourCommentsHere: 'Deixe seus comentários aqui:',
     send: 'Enviar',
+    modalTittle: 'Disputa criada com sucesso',
+    modalText: 'Nossa equipe verificará as informações',
+    modalButton: 'Continuar',
   },
   uploadFile: {
     attachPhoto: 'Anexar foto:',
@@ -113,6 +116,12 @@ const ptTranslations = {
     checkYourProducts: 'Verifique seus produtos',
     openDispute: 'Abrir disputa',
     confirmOrder: 'Confirmar pedido',
+    modalTittle: 'Obrigado por usar',
+    modalText:
+      "Para ver seus pedidos confirmados, acesse 'Pedidos antigos' em 'Registro'.",
+    modalButton: 'Continuar',
+    modalEvidenceText:
+      'A disputa será analisada por um de nossos agentes e responderemos o mais breve possível.',
     warningTitle: 'Você tem uma disputa aberta',
     warningFirstPart: 'Confirmando o pedido ',
     warningSecondPart: 'a disputa será encerrada ',
