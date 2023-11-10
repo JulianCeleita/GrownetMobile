@@ -100,8 +100,8 @@ const enTranslations = {
     send: 'Send',
   },
   uploadFile: {
-    attachPhoto: 'Attach photo:',
-    customUpload: 'Custom Upload',
+    customUpload: 'Add evidence',
+    submitEvidence: "Submit evidence",
   },
   pendingRecord: {
     products: 'Products',

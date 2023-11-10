@@ -100,8 +100,8 @@ const ptTranslations = {
     send: 'Enviar',
   },
   uploadFile: {
-    attachPhoto: 'Anexar foto:',
-    customUpload: 'Upload personalizado',
+    customUpload: 'Adicionar evidências',
+    submitEvidence: "Enviar evidência",
   },
   pendingRecord: {
     products: 'Produtos',

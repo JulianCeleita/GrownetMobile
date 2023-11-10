@@ -101,8 +101,8 @@ const esTranslations = {
     send: 'Enviar',
   },
   uploadFile: {
-    attachPhoto: 'Adjuntar foto:',
-    customUpload: 'Subida personalizada',
+    customUpload: 'Agregar evidencia',
+    submitEvidence: "Enviar evidencia",
   },
   pendingRecord: {
     products: 'Productos',

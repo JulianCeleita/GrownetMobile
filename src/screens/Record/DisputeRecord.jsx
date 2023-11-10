@@ -6,7 +6,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import { useTranslation } from 'react-i18next'
-import UploadFile from '../../components/UploadFile'
 import useRecordStore from '../../store/useRecordStore'
 import axios from 'axios'
 

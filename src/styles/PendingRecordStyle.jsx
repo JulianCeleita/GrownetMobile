@@ -112,16 +112,10 @@ export const DisputeStyle = StyleSheet.create({
     borderRadius: 15,
   },
   buttonUpload: {
-    backgroundColor: '#04444F',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 15,
-    margin: 0.5,
-    alignItems: 'center',
-    width: 250,
+    marginVertical: 25,
   },
   textBtnUpload: {
-    color: 'white',
+    color: '#04444F',
     fontSize: 16,
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',

@@ -13,9 +13,9 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
-import CheckList from '../../components/CheckList'
-import UploadFile from '../../components/UploadFile'
 import ModalAlert, { ModalErrorDispute } from '../../components/ModalAlert'
+import { Feather } from '@expo/vector-icons'
+import * as DocumentPicker from 'expo-document-picker' 
 
 function PendingRecord({ navigation }) {
   const { t } = useTranslation()
@@ -54,6 +54,21 @@ function PendingRecord({ navigation }) {
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // SUBIR EVIDENCIA
+  const pickDocument = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: '*/*',
+    })
+
+    if (result.type === 'success') {
+      console.log('URI:', result.uri)
+      console.log('Nombre:', result.name)
+      console.log('Tamaño:', result.size)
+    } else {
+      console.log('El usuario canceló la selección de archivos')
+    }
+  }
 
   // CERRAR LA ORDEN SELECCIONADA
   const onCloseOrder = (e) => {
@@ -234,9 +249,22 @@ function PendingRecord({ navigation }) {
                   </View>
                 </View>
               ))}
-              <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
-                <UploadFile />
-              </View>
+              <View>
+      <Button style={DisputeStyle.buttonUpload} onPress={pickDocument}>
+        <Feather name="upload" size={18} color="#04444F" />
+        <Text style={DisputeStyle.textBtnUpload}>
+          {' '}
+          {t('uploadFile.customUpload')}
+        </Text>
+      </Button>
+      <Button style={DisputeStyle.buttonUpload} onPress={pickDocument}>
+        <Feather name="send" size={18} color="#04444F" />
+        <Text style={DisputeStyle.textBtnUpload}>
+          {' '}
+          {t('uploadFile.submitEvidence')}
+        </Text>
+      </Button>
+    </View>
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onCloseOrder(e)}
