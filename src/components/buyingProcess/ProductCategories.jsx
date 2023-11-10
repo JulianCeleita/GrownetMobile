@@ -9,8 +9,6 @@ import {
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import { GlobalStyles, ProductsStyles } from '../../styles/Styles'
-import { MaterialIcons } from '@expo/vector-icons'
-import { Iconify } from 'react-native-iconify'
 import useTokenStore from '../../store/useTokenStore'
 import { allCategories } from '../../config/urls.config'
 import axios from '../../../axiosConfig'
@@ -18,21 +16,22 @@ import { ProductsStyle } from '../../styles/ProductsStyle'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { LinearGradient } from 'expo-linear-gradient'
+import useOrderStore from '../../store/useOrderStore'
 
 const { width } = Dimensions.get('window')
 
 function ProductsCategories({
   showFavorites,
   toggleShowFavorites,
-  categoriesProduct,
   filterCategory,
   selectedCategory,
 }) {
   const { t } = useTranslation()
   const navigation = useNavigation()
   const isCarousel = useRef(null)
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState([])
   const { token } = useTokenStore()
+  const { selectedSupplier } = useOrderStore()
 
   const isCategoryActive = (category) => {
     if (
@@ -43,26 +42,23 @@ function ProductsCategories({
     }
     return false
   }
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(allCategories, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+    axios
+      .get(`${allCategories}${selectedSupplier.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
         setCategories(response.data.categories)
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error('Error al obtener los datos de la API:', error)
-      }
-    }
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      })
+  }, [selectedSupplier, token])
 
-  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
-  const updatedCategories = [...categoriesProduct, 'Favorites']
+  const categoriesList = categories.map((e) => e.name)
+  const updatedCategories = ['All', ...categoriesList, 'Favorites']
 
   const renderItem = ({ item }) => {
     return (
@@ -74,7 +70,7 @@ function ProductsCategories({
       >
         {item === 'Favorites' && showFavorites ? (
           <TouchableOpacity onPress={toggleShowFavorites}>
-            <Text>Favorites</Text>
+            <Text>Volver</Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
           <TouchableOpacity onPress={toggleShowFavorites}>
