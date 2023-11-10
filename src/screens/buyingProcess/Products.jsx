@@ -87,13 +87,9 @@ export default function Products() {
 
       useOrderStore.setState({ categories: productsWithTax })
 
-      if (page !== 0) {
-        setArticles((prevProducts) => [...prevProducts, ...productsWithTax])
-        setProducts((prevProducts) => [...prevProducts, ...productsWithTax])
-      } else {
-        setArticles(productsWithTax)
-        setProducts(productsWithTax)
-      }
+      setArticles(productsWithTax)
+      setProducts(productsWithTax)
+
       setHasMore(false)
     } catch (error) {
       console.error('Error al obtener los productos del proveedor:', error)
@@ -138,14 +134,18 @@ export default function Products() {
 
   const fetchProductsByCategory = async (categoryId) => {
     if (categoryId === 'All') {
-      fetchProducts(currentPage)
-        .then(() => {
+      if (hasMore && !isFetchingMore) {
+        setIsFetchingMore(true)
+        try {
+          await fetchProducts(currentPage)
           setIsFetchingMore(false)
-        })
-        .catch((error) => {
+          setIsLoading(false)
+        } catch (error) {
           console.error('Error al cargar más productos:', error)
           setIsFetchingMore(false)
-        })
+          setIsLoading(false)
+        }
+      }
       return
     }
     const requestBody = {
@@ -233,19 +233,14 @@ export default function Products() {
     useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
-  const allCategories = [
-    'All',
-    ...new Set(categories.map((article) => article.nameCategorie)),
-  ]
-  const productsCategory = allCategories
-
   const filterCategories = async (category, categoryId) => {
     setSelectedCategory(category)
-
+    console.log('category', category)
     setShowFavorites(false)
     resetInputSearcher()
     try {
       await fetchProductsByCategory(categoryId)
+      console.log('categoryId', categoryId)
     } catch (error) {
       console.error('Error al obtener productos al mostrar categoría:', error)
     }
@@ -346,7 +341,6 @@ export default function Products() {
       <ProductCategories
         showFavorites={showFavorites}
         toggleShowFavorites={toggleShowFavorites}
-        categoriesProduct={productsCategory}
         filterCategory={filterCategories}
       />
     </View>
