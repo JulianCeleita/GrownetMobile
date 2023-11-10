@@ -27,6 +27,18 @@ function PendingRecord({ navigation }) {
   const { token } = useTokenStore()
   const { selectedPendingOrder } = useRecordStore()
   const [detailsToShow, setDetailsToShow] = useState({})
+  const [textColor, setTextColor] = useState('#a4a4a4')
+  const [productColors, setProductColors] = useState({})
+
+  const disputePress = (productId) => {
+    setProductColors((prevColors) => ({
+      ...prevColors,
+      [productId]: '#ee6055',
+    }))
+    setTimeout(() => {
+      navigation.navigate('disputeRecord')
+    }, 200)
+  }
 
   console.log('ORDER', detailsToShow)
   console.log('SELECTED ORDER', selectedPendingOrder)
@@ -95,6 +107,14 @@ function PendingRecord({ navigation }) {
   }
   const handleOutsidePress = () => {
     closeModal()
+  }
+  const [checkProduct, setCheckProduct] = useState({})
+
+  const handlePress = (productId) => {
+    setCheckProduct((prevState) => ({
+      ...prevState,
+      [productId]: !prevState[productId],
+    }))
   }
   return (
     <SafeAreaView style={RecordStyle.record}>
@@ -210,24 +230,61 @@ function PendingRecord({ navigation }) {
                 {t('pendingRecord.checkYourProducts')}
               </Text>
               {detailsToShow.products?.map((product) => (
-                <View style={PendingStyle.cardProduct} key={product.id}>
-                  <View style={PendingStyle.dispute}>
-                    <Text style={PendingStyle.text}>{product.name}</Text>
-                    <Text
-                      style={PendingStyle.p}
-                      onPress={() => navigation.navigate('disputeRecord')}
-                    >
-                      {t('pendingRecord.openDispute')}
-                    </Text>
+                <TouchableOpacity
+                  key={product.id}
+                  onPress={() => handlePress(product.id)}
+                  style={{
+                    backgroundColor: checkProduct[product.id]
+                      ? '#04444f'
+                      : 'transparent',
+                    marginHorizontal: 10,
+                    marginBottom: 5,
+                    paddingTop: 15,
+                    borderRadius: 10,
+                  }}
+                >
+                  <View style={PendingStyle.cardProduct} key={product.id}>
+                    <View style={PendingStyle.dispute}>
+                      <Text
+                        style={[
+                          PendingStyle.text,
+                          {
+                            color: checkProduct[product.id]
+                              ? 'white'
+                              : '#04444f',
+                          },
+                        ]}
+                      >
+                        {product.name}
+                      </Text>
+                      <Text
+                        style={[
+                          PendingStyle.p,
+                          { color: productColors[product.id] || textColor },
+                        ]}
+                        onPress={() => disputePress(product.id)}
+                      >
+                        {t('pendingRecord.openDispute')}
+                      </Text>
+                    </View>
+                    <View style={PendingStyle.disputeRight}>
+                      <Text
+                        style={[
+                          PendingStyle.p,
+                          {
+                            color: checkProduct[product.id]
+                              ? 'white'
+                              : '#868686',
+                          },
+                        ]}
+                      >
+                        {product.quantity} {product.uom}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={PendingStyle.disputeRight}>
-                    <Text style={PendingStyle.p}>
-                      {product.quantity} {product.uom}
-                    </Text>
-                  </View>
-                </View>
+                </TouchableOpacity>
               ))}
-              <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
+              <View style={[DisputeStyle.cardForm, { marginTop: 0 }]}>
                 <UploadFile />
               </View>
               <Button
