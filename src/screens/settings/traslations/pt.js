@@ -112,7 +112,7 @@ const ptTranslations = {
     tax: 'Imposto',
     currentTotal: 'Valor atual',
     checkYourProducts: 'Verifique seus produtos',
-    openDispute: 'Abrir disputa',
+    openDispute: 'Disputa',
     confirmOrder: 'Confirmar pedido',
     warningTitle: 'Você tem uma disputa aberta',
     warningFirstPart: 'Confirmando o pedido ',

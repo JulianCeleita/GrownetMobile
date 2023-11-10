@@ -28,7 +28,7 @@ export const PendingStyle = StyleSheet.create({
   p: {
     fontFamily: 'PoppinsRegular',
     fontSize: 17,
-    color: '#868686',
+    color: '#A4A4A4',
   },
   dispute: {
     paddingLeft: 30,

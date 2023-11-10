@@ -24,6 +24,9 @@ function PendingRecord({ navigation }) {
   const { selectedPendingOrder } = useRecordStore()
   const [detailsToShow, setDetailsToShow] = useState({})
 
+  console.log('ORDER', detailsToShow)
+  console.log('SELECTED ORDER', selectedPendingOrder)
+
   const onToggleCheckbox = () => {
     setChecked(!checked)
   }
@@ -217,19 +220,17 @@ function PendingRecord({ navigation }) {
                 <View style={PendingStyle.cardProduct} key={product.id}>
                   <View style={PendingStyle.dispute}>
                     <Text style={PendingStyle.text}>{product.name}</Text>
-                    <Text style={PendingStyle.p}>
-                      {product.quantity} {product.uom}
+                    <Text
+                      style={PendingStyle.p}
+                      onPress={() => navigation.navigate('disputeRecord')}
+                    >
+                      {t('pendingRecord.openDispute')}
                     </Text>
                   </View>
                   <View style={PendingStyle.disputeRight}>
-                    <CheckList />
-                    <Button
-                      onPress={() => navigation.navigate('disputeRecord')}
-                    >
-                      <Text style={PendingStyle.p}>
-                        {t('pendingRecord.openDispute')}
-                      </Text>
-                    </Button>
+                    <Text style={PendingStyle.p}>
+                      {product.quantity} {product.uom}
+                    </Text>
                   </View>
                 </View>
               ))}

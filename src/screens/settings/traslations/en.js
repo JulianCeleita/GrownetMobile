@@ -112,7 +112,7 @@ const enTranslations = {
     tax: 'Tax',
     currentTotal: 'Current value',
     checkYourProducts: 'Check your products',
-    openDispute: 'Open dispute',
+    openDispute: 'Dispute',
     confirmOrder: 'Confirm order',
   },
   stackRecord: {
