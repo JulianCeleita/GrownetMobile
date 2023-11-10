@@ -20,8 +20,9 @@ import ModalAlert, {
   ModalOpenDispute,
 } from '../../components/ModalAlert'
 import UploadFile from '../../components/UploadFile'
-
-function PendingRecord({ navigation }) {
+import { useNavigation } from '@react-navigation/native'
+function PendingRecord() {
+  const navigation = useNavigation()
   const { t } = useTranslation()
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
@@ -39,7 +40,14 @@ function PendingRecord({ navigation }) {
       navigation.navigate('disputeRecord')
     }, 200)
   }
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Restablecer los colores de los productos cuando la pantalla vuelve a estar enfocada
+      setProductColors({})
+    })
 
+    return unsubscribe
+  }, [navigation])
   console.log('ORDER', detailsToShow)
   console.log('SELECTED ORDER', selectedPendingOrder)
 
