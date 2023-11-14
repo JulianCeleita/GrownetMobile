@@ -126,15 +126,12 @@ function PendingRecord() {
       })
   }
   const [showErrorDispute, setShowErrorDispute] = useState(false)
-  const [showOpenDispute, setShowOpenDispute] = useState(false)
   const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const closeModal = () => {
-    setShowOpenDispute(false)
     setShowConfirmOder(false)
     setShowErrorDispute(false)
   }
   const openModal = () => {
-    setShowOpenDispute(true)
     setShowConfirmOder(true)
     setShowErrorDispute(true)
   }
@@ -369,16 +366,7 @@ function PendingRecord() {
             btnClose={t('pendingRecord.warningCancel')}
           />
         }
-        {/*
-          <ModalOpenDispute
-            showModal={showOpenDispute}
-            closeModal={closeModal}
-            handleOutsidePress={handleOutsidePress}
-            Title={t('disputeRecord.modalTittle')}
-            message={t('disputeRecord.modalText')}
-            message2={t('pendingRecord.modalButton')}
-          />
-        */}
+        
         {/* <ModalConfirmOrder
           showModal={showConfirmOrder}
           closeModal={closeModal}
