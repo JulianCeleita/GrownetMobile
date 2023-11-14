@@ -4,7 +4,7 @@ import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, Image } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -12,7 +12,7 @@ import {
   ModalConfirmOrder,
   ModalErrorDispute
 } from '../../components/ModalAlert'
-import { closeSelectedOrder, selectedStorageOrder } from '../../config/urls.config'
+import { closeSelectedOrder, selectedStorageOrder, createDisputeOrder } from '../../config/urls.config'
 import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { PastStyle } from '../../styles/PastRecordStyle'
@@ -37,6 +37,8 @@ function PendingRecord() {
   const [showErrorDispute, setShowErrorDispute] = useState(false)
   const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const [checkProduct, setCheckProduct] = useState({})
+  const [evidences, setEvidences] = useState([])
+  const [buttonEvidence, setButtonEvidence] = useState('upload')
 
   console.log('Detalles para mooostrarrr', detailsToShow)
   console.log('ESTADO DE LA ORDEN AQUI:', detailsToShow.id_stateOrders)
@@ -91,19 +93,63 @@ function PendingRecord() {
   }
 
   // SUBIR EVIDENCIA
+  useEffect(() => {
+    if (evidences.length === 0) {
+      setButtonEvidence('upload');
+    }
+  }, [evidences]);
+
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
       type: '*/*',
     })
 
     if (result.type === 'success') {
-      console.log('URI:', result.uri)
-      console.log('Nombre:', result.name)
-      console.log('Tamaño:', result.size)
+      setEvidences([...evidences, result])
     } else {
       console.log('El usuario canceló la selección de archivos')
     }
   }
+
+  const onSendEvidences = () => {
+    const formData = new FormData();
+
+    const disputeBody = {
+      order: selectedPendingOrder,
+      product_id: detailsToShow.evidences_id,
+    };
+    for (let key in disputeBody) {
+      if (disputeBody.hasOwnProperty(key)) {
+        formData.append(key, disputeBody[key]);
+      }
+    }
+    evidences.forEach((file) => {
+      formData.append("evidences[]", file);
+    });
+
+    axios
+      .post(createDisputeOrder, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setEvidences([]);
+        setButtonEvidence("upload");
+      })
+      .catch((error) => {
+        console.error("Error al crear la disputa:", error);
+      });
+  };
+
+  const removeEvidence = (index) => {
+    const newEvidences = [...evidences];
+    newEvidences.splice(index, 1);
+    setEvidences(newEvidences);
+  };
+
   // CERRAR LA ORDEN SELECCIONADA
   const onConfirmOrder = (e) => {
     e.preventDefault()
@@ -324,6 +370,33 @@ function PendingRecord() {
                   </View>
                 </TouchableOpacity>
               ))}
+              <View>
+      {evidences.map((file, index) => (
+        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+          <Image
+            source={{ uri: file.uri }}
+            style={{ width: 30, height: 30, marginRight: 10 }}
+          />
+          <TouchableOpacity onPress={() => removeEvidence(index)}>
+            <Text>X</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+
+      {buttonEvidence === 'upload' && (
+        <Button
+          onPress={pickDocument}
+          title={t('uploadFile.customUpload')}
+        />
+      )}
+
+      {buttonEvidence === 'submit' && (
+        <Button
+          onPress={onSendEvidences}
+          title={t('uploadFile.submitEvidence')}
+        />
+      )}
+    </View>
               <View>
                 <Button
                   style={DisputeStyle.buttonUpload}
