@@ -10,15 +10,21 @@ import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   ModalConfirmOrder,
-  ModalErrorDispute
+  ModalErrorDispute,
 } from '../../components/ModalAlert'
-import { closeSelectedOrder, selectedStorageOrder, createDisputeOrder } from '../../config/urls.config'
+import {
+  closeSelectedOrder,
+  selectedStorageOrder,
+  createDisputeOrder,
+} from '../../config/urls.config'
 import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import { set } from 'date-fns'
+import { ModalOpenDispute } from '../../components/ModalAlert'
 
 function PendingRecord() {
   const navigation = useNavigation()
@@ -38,11 +44,7 @@ function PendingRecord() {
   const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const [checkProduct, setCheckProduct] = useState({})
   const [evidences, setEvidences] = useState([])
-  const [buttonEvidence, setButtonEvidence] = useState('upload')
-
-  console.log('Detalles para mooostrarrr', detailsToShow)
-  console.log('ESTADO DE LA ORDEN AQUI:', detailsToShow.id_stateOrders)
-  console.log('NUMERO DE REFERENCIA:', detailsToShow.reference)
+  const [showOpenDispute, setShowOpenDispute] = useState(false)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -59,10 +61,6 @@ function PendingRecord() {
     })
     return unsubscribe
   }, [navigation])
-
-  console.log('ORDER', detailsToShow)
-  console.log('SELECTED ORDER', selectedPendingOrder)
-  console.log('SELECTED PRODUCT', selectedProduct)
 
   const switchTab = () => {
     setActiveTab((prevTab) =>
@@ -93,62 +91,65 @@ function PendingRecord() {
   }
 
   // SUBIR EVIDENCIA
-  useEffect(() => {
-    if (evidences.length === 0) {
-      setButtonEvidence('upload');
-    }
-  }, [evidences]);
-
   const pickDocument = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: '*/*',
-    })
-
-    if (result.type === 'success') {
-      setEvidences([...evidences, result])
-    } else {
-      console.log('El usuario canceló la selección de archivos')
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+      })
+      console.log('Resultado del DocumentPicker', result.assets)
+      setEvidences((prevEvidences) => [...prevEvidences, ...result.assets])
+    } catch (error) {
+      console.log('Error al seleccionar el archivo', error)
     }
   }
 
-  const onSendEvidences = () => {
-    const formData = new FormData();
+  const onSendEvidences = async () => {
+    const formData = new FormData()
 
     const disputeBody = {
       order: selectedPendingOrder,
       product_id: detailsToShow.evidences_id,
-    };
+    }
     for (let key in disputeBody) {
       if (disputeBody.hasOwnProperty(key)) {
-        formData.append(key, disputeBody[key]);
+        formData.append(key, disputeBody[key])
       }
     }
     evidences.forEach((file) => {
-      formData.append("evidences[]", file);
+      const fileUri = file.uri;
+      const fileName = fileUri.split('/').pop();
+      const fileType = fileUri.match(/\.(\w+)$/)?.[1];
+      formData.append("evidences[]", {
+        uri: fileUri,
+        name: fileName || "image",
+        type: `image/${fileType}` || "image/jpg",
+      });
     });
 
     axios
       .post(createDisputeOrder, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       })
       .then((response) => {
-        console.log(response.data);
-        setEvidences([]);
-        setButtonEvidence("upload");
+        console.log('FORMDATA EXITOSO', formData._parts)
+        console.log(response.data)
+        setShowOpenDispute(true)
+        setEvidences([])
       })
       .catch((error) => {
-        console.error("Error al crear la disputa:", error);
-      });
-  };
+        console.log('FORMDATA', formData._parts)
+        console.error('Error al crear la disputa:', error)
+      })
+  }
 
   const removeEvidence = (index) => {
-    const newEvidences = [...evidences];
-    newEvidences.splice(index, 1);
-    setEvidences(newEvidences);
-  };
+    const newEvidences = [...evidences]
+    newEvidences.splice(index, 1)
+    setEvidences(newEvidences)
+  }
 
   // CERRAR LA ORDEN SELECCIONADA
   const onConfirmOrder = (e) => {
@@ -186,6 +187,7 @@ function PendingRecord() {
       navigation.navigate('Records', { screen: 'recordsStack' })
     } else {
       setShowErrorDispute(false)
+      setShowOpenDispute(false)
     }
   }
   const handleOutsidePress = () => {
@@ -371,33 +373,59 @@ function PendingRecord() {
                 </TouchableOpacity>
               ))}
               <View>
-      {evidences.map((file, index) => (
-        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
-          <Image
-            source={{ uri: file.uri }}
-            style={{ width: 30, height: 30, marginRight: 10 }}
-          />
-          <TouchableOpacity onPress={() => removeEvidence(index)}>
-            <Text>X</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-
-      {buttonEvidence === 'upload' && (
-        <Button
-          onPress={pickDocument}
-          title={t('uploadFile.customUpload')}
-        />
-      )}
-
-      {buttonEvidence === 'submit' && (
-        <Button
-          onPress={onSendEvidences}
-          title={t('uploadFile.submitEvidence')}
-        />
-      )}
-    </View>
+                {evidences.length > 0 &&
+                  evidences.map((file, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginVertical: 10,
+                        backgroundColor: '#fff',
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,
+                        elevation: 5,
+                        borderRadius: 10,
+                        padding: 10,
+                      }}
+                    >
+                      <Image
+                        source={{ uri: file.uri }}
+                        style={{
+                          width: 150,
+                          height: 150,
+                          marginRight: 10,
+                          borderRadius: 10,
+                        }}
+                        onError={(e) => {
+                          console.log('Error al cargar la imagen', e)
+                        }}
+                      />
+                      <TouchableOpacity
+                        onPress={() => removeEvidence(index, index)}
+                        style={{
+                          backgroundColor: '#FF5252',
+                          borderRadius: 50,
+                          padding: 10,
+                          marginLeft: 'auto',
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          X
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+              </View>
               <View>
+              {evidences.length < 4 && (
                 <Button
                   style={DisputeStyle.buttonUpload}
                   onPress={pickDocument}
@@ -408,9 +436,11 @@ function PendingRecord() {
                     {t('uploadFile.customUpload')}
                   </Text>
                 </Button>
+                )}
+                {evidences.length > 0 && (
                 <Button
                   style={DisputeStyle.buttonUpload}
-                  onPress={pickDocument}
+                  onPress={onSendEvidences}
                 >
                   <Feather name="send" size={18} color="#04444F" />
                   <Text style={DisputeStyle.textBtnUpload}>
@@ -418,6 +448,7 @@ function PendingRecord() {
                     {t('uploadFile.submitEvidence')}
                   </Text>
                 </Button>
+                )}
               </View>
               <Button
                 style={GlobalStyles.btnPrimary}
@@ -451,6 +482,14 @@ function PendingRecord() {
           Title={t('pendingRecord.modalTittle')}
           Title2="Grownet"
           message={t('pendingRecord.modalText')}
+          message2={t('pendingRecord.modalButton')}
+        />
+        {/* MODAL DE DISPUTA ABIERTA */}
+        <ModalOpenDispute
+          showModal={showOpenDispute}
+          closeModal={closeModal}
+          Title={t('disputeRecord.modalTittle')}
+          message={t('disputeRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
         />
       </ScrollView>
