@@ -13,14 +13,12 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
-import CheckList from '../../components/CheckList'
 import ModalAlert, {
   ModalConfirmOrder,
   ModalErrorDispute,
   ModalOpenDispute,
 } from '../../components/ModalAlert'
 import { Feather } from '@expo/vector-icons'
-import UploadFile from '../../components/UploadFile'
 import { useNavigation } from '@react-navigation/native'
 import * as DocumentPicker from 'expo-document-picker'
 
@@ -29,7 +27,13 @@ function PendingRecord() {
   const { t } = useTranslation()
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
-  const { selectedPendingOrder, detailsToShow, setDetailsToShow } = useRecordStore()
+  const {
+    selectedPendingOrder,
+    detailsToShow,
+    setDetailsToShow,
+    selectedProduct,
+    setSelectedProduct,
+  } = useRecordStore()
   const [textColor, setTextColor] = useState('#a4a4a4')
   const [productColors, setProductColors] = useState({})
   const [activeTab, setActiveTab] = useState('reception')
@@ -45,20 +49,20 @@ function PendingRecord() {
   }
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Restablecer los colores de los productos cuando la pantalla vuelve a estar enfocada
       setProductColors({})
     })
 
     return unsubscribe
   }, [navigation])
-  
-    console.log('ORDER', detailsToShow)
-    console.log('SELECTED ORDER', selectedPendingOrder)
-  
-    const onToggleCheckbox = () => {
-      setChecked(!checked)
-    }
-    
+
+  console.log('ORDER', detailsToShow)
+  console.log('SELECTED ORDER', selectedPendingOrder)
+  console.log('SELECTED PRODUCT', selectedProduct)
+
+  const onToggleCheckbox = () => {
+    setChecked(!checked)
+  }
+
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'productsRecord' ? 'reception' : 'productsRecord',
@@ -82,9 +86,8 @@ function PendingRecord() {
   }, [])
 
   const handleSelectProduct = (product) => {
-    setSelectedProduct(product);
-  };
-  
+    setSelectedProduct(product)
+  }
 
   // SUBIR EVIDENCIA
   const pickDocument = async () => {
@@ -292,7 +295,10 @@ function PendingRecord() {
                           PendingStyle.p,
                           { color: productColors[product.id] || textColor },
                         ]}
-                        onPress={() => disputePress(product.id)}
+                        onPress={() => {
+                          handleSelectProduct(product)
+                          disputePress(product.id)
+                        }}
                       >
                         {t('pendingRecord.openDispute')}
                       </Text>
@@ -315,21 +321,27 @@ function PendingRecord() {
                 </TouchableOpacity>
               ))}
               <View>
-      <Button style={DisputeStyle.buttonUpload} onPress={pickDocument}>
-        <Feather name="upload" size={18} color="#04444F" />
-        <Text style={DisputeStyle.textBtnUpload}>
-          {' '}
-          {t('uploadFile.customUpload')}
-        </Text>
-      </Button>
-      <Button style={DisputeStyle.buttonUpload} onPress={pickDocument}>
-        <Feather name="send" size={18} color="#04444F" />
-        <Text style={DisputeStyle.textBtnUpload}>
-          {' '}
-          {t('uploadFile.submitEvidence')}
-        </Text>
-      </Button>
-    </View>
+                <Button
+                  style={DisputeStyle.buttonUpload}
+                  onPress={pickDocument}
+                >
+                  <Feather name="upload" size={18} color="#04444F" />
+                  <Text style={DisputeStyle.textBtnUpload}>
+                    {' '}
+                    {t('uploadFile.customUpload')}
+                  </Text>
+                </Button>
+                <Button
+                  style={DisputeStyle.buttonUpload}
+                  onPress={pickDocument}
+                >
+                  <Feather name="send" size={18} color="#04444F" />
+                  <Text style={DisputeStyle.textBtnUpload}>
+                    {' '}
+                    {t('uploadFile.submitEvidence')}
+                  </Text>
+                </Button>
+              </View>
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onCloseOrder(e)}

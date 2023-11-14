@@ -8,14 +8,20 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import useRecordStore from '../../store/useRecordStore'
 import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import { createDisputeOrder } from '../../config/urls.config'
+import useTokenStore from '../../store/useTokenStore'
 
 function DisputeRecord() {
   const { t } = useTranslation()
+  const { token } = useTokenStore()
   const [motive, setMotive] = useState('1')
   const [quantityDispute, setQuantityDispute] = useState('')
-  const { selectedPendingOrder } = useRecordStore()
+  const { selectedPendingOrder, selectedProduct } = useRecordStore()
   const [solutionSelected, setSolutionSelected] = useState('1')
   console.log("SELECTED ORDER", selectedPendingOrder)
+  console.log("MOTIVE", motive)
+  console.log("QUANTITY", quantityDispute)
+  console.log("SOLUTION", solutionSelected)
 
   const handleQuantityChange = (inputValue) => {
     const re = /^[0-9\b]+$/;
@@ -31,16 +37,20 @@ function DisputeRecord() {
   // ENVIAR LA DISPUTA
   const handleSubmit = (e) => {
     e.preventDefault()
-    setShow(true)
+    if (!quantityDispute) {
+      alert('Please fill in the quantity')
+      return
+    }
+    
     const formData = new FormData()
 
     const disputeBody = {
-      order: selectedPendingOrder, //ya
-      motive: motive, //ya
-      id_solutionsDisputes: solutionSelected, //ya
-      product_id: id,
-      description: "", //ya
-      quantity: quantityDispute, 
+      order: selectedPendingOrder,
+      motive: motive,
+      id_solutionsDisputes: solutionSelected,
+      product_id: selectedProduct.id,
+      description: "",
+      quantity: quantityDispute,
     };
     for (let key in disputeBody) {
       if (disputeBody.hasOwnProperty(key)) {
@@ -163,8 +173,8 @@ function DisputeRecord() {
         <View style={DisputeStyle.cardTittle}>
           <MaterialIcons name="error-outline" size={60} color="#62c471" />
           <View style={{ marginLeft: 15 }}>
-            <Text style={DisputeStyle.title}>Broccoli</Text>
-            <Text style={DisputeStyle.quantity}>1 Box</Text>
+            <Text style={DisputeStyle.title}>{selectedProduct.name}</Text>
+            <Text style={DisputeStyle.quantity}>{selectedProduct.quantity} {selectedProduct.uom}</Text>
           </View>
         </View>
         <View style={DisputeStyle.dispute}>
@@ -189,7 +199,9 @@ function DisputeRecord() {
             </Button>
           </View>
           {renderContent()}
-          <Button style={[GlobalStyles.btnPrimary, DisputeStyle.space]}>
+          <Button 
+          onPress={handleSubmit}
+          style={[GlobalStyles.btnPrimary, DisputeStyle.space]}>
             <Text style={GlobalStyles.textBtnSecundary}>
               {t('disputeRecord.send')}
             </Text>
