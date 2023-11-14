@@ -22,7 +22,7 @@ function DisputeRecord() {
     if (inputValue === "" || re.test(inputValue)) {
       setQuantityDispute(inputValue);
     }
-  };
+  }
 
   const onToggleCheckbox = (value) => {
     setSolutionSelected(value)
@@ -30,9 +30,9 @@ function DisputeRecord() {
 
   // ENVIAR LA DISPUTA
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setShow(true);
-    const formData = new FormData();
+    e.preventDefault()
+    setShow(true)
+    const formData = new FormData()
 
     const disputeBody = {
       order: selectedPendingOrder, //ya
@@ -44,7 +44,7 @@ function DisputeRecord() {
     };
     for (let key in disputeBody) {
       if (disputeBody.hasOwnProperty(key)) {
-        formData.append(key, disputeBody[key]);
+        formData.append(key, disputeBody[key])
       }
     }
 
@@ -52,11 +52,11 @@ function DisputeRecord() {
       .post(createDisputeOrder, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.error("Error al crear la disputa:", error);
@@ -78,7 +78,7 @@ function DisputeRecord() {
               onChangeText={handleQuantityChange}
               keyboardType='numeric'
               required
-            />            
+            />
           </View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <View style={DisputeStyle.optionForm}>
@@ -87,9 +87,7 @@ function DisputeRecord() {
               </Text>
               <Checkbox.Item
                 label=""
-                status={
-                  solutionSelected === '1' ? 'checked' : 'unchecked'
-                }
+                status={solutionSelected === '1' ? 'checked' : 'unchecked'}
                 onPress={() => onToggleCheckbox('1')}
               />
             </View>
@@ -99,9 +97,7 @@ function DisputeRecord() {
               </Text>
               <Checkbox.Item
                 label=""
-                status={
-                  solutionSelected === '2' ? 'checked' : 'unchecked'
-                }
+                status={solutionSelected === '2' ? 'checked' : 'unchecked'}
                 onPress={() => onToggleCheckbox('2')}
               />
             </View>
@@ -131,9 +127,7 @@ function DisputeRecord() {
               </Text>
               <Checkbox.Item
                 label=""
-                status={
-                  solutionSelected === '1' ? 'checked' : 'unchecked'
-                }
+                status={solutionSelected === '1' ? 'checked' : 'unchecked'}
                 onPress={() => onToggleCheckbox('1')}
               />
             </View>
@@ -143,9 +137,7 @@ function DisputeRecord() {
               </Text>
               <Checkbox.Item
                 label=""
-                status={
-                  solutionSelected === '2' ? 'checked' : 'unchecked'
-                }
+                status={solutionSelected === '2' ? 'checked' : 'unchecked'}
                 onPress={() => onToggleCheckbox('2')}
               />
             </View>
@@ -162,7 +154,11 @@ function DisputeRecord() {
   }
 
   return (
-    <SafeAreaView style={DisputeStyle.dispute}>
+    <SafeAreaView
+      style={
+        (DisputeStyle.dispute, { backgroundColor: 'white', height: '100%' })
+      }
+    >
       <ScrollView>
         <View style={DisputeStyle.cardTittle}>
           <MaterialIcons name="error-outline" size={60} color="#62c471" />

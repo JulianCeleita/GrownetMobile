@@ -13,16 +13,44 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
-import ModalAlert, { ModalErrorDispute } from '../../components/ModalAlert'
+import CheckList from '../../components/CheckList'
+import ModalAlert, {
+  ModalConfirmOrder,
+  ModalErrorDispute,
+  ModalOpenDispute,
+} from '../../components/ModalAlert'
 import { Feather } from '@expo/vector-icons'
-import * as DocumentPicker from 'expo-document-picker' 
+import UploadFile from '../../components/UploadFile'
+import { useNavigation } from '@react-navigation/native'
+import * as DocumentPicker from 'expo-document-picker'
 
-function PendingRecord({ navigation }) {
+function PendingRecord() {
+  const navigation = useNavigation()
   const { t } = useTranslation()
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
   const { selectedPendingOrder, detailsToShow, setDetailsToShow } = useRecordStore()
+  const [textColor, setTextColor] = useState('#a4a4a4')
+  const [productColors, setProductColors] = useState({})
   const [activeTab, setActiveTab] = useState('reception')
+
+  const disputePress = (productId) => {
+    setProductColors((prevColors) => ({
+      ...prevColors,
+      [productId]: '#ee6055',
+    }))
+    setTimeout(() => {
+      navigation.navigate('disputeRecord')
+    }, 200)
+  }
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Restablecer los colores de los productos cuando la pantalla vuelve a estar enfocada
+      setProductColors({})
+    })
+
+    return unsubscribe
+  }, [navigation])
   
     console.log('ORDER', detailsToShow)
     console.log('SELECTED ORDER', selectedPendingOrder)
@@ -95,35 +123,32 @@ function PendingRecord({ navigation }) {
       })
   }
   const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const [showOpenDispute, setShowOpenDispute] = useState(false)
+  const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const closeModal = () => {
+    setShowOpenDispute(false)
+    setShowConfirmOder(false)
     setShowErrorDispute(false)
   }
   const openModal = () => {
+    setShowOpenDispute(true)
+    setShowConfirmOder(true)
     setShowErrorDispute(true)
   }
   const handleOutsidePress = () => {
     closeModal()
   }
+  const [checkProduct, setCheckProduct] = useState({})
+
+  const handlePress = (productId) => {
+    setCheckProduct((prevState) => ({
+      ...prevState,
+      [productId]: !prevState[productId],
+    }))
+  }
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
-        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
-          hola
-        </Button>
-        <ModalErrorDispute
-          showModal={showErrorDispute}
-          closeModal={closeModal}
-          handleOutsidePress={handleOutsidePress}
-          Title={t('pendingRecord.warningTitle')}
-          message={t('pendingRecord.warningFirstPart')}
-          messagep2={t('pendingRecord.warningSecondPart')}
-          messagep3={t('pendingRecord.warningThirdPart')}
-          message2="
-          Continuar"
-          btnClose="
-          Close"
-        />
-
         <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
           <TouchableOpacity
             style={[
@@ -235,22 +260,59 @@ function PendingRecord({ navigation }) {
                 {t('pendingRecord.checkYourProducts')}
               </Text>
               {detailsToShow.products?.map((product) => (
-                <View style={PendingStyle.cardProduct} key={product.id}>
-                  <View style={PendingStyle.dispute}>
-                    <Text style={PendingStyle.text}>{product.name}</Text>
-                    <Text
-                      style={PendingStyle.p}
-                      onPress={() => navigation.navigate('disputeRecord')}
-                    >
-                      {t('pendingRecord.openDispute')}
-                    </Text>
+                <TouchableOpacity
+                  key={product.id}
+                  onPress={() => handlePress(product.id)}
+                  style={{
+                    backgroundColor: checkProduct[product.id]
+                      ? '#04444f'
+                      : 'transparent',
+                    marginHorizontal: 10,
+                    marginBottom: 5,
+                    paddingTop: 15,
+                    borderRadius: 10,
+                  }}
+                >
+                  <View style={PendingStyle.cardProduct} key={product.id}>
+                    <View style={PendingStyle.dispute}>
+                      <Text
+                        style={[
+                          PendingStyle.text,
+                          {
+                            color: checkProduct[product.id]
+                              ? 'white'
+                              : '#04444f',
+                          },
+                        ]}
+                      >
+                        {product.name}
+                      </Text>
+                      <Text
+                        style={[
+                          PendingStyle.p,
+                          { color: productColors[product.id] || textColor },
+                        ]}
+                        onPress={() => disputePress(product.id)}
+                      >
+                        {t('pendingRecord.openDispute')}
+                      </Text>
+                    </View>
+                    <View style={PendingStyle.disputeRight}>
+                      <Text
+                        style={[
+                          PendingStyle.p,
+                          {
+                            color: checkProduct[product.id]
+                              ? 'white'
+                              : '#868686',
+                          },
+                        ]}
+                      >
+                        {product.quantity} {product.uom}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={PendingStyle.disputeRight}>
-                    <Text style={PendingStyle.p}>
-                      {product.quantity} {product.uom}
-                    </Text>
-                  </View>
-                </View>
+                </TouchableOpacity>
               ))}
               <View>
       <Button style={DisputeStyle.buttonUpload} onPress={pickDocument}>
@@ -279,6 +341,41 @@ function PendingRecord({ navigation }) {
             </View>
           )}
         </View>
+        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
+          tiene disputa
+        </Button>
+        {
+          <ModalErrorDispute
+            showModal={showErrorDispute}
+            closeModal={closeModal}
+            handleOutsidePress={handleOutsidePress}
+            Title={t('pendingRecord.warningTitle')}
+            message={t('pendingRecord.warningFirstPart')}
+            messagep2={t('pendingRecord.warningSecondPart')}
+            messagep3={t('pendingRecord.warningThirdPart')}
+            message2={t('pendingRecord.modalButton')}
+            btnClose={t('pendingRecord.warningCancel')}
+          />
+        }
+        {/*
+          <ModalOpenDispute
+            showModal={showOpenDispute}
+            closeModal={closeModal}
+            handleOutsidePress={handleOutsidePress}
+            Title={t('disputeRecord.modalTittle')}
+            message={t('disputeRecord.modalText')}
+            message2={t('pendingRecord.modalButton')}
+          />
+        */}
+        {/* <ModalConfirmOrder
+          showModal={showConfirmOrder}
+          closeModal={closeModal}
+          handleOutsidePress={handleOutsidePress}
+          Title={t('pendingRecord.modalTittle')}
+          Title2="Grownet"
+          message={t('pendingRecord.modalText')}
+          message2={t('pendingRecord.modalButton')}
+        />*/}
       </ScrollView>
     </SafeAreaView>
   )
