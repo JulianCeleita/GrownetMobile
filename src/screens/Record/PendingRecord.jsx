@@ -21,8 +21,7 @@ function PendingRecord({ navigation }) {
   const { t } = useTranslation()
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
-  const { selectedPendingOrder } = useRecordStore()
-  const [detailsToShow, setDetailsToShow] = useState({})
+  const { selectedPendingOrder, detailsToShow, setDetailsToShow } = useRecordStore()
 
   console.log('ORDER', detailsToShow)
   console.log('SELECTED ORDER', selectedPendingOrder)

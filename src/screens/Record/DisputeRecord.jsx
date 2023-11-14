@@ -10,22 +10,17 @@ import useRecordStore from '../../store/useRecordStore'
 import axios from 'axios'
 
 function DisputeRecord() {
-  const [activeTab, setActiveTab] = useState('1')
   const { t } = useTranslation()
-  const [description, setDescription] = useState('')
-  const [quantityDispute, setQuantityDispute] = useState('')
   const [motive, setMotive] = useState('1')
+  const [quantityDispute, setQuantityDispute] = useState('')
   const { selectedPendingOrder } = useRecordStore()
   const [solutionSelected, setSolutionSelected] = useState('1')
   console.log("SELECTED OPTION", solutionSelected)
+  console.log("SELECTED MOTIVE", motive)
+  console.log("SELECTED QUANTITY", quantityDispute)
+  console.log("SELECTED ORDER", selectedPendingOrder)
 
-  const resetFormData = () => {
-    setDescription('')
-    setQuantityDispute('')
-  }
-
-  const handleQuantityChange = (e) => {
-    const inputValue = e.target.value;
+  const handleQuantityChange = (inputValue) => {
     const re = /^[0-9\b]+$/;
     if (inputValue === "" || re.test(inputValue)) {
       setQuantityDispute(inputValue);
@@ -43,12 +38,12 @@ function DisputeRecord() {
     const formData = new FormData();
 
     const disputeBody = {
-      order: selectedPendingOrder,
-      motive: motive,
-      id_solutionsDisputes: solutionSelected,
+      order: selectedPendingOrder, //ya
+      motive: motive, //ya
+      id_solutionsDisputes: solutionSelected, //ya
       product_id: id,
-      description: description,
-      quantity: quantityDispute,
+      description: "", //ya
+      quantity: quantityDispute, 
     };
     for (let key in disputeBody) {
       if (disputeBody.hasOwnProperty(key)) {
@@ -73,7 +68,7 @@ function DisputeRecord() {
 
 
   const renderContent = () => {
-    if (activeTab === '1') {
+    if (motive === '1') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -83,6 +78,9 @@ function DisputeRecord() {
             <TextInput
               style={DisputeStyle.input}
               placeholder="Total received"
+              value={quantityDispute}
+              onChangeText={handleQuantityChange}
+              keyboardType='numeric'
               required
             />            
           </View>
@@ -114,7 +112,7 @@ function DisputeRecord() {
           </View>
         </View>
       )
-    } else if (activeTab === '2') {
+    } else if (motive === '2') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -124,6 +122,9 @@ function DisputeRecord() {
             <TextInput
               style={DisputeStyle.input}
               placeholder="Total defective"
+              value={quantityDispute}
+              onChangeText={handleQuantityChange}
+              keyboardType='numeric'
               required
             />
           </View>
@@ -177,18 +178,18 @@ function DisputeRecord() {
         <View style={DisputeStyle.dispute}>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardTabs]}>
             <Button
-              mode={activeTab === '1' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('1')}
-              style={activeTab === '1' ? activeButtonColor : null}
+              mode={motive === '1' ? 'contained' : 'text'}
+              onPress={() => setMotive('1')}
+              style={motive === '1' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.wrongQuantity')}
               </Text>
             </Button>
             <Button
-              mode={activeTab === '2' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('2')}
-              style={activeTab === '2' ? activeButtonColor : null}
+              mode={motive === '2' ? 'contained' : 'text'}
+              onPress={() => setMotive('2')}
+              style={motive === '2' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.defective')}
