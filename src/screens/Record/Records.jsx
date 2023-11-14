@@ -163,6 +163,7 @@ const Records = ({ navigation }) => {
                   },
                   RecordStyle.btnTab,
                 ]}
+                onPress={switchTab}
               >
                 <Text
                   style={{

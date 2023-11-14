@@ -23,12 +23,14 @@ export const ProductsStyle = StyleSheet.create({
     flex: 1,
     borderRadius: 51,
     paddingLeft: 20,
-    fontSize: 20,
+    fontSize: 16,
+    color: '#04444f',
+    fontFamily: 'PoppinsRegular',
     backgroundColor: '#f2f2f2',
   },
   iconSearch: {
     position: 'absolute',
-    right: 30,
+    right: 20,
     top: 15,
   },
   // PRODUCT CARD

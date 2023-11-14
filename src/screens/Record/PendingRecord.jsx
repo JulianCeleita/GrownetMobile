@@ -198,7 +198,9 @@ function PendingRecord() {
                   {detailsToShow.products?.map((product) => (
                     <View>
                       <View style={PastStyle.products}>
-                        <Text style={PastStyle.subtittle}>{product.name}</Text>
+                        <Text style={[PastStyle.subtittle, { width: '70%' }]}>
+                          {product.name}
+                        </Text>
                         <Text style={PastStyle.subtittle}>
                           £{product.price}
                         </Text>

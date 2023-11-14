@@ -59,7 +59,7 @@ const HeaderLeft = () => {
         name="arrow-left"
         size={24}
         color="#04444F"
-        style={{ position: 'relative' }}
+        style={{ position: 'relative', width: 20 }}
       />
     </TouchableOpacity>
   )
