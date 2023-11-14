@@ -25,6 +25,7 @@ export const selectedStorageOrder =
 
 // FAVORITES
 export const addFavorites = process.env.EXPO_PUBLIC_ADD_FAVORITES
+export const favoritesBySupplier = process.env.EXPO_PUBLIC_FAVORITES_BY_SUPPLIER
 
 // DISPUTES
 export const createDisputeOrder = process.env.EXPO_PUBLIC_CREATE_DISPUTE_ORDER

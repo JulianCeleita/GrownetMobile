@@ -98,7 +98,7 @@ export default function Products() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (articlesToPay && articlesToPay.length > 0) {
+      if (articlesToPay.length > 0) {
         setArticles(articlesToPay)
         setProducts(articlesToPay)
         setIsLoading(false)
@@ -134,18 +134,9 @@ export default function Products() {
 
   const fetchProductsByCategory = async (categoryId) => {
     if (categoryId === 'All') {
-      if (hasMore && !isFetchingMore) {
-        setIsFetchingMore(true)
-        try {
-          await fetchProducts(currentPage)
-          setIsFetchingMore(false)
-          setIsLoading(false)
-        } catch (error) {
-          console.error('Error al cargar más productos:', error)
-          setIsFetchingMore(false)
-          setIsLoading(false)
-        }
-      }
+      await fetchProducts(currentPage)
+      console.log('entro aqui')
+
       return
     }
     const requestBody = {
@@ -287,7 +278,8 @@ export default function Products() {
         />
       )}
       <SafeAreaView style={ProductsStyle.containerCards}>
-        <ScrollView onScroll={handleScroll} onMomentumScrollEnd={handleScroll}>
+        {/* <ScrollView onScroll={handleScroll} onMomentumScrollEnd={handleScroll}> */}
+        <ScrollView>
           {showSearchResults ? (
             <ProductsFind
               onAmountChange={handleAmountChange}
@@ -317,14 +309,15 @@ export default function Products() {
                         productData={article}
                         onAmountChange={handleAmountChange}
                         onUomChange={handleUomChange}
-                        fetchFavorites={fetchProducts}
+                        fetchProducts={fetchProducts}
+                        currentPage={currentPage}
                       />
                     ))}
                 </>
               )}
             </>
           )}
-          {isFetchingMore && (
+          {/* {isFetchingMore && (
             <View style={styles.loadingMore}>
               <ActivityIndicator
                 animating={isLoading}
@@ -333,7 +326,7 @@ export default function Products() {
                 style={isLoading ? styles.loading : styles.hidden}
               />
             </View>
-          )}
+          )} */}
           <View style={{ height: 220 }} />
         </ScrollView>
       </SafeAreaView>

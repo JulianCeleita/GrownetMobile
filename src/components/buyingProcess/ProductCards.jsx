@@ -14,8 +14,10 @@ const ProductCards = ({
   productData,
   onAmountChange,
   onUomChange,
-  fetchFavorites,
   opacity,
+  reloadFavorites,
+  fetchProducts,
+  currentPage,
 }) => {
   const { id, name, image, prices, uomToPay, active } = productData
 
@@ -66,7 +68,12 @@ const ProductCards = ({
 
       console.log('Toggle favorite response:', response.data)
 
-      await fetchFavorites()
+      if (opacity) {
+        await reloadFavorites()
+      } else {
+        await fetchProducts(currentPage)
+        console.log('currentPage:', currentPage)
+      }
     } catch (error) {
       setProductState((prevState) => ({
         ...prevState,
@@ -78,13 +85,15 @@ const ProductCards = ({
       console.error('Error al gestionar el favorito:', error)
     }
   }, [
-    fetchFavorites,
     productData,
     productState.isFavorite,
     productState.isFavoritePending,
     selectedRestaurant.accountNumber,
     selectedSupplier.id,
     token,
+    reloadFavorites,
+    fetchProducts,
+    currentPage,
   ])
 
   const handleUomToPayChange = useCallback(
