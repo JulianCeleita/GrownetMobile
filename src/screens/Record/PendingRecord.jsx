@@ -37,6 +37,8 @@ function PendingRecord() {
   const [textColor, setTextColor] = useState('#a4a4a4')
   const [productColors, setProductColors] = useState({})
   const [activeTab, setActiveTab] = useState('reception')
+  const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const [showConfirmOrder, setShowConfirmOder] = useState(false)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -119,20 +121,18 @@ function PendingRecord() {
       })
       .then((response) => {
         console.log(response.data)
-        navigation.navigate('record')
+        setShowConfirmOder(true)
       })
       .catch((error) => {
         console.log('Error al cerrar la orden', error)
       })
   }
-  const [showErrorDispute, setShowErrorDispute] = useState(false)
-  const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const closeModal = () => {
     setShowConfirmOder(false)
     setShowErrorDispute(false)
+    navigation.goBack()
   }
   const openModal = () => {
-    setShowConfirmOder(true)
     setShowErrorDispute(true)
   }
   const handleOutsidePress = () => {
@@ -366,16 +366,14 @@ function PendingRecord() {
             btnClose={t('pendingRecord.warningCancel')}
           />
         }
-        
-        {/* <ModalConfirmOrder
+        <ModalConfirmOrder
           showModal={showConfirmOrder}
           closeModal={closeModal}
-          handleOutsidePress={handleOutsidePress}
           Title={t('pendingRecord.modalTittle')}
           Title2="Grownet"
           message={t('pendingRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
-        />*/}
+        />
       </ScrollView>
     </SafeAreaView>
   )
