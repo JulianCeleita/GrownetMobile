@@ -15,6 +15,8 @@ import useTokenStore from '../../store/useTokenStore'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import { FontAwesome } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
+
 const Records = ({ navigation }) => {
   const { t } = useTranslation()
   const { token } = useTokenStore()
@@ -35,7 +37,8 @@ const Records = ({ navigation }) => {
       prevTab === 'pastRecord' ? 'pendingRecord' : 'pastRecord',
     )
   }
-  useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
     const fetchData = async () => {
       if (selectedRestaurant === null) {
         navigation.navigate('restaurants')
@@ -66,6 +69,7 @@ const Records = ({ navigation }) => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiOrders])
+  )
   const handleClosedOrderSelect = (orderReference) => {
     setSelectedPendingOrder(orderReference)
     navigation.navigate('pastRecord')

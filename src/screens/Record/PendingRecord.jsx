@@ -130,7 +130,7 @@ function PendingRecord() {
   const closeModal = () => {
     setShowConfirmOder(false)
     setShowErrorDispute(false)
-    navigation.goBack()
+    navigation.navigate('Records', { screen: 'recordsStack' })
   }
   const openModal = () => {
     setShowErrorDispute(true)
