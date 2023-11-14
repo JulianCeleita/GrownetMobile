@@ -13,23 +13,32 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { useTranslation } from 'react-i18next'
 import { closeSelectedOrder } from '../../config/urls.config'
-import CheckList from '../../components/CheckList'
 import ModalAlert, {
   ModalConfirmOrder,
   ModalErrorDispute,
   ModalOpenDispute,
 } from '../../components/ModalAlert'
-import UploadFile from '../../components/UploadFile'
+import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import * as DocumentPicker from 'expo-document-picker'
+
 function PendingRecord() {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
-  const { selectedPendingOrder } = useRecordStore()
-  const [detailsToShow, setDetailsToShow] = useState({})
+  const {
+    selectedPendingOrder,
+    detailsToShow,
+    setDetailsToShow,
+    selectedProduct,
+    setSelectedProduct,
+  } = useRecordStore()
   const [textColor, setTextColor] = useState('#a4a4a4')
   const [productColors, setProductColors] = useState({})
+  const [activeTab, setActiveTab] = useState('reception')
+  const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const [showConfirmOrder, setShowConfirmOder] = useState(false)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -42,20 +51,19 @@ function PendingRecord() {
   }
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Restablecer los colores de los productos cuando la pantalla vuelve a estar enfocada
       setProductColors({})
     })
 
     return unsubscribe
   }, [navigation])
+
   console.log('ORDER', detailsToShow)
   console.log('SELECTED ORDER', selectedPendingOrder)
+  console.log('SELECTED PRODUCT', selectedProduct)
 
   const onToggleCheckbox = () => {
     setChecked(!checked)
   }
-
-  const [activeTab, setActiveTab] = useState('reception')
 
   const switchTab = () => {
     setActiveTab((prevTab) =>
@@ -79,6 +87,25 @@ function PendingRecord() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(product)
+  }
+
+  // SUBIR EVIDENCIA
+  const pickDocument = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: '*/*',
+    })
+
+    if (result.type === 'success') {
+      console.log('URI:', result.uri)
+      console.log('Nombre:', result.name)
+      console.log('Tamaño:', result.size)
+    } else {
+      console.log('El usuario canceló la selección de archivos')
+    }
+  }
+
   // CERRAR LA ORDEN SELECCIONADA
   const onCloseOrder = (e) => {
     e.preventDefault()
@@ -94,23 +121,18 @@ function PendingRecord() {
       })
       .then((response) => {
         console.log(response.data)
-        navigation.navigate('record')
+        setShowConfirmOder(true)
       })
       .catch((error) => {
         console.log('Error al cerrar la orden', error)
       })
   }
-  const [showErrorDispute, setShowErrorDispute] = useState(false)
-  const [showOpenDispute, setShowOpenDispute] = useState(false)
-  const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const closeModal = () => {
-    setShowOpenDispute(false)
     setShowConfirmOder(false)
     setShowErrorDispute(false)
+    navigation.goBack()
   }
   const openModal = () => {
-    setShowOpenDispute(true)
-    setShowConfirmOder(true)
     setShowErrorDispute(true)
   }
   const handleOutsidePress = () => {
@@ -272,7 +294,10 @@ function PendingRecord() {
                           PendingStyle.p,
                           { color: productColors[product.id] || textColor },
                         ]}
-                        onPress={() => disputePress(product.id)}
+                        onPress={() => {
+                          handleSelectProduct(product)
+                          disputePress(product.id)
+                        }}
                       >
                         {t('pendingRecord.openDispute')}
                       </Text>
@@ -294,8 +319,27 @@ function PendingRecord() {
                   </View>
                 </TouchableOpacity>
               ))}
-              <View style={[DisputeStyle.cardForm, { marginTop: 0 }]}>
-                <UploadFile />
+              <View>
+                <Button
+                  style={DisputeStyle.buttonUpload}
+                  onPress={pickDocument}
+                >
+                  <Feather name="upload" size={18} color="#04444F" />
+                  <Text style={DisputeStyle.textBtnUpload}>
+                    {' '}
+                    {t('uploadFile.customUpload')}
+                  </Text>
+                </Button>
+                <Button
+                  style={DisputeStyle.buttonUpload}
+                  onPress={pickDocument}
+                >
+                  <Feather name="send" size={18} color="#04444F" />
+                  <Text style={DisputeStyle.textBtnUpload}>
+                    {' '}
+                    {t('uploadFile.submitEvidence')}
+                  </Text>
+                </Button>
               </View>
               <Button
                 style={GlobalStyles.btnPrimary}
@@ -324,25 +368,14 @@ function PendingRecord() {
             btnClose={t('pendingRecord.warningCancel')}
           />
         }
-        {/*
-          <ModalOpenDispute
-            showModal={showOpenDispute}
-            closeModal={closeModal}
-            handleOutsidePress={handleOutsidePress}
-            Title={t('disputeRecord.modalTittle')}
-            message={t('disputeRecord.modalText')}
-            message2={t('pendingRecord.modalButton')}
-          />
-        */}
-        {/* <ModalConfirmOrder
+        <ModalConfirmOrder
           showModal={showConfirmOrder}
           closeModal={closeModal}
-          handleOutsidePress={handleOutsidePress}
           Title={t('pendingRecord.modalTittle')}
           Title2="Grownet"
           message={t('pendingRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
-        />*/}
+        />
       </ScrollView>
     </SafeAreaView>
   )

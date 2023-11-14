@@ -1,32 +1,29 @@
+import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Text, View, TextInput, ScrollView } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, Text, TextInput, View } from 'react-native'
 import { Button, Checkbox } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { MaterialIcons } from '@expo/vector-icons'
+import { ModalOpenDispute } from '../../components/ModalAlert'
+import { createDisputeOrder } from '../../config/urls.config'
+import useRecordStore from '../../store/useRecordStore'
+import useTokenStore from '../../store/useTokenStore'
 import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { useTranslation } from 'react-i18next'
-import UploadFile from '../../components/UploadFile'
-import useRecordStore from '../../store/useRecordStore'
-import axios from 'axios'
 
 function DisputeRecord() {
-  const [activeTab, setActiveTab] = useState('1')
   const { t } = useTranslation()
-  const [description, setDescription] = useState('')
-  const [quantityDispute, setQuantityDispute] = useState('')
+  const { token } = useTokenStore()
   const [motive, setMotive] = useState('1')
-  const { selectedPendingOrder } = useRecordStore()
+  const [quantityDispute, setQuantityDispute] = useState('')
+  const { selectedPendingOrder, selectedProduct } = useRecordStore()
   const [solutionSelected, setSolutionSelected] = useState('1')
-  console.log('SELECTED OPTION', solutionSelected)
+  const [showOpenDispute, setShowOpenDispute] = useState(false)
+  const navigation = useNavigation()
 
-  const resetFormData = () => {
-    setDescription('')
-    setQuantityDispute('')
-  }
-
-  const handleQuantityChange = (e) => {
-    const inputValue = e.target.value
+  const handleQuantityChange = (inputValue) => {
     const re = /^[0-9\b]+$/
     if (inputValue === '' || re.test(inputValue)) {
       setQuantityDispute(inputValue)
@@ -37,18 +34,25 @@ function DisputeRecord() {
     setSolutionSelected(value)
   }
 
+  const closeModal = () => {
+    setShowOpenDispute(false)
+    navigation.goBack()
+  }
+
   // ENVIAR LA DISPUTA
   const handleSubmit = (e) => {
     e.preventDefault()
-    setShow(true)
+    if (!quantityDispute) {
+      alert('Please fill in the quantity')
+      return
+    }
     const formData = new FormData()
-
     const disputeBody = {
       order: selectedPendingOrder,
       motive: motive,
       id_solutionsDisputes: solutionSelected,
-      product_id: id,
-      description: description,
+      product_id: selectedProduct.id,
+      description: '',
       quantity: quantityDispute,
     }
     for (let key in disputeBody) {
@@ -56,7 +60,6 @@ function DisputeRecord() {
         formData.append(key, disputeBody[key])
       }
     }
-
     axios
       .post(createDisputeOrder, formData, {
         headers: {
@@ -66,6 +69,7 @@ function DisputeRecord() {
       })
       .then((response) => {
         console.log(response.data)
+        setShowOpenDispute(true)
       })
       .catch((error) => {
         console.error('Error al crear la disputa:', error)
@@ -73,7 +77,7 @@ function DisputeRecord() {
   }
 
   const renderContent = () => {
-    if (activeTab === '1') {
+    if (motive === '1') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -83,6 +87,9 @@ function DisputeRecord() {
             <TextInput
               style={DisputeStyle.input}
               placeholder="Total received"
+              value={quantityDispute}
+              onChangeText={handleQuantityChange}
+              keyboardType="numeric"
               required
             />
           </View>
@@ -110,7 +117,7 @@ function DisputeRecord() {
           </View>
         </View>
       )
-    } else if (activeTab === '2') {
+    } else if (motive === '2') {
       return (
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
@@ -120,6 +127,9 @@ function DisputeRecord() {
             <TextInput
               style={DisputeStyle.input}
               placeholder="Total defective"
+              value={quantityDispute}
+              onChangeText={handleQuantityChange}
+              keyboardType="numeric"
               required
             />
           </View>
@@ -166,25 +176,27 @@ function DisputeRecord() {
         <View style={DisputeStyle.cardTittle}>
           <MaterialIcons name="error-outline" size={60} color="#62c471" />
           <View style={{ marginLeft: 15 }}>
-            <Text style={DisputeStyle.title}>Broccoli</Text>
-            <Text style={DisputeStyle.quantity}>1 Box</Text>
+            <Text style={DisputeStyle.title}>{selectedProduct.name}</Text>
+            <Text style={DisputeStyle.quantity}>
+              {selectedProduct.quantity} {selectedProduct.uom}
+            </Text>
           </View>
         </View>
         <View style={DisputeStyle.dispute}>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardTabs]}>
             <Button
-              mode={activeTab === '1' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('1')}
-              style={activeTab === '1' ? activeButtonColor : null}
+              mode={motive === '1' ? 'contained' : 'text'}
+              onPress={() => setMotive('1')}
+              style={motive === '1' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.wrongQuantity')}
               </Text>
             </Button>
             <Button
-              mode={activeTab === '2' ? 'contained' : 'text'}
-              onPress={() => setActiveTab('2')}
-              style={activeTab === '2' ? activeButtonColor : null}
+              mode={motive === '2' ? 'contained' : 'text'}
+              onPress={() => setMotive('2')}
+              style={motive === '2' ? activeButtonColor : null}
             >
               <Text style={DisputeStyle.text}>
                 {t('disputeRecord.defective')}
@@ -192,13 +204,23 @@ function DisputeRecord() {
             </Button>
           </View>
           {renderContent()}
-          <Button style={[GlobalStyles.btnPrimary, DisputeStyle.space]}>
+          <Button
+            onPress={handleSubmit}
+            style={[GlobalStyles.btnPrimary, DisputeStyle.space]}
+          >
             <Text style={GlobalStyles.textBtnSecundary}>
               {t('disputeRecord.send')}
             </Text>
           </Button>
           <View style={DisputeStyle.space} />
         </View>
+        <ModalOpenDispute
+          showModal={showOpenDispute}
+          closeModal={closeModal}
+          Title={t('disputeRecord.modalTittle')}
+          message={t('disputeRecord.modalText')}
+          message2={t('pendingRecord.modalButton')}
+        />
       </ScrollView>
     </SafeAreaView>
   )

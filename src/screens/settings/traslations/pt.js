@@ -103,8 +103,8 @@ const ptTranslations = {
     modalButton: 'Continuar',
   },
   uploadFile: {
-    attachPhoto: 'Anexar foto:',
-    customUpload: 'Upload personalizado',
+    customUpload: 'Adicionar evidências',
+    submitEvidence: "Enviar evidência",
   },
   pendingRecord: {
     products: 'Produtos',

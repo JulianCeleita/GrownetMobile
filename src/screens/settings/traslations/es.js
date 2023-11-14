@@ -104,8 +104,8 @@ const esTranslations = {
     modalButton: 'Continuar',
   },
   uploadFile: {
-    attachPhoto: 'Adjuntar foto:',
-    customUpload: 'Subida personalizada',
+    customUpload: 'Agregar evidencia',
+    submitEvidence: "Enviar evidencia",
   },
   pendingRecord: {
     products: 'Productos',
