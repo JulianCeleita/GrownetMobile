@@ -86,6 +86,7 @@ const enTranslations = {
     noOrders: 'No orders yet',
     bttnNoOrders: 'Order now',
     noOrdersDate: 'No orders on this date',
+    openDispute: 'Open dispute',
   },
   disputeRecord: {
     quantityDelivered: 'Enter quantity delivered:',
@@ -104,7 +105,7 @@ const enTranslations = {
   },
   uploadFile: {
     customUpload: 'Add evidence',
-    submitEvidence: "Submit evidence",
+    submitEvidence: 'Submit evidence',
   },
   pendingRecord: {
     products: 'Products',

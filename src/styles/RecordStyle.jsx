@@ -118,4 +118,15 @@ export const RecordStyle = StyleSheet.create({
   btnCloseFilter: {
     flexDirection: 'row',
   },
+  /*Alert open dispute*/
+  openDispute: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+  textDispute: {
+    color: '#ee6055',
+    fontFamily: 'PoppinsRegular',
+    fontSize: 14,
+    marginLeft: 8,
+  },
 })

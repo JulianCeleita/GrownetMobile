@@ -86,6 +86,7 @@ const ptTranslations = {
     noOrders: 'Ainda não há pedidos',
     bttnNoOrders: 'Faça um pedido agora',
     noOrdersDate: 'Sem pedidos nesta data',
+    openDispute: 'Abrir disputa',
   },
   disputeRecord: {
     quantityDelivered: 'Digite a quantidade entregue:',
@@ -104,7 +105,7 @@ const ptTranslations = {
   },
   uploadFile: {
     customUpload: 'Adicionar evidências',
-    submitEvidence: "Enviar evidência",
+    submitEvidence: 'Enviar evidência',
   },
   pendingRecord: {
     products: 'Produtos',

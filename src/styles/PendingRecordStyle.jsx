@@ -49,9 +49,11 @@ export const DisputeStyle = StyleSheet.create({
   },
   cardTittle: {
     flexDirection: 'row',
+    marginBottom: 10,
     alignItems: 'center',
-    marginBottom: 20,
+    textAlign: 'center',
     justifyContent: 'center',
+    marginHorizontal: 65,
   },
   optionForm: {
     flexDirection: 'row',

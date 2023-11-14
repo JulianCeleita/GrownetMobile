@@ -1,4 +1,9 @@
-import { Feather, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import {
+  Feather,
+  FontAwesome,
+  MaterialIcons,
+  AntDesign,
+} from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useFocusEffect } from '@react-navigation/native'
 import { isSameDay, parseISO } from 'date-fns'
@@ -380,6 +385,18 @@ const Records = ({ navigation }) => {
                                 {t('record.viewDetails')}
                               </Text>
                             </Button>
+                            {order.id_stateOrders === 6 && (
+                              <View style={RecordStyle.openDispute}>
+                                <AntDesign
+                                  name="warning"
+                                  size={20}
+                                  color="#ee6055"
+                                />
+                                <Text style={RecordStyle.textDispute}>
+                                  {t('record.openDispute')}
+                                </Text>
+                              </View>
+                            )}
                           </View>
                         </View>
                       ))}

@@ -175,7 +175,7 @@ function DisputeRecord() {
       <ScrollView>
         <View style={DisputeStyle.cardTittle}>
           <MaterialIcons name="error-outline" size={60} color="#62c471" />
-          <View style={{ marginLeft: 15 }}>
+          <View style={{ paddingLeft: 10 }}>
             <Text style={DisputeStyle.title}>{selectedProduct.name}</Text>
             <Text style={DisputeStyle.quantity}>
               {selectedProduct.quantity} {selectedProduct.uom}
