@@ -1,13 +1,13 @@
+import { MaterialIcons } from '@expo/vector-icons'
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Text, View, TextInput, ScrollView } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, Text, TextInput, View } from 'react-native'
 import { Button, Checkbox } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { MaterialIcons } from '@expo/vector-icons'
+import useRecordStore from '../../store/useRecordStore'
 import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { useTranslation } from 'react-i18next'
-import useRecordStore from '../../store/useRecordStore'
-import axios from 'axios'
 
 function DisputeRecord() {
   const { t } = useTranslation()
@@ -15,9 +15,6 @@ function DisputeRecord() {
   const [quantityDispute, setQuantityDispute] = useState('')
   const { selectedPendingOrder } = useRecordStore()
   const [solutionSelected, setSolutionSelected] = useState('1')
-  console.log("SELECTED OPTION", solutionSelected)
-  console.log("SELECTED MOTIVE", motive)
-  console.log("SELECTED QUANTITY", quantityDispute)
   console.log("SELECTED ORDER", selectedPendingOrder)
 
   const handleQuantityChange = (inputValue) => {
@@ -65,7 +62,6 @@ function DisputeRecord() {
         console.error("Error al crear la disputa:", error);
       });
   };
-
 
   const renderContent = () => {
     if (motive === '1') {

@@ -22,16 +22,15 @@ function PendingRecord({ navigation }) {
   const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
   const { selectedPendingOrder, detailsToShow, setDetailsToShow } = useRecordStore()
-
-  console.log('ORDER', detailsToShow)
-  console.log('SELECTED ORDER', selectedPendingOrder)
-
-  const onToggleCheckbox = () => {
-    setChecked(!checked)
-  }
-
   const [activeTab, setActiveTab] = useState('reception')
-
+  
+    console.log('ORDER', detailsToShow)
+    console.log('SELECTED ORDER', selectedPendingOrder)
+  
+    const onToggleCheckbox = () => {
+      setChecked(!checked)
+    }
+    
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'productsRecord' ? 'reception' : 'productsRecord',
@@ -53,6 +52,11 @@ function PendingRecord({ navigation }) {
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(product);
+  };
+  
 
   // SUBIR EVIDENCIA
   const pickDocument = async () => {
