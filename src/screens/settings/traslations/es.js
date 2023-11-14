@@ -99,6 +99,9 @@ const esTranslations = {
     other: 'Otro',
     leaveYourCommentsHere: 'Deje sus comentarios aquí:',
     send: 'Enviar',
+    modalTittle: 'Disputa creada exitosamente',
+    modalText: 'Nuestro equipo verificará la información',
+    modalButton: 'Continuar',
   },
   uploadFile: {
     attachPhoto: 'Adjuntar foto:',
@@ -113,8 +116,14 @@ const esTranslations = {
     tax: 'Impuesto',
     currentTotal: 'Valor actual',
     checkYourProducts: 'Verifica tus productos',
-    openDispute: 'Abrir disputa',
+    openDispute: 'Disputa',
     confirmOrder: 'Confirmar pedido',
+    modalTittle: 'Gracias por usar',
+    modalText:
+      "Para ver tus pedidos confirmados, ve a 'Pedidos anteriores' en 'Historial'.",
+    modalButton: 'Continuar',
+    modalEvidenceText:
+      'La disputa será revisada por uno de nuestros agentes y te responderemos lo antes posible.',
     warningTitle: 'Tienes una disputa abierta',
     warningFirstPart: 'Confirmando la orden ',
     warningSecondPart: 'se cerrará la disputa ',

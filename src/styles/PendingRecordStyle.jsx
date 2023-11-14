@@ -21,14 +21,14 @@ export const PendingStyle = StyleSheet.create({
     marginBottom: 20,
   },
   text: {
-    fontSize: 18,
+    fontSize: 17,
     fontFamily: 'PoppinsMedium',
     color: '#04444f',
   },
   p: {
     fontFamily: 'PoppinsRegular',
     fontSize: 17,
-    color: '#868686',
+    color: '#A4A4A4',
   },
   dispute: {
     paddingLeft: 30,
@@ -94,7 +94,7 @@ export const DisputeStyle = StyleSheet.create({
     padding: 10,
     paddingLeft: 25,
     textAlign: 'left',
-    marginTop: 15,
+    marginTop: 10,
   },
   input: {
     backgroundColor: '#f2f2f2',
