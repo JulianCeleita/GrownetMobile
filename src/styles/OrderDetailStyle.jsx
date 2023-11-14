@@ -17,6 +17,7 @@ export const OrderDetailStyle = StyleSheet.create({
     borderBottomColor: '#04444F',
     borderBottomWidth: 1,
     borderStyle: 'dashed',
+    color: '#04444f',
   },
   text: {
     fontSize: 18,
