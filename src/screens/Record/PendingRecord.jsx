@@ -1,31 +1,28 @@
+import { Feather } from '@expo/vector-icons'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import * as DocumentPicker from 'expo-document-picker'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { Button, Checkbox } from 'react-native-paper'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import {
+  ModalConfirmOrder,
+  ModalErrorDispute
+} from '../../components/ModalAlert'
+import { closeSelectedOrder, selectedStorageOrder } from '../../config/urls.config'
+import useRecordStore from '../../store/useRecordStore'
+import useTokenStore from '../../store/useTokenStore'
+import { PastStyle } from '../../styles/PastRecordStyle'
 import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import useTokenStore from '../../store/useTokenStore'
-import useRecordStore from '../../store/useRecordStore'
-import { selectedStorageOrder } from '../../config/urls.config'
-import { ScrollView } from 'react-native-gesture-handler'
-import { PastStyle } from '../../styles/PastRecordStyle'
-import { useTranslation } from 'react-i18next'
-import { closeSelectedOrder } from '../../config/urls.config'
-import ModalAlert, {
-  ModalConfirmOrder,
-  ModalErrorDispute,
-  ModalOpenDispute,
-} from '../../components/ModalAlert'
-import { Feather } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
-import * as DocumentPicker from 'expo-document-picker'
 
 function PendingRecord() {
   const navigation = useNavigation()
   const { t } = useTranslation()
-  const [checked, setChecked] = useState(false)
   const { token } = useTokenStore()
   const {
     selectedPendingOrder,
@@ -39,6 +36,11 @@ function PendingRecord() {
   const [activeTab, setActiveTab] = useState('reception')
   const [showErrorDispute, setShowErrorDispute] = useState(false)
   const [showConfirmOrder, setShowConfirmOder] = useState(false)
+  const [checkProduct, setCheckProduct] = useState({})
+
+  console.log('Detalles para mooostrarrr', detailsToShow)
+  console.log('ESTADO DE LA ORDEN AQUI:', detailsToShow.id_stateOrders)
+  console.log('NUMERO DE REFERENCIA:', detailsToShow.reference)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -53,7 +55,6 @@ function PendingRecord() {
     const unsubscribe = navigation.addListener('focus', () => {
       setProductColors({})
     })
-
     return unsubscribe
   }, [navigation])
 
@@ -61,31 +62,29 @@ function PendingRecord() {
   console.log('SELECTED ORDER', selectedPendingOrder)
   console.log('SELECTED PRODUCT', selectedProduct)
 
-  const onToggleCheckbox = () => {
-    setChecked(!checked)
-  }
-
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'productsRecord' ? 'reception' : 'productsRecord',
     )
   }
 
-  useEffect(() => {
-    axios
-      .get(`${selectedStorageOrder}/${selectedPendingOrder}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setDetailsToShow(response.data.order)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${selectedStorageOrder}/${selectedPendingOrder}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setDetailsToShow(response.data.order)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  )
 
   const handleSelectProduct = (product) => {
     setSelectedProduct(product)
@@ -105,10 +104,17 @@ function PendingRecord() {
       console.log('El usuario canceló la selección de archivos')
     }
   }
-
   // CERRAR LA ORDEN SELECCIONADA
-  const onCloseOrder = (e) => {
+  const onConfirmOrder = (e) => {
     e.preventDefault()
+    if (detailsToShow.id_stateOrders === 6) {
+      setShowErrorDispute(true)
+    } else {
+      onCloseOrder(e)
+    }
+  }
+
+  const onCloseOrder = () => {
     const bodyCloseOrder = {
       reference: selectedPendingOrder,
       state: 5,
@@ -121,6 +127,7 @@ function PendingRecord() {
       })
       .then((response) => {
         console.log(response.data)
+        setShowErrorDispute(false)
         setShowConfirmOder(true)
       })
       .catch((error) => {
@@ -128,18 +135,16 @@ function PendingRecord() {
       })
   }
   const closeModal = () => {
-    setShowConfirmOder(false)
-    setShowErrorDispute(false)
-    navigation.navigate('Records', { screen: 'recordsStack' })
-  }
-  const openModal = () => {
-    setShowErrorDispute(true)
+    if (showConfirmOrder === true) {
+      setShowConfirmOder(false)
+      navigation.navigate('Records', { screen: 'recordsStack' })
+    } else {
+      setShowErrorDispute(false)
+    }
   }
   const handleOutsidePress = () => {
     closeModal()
   }
-  const [checkProduct, setCheckProduct] = useState({})
-
   const handlePress = (productId) => {
     setCheckProduct((prevState) => ({
       ...prevState,
@@ -343,7 +348,7 @@ function PendingRecord() {
               </View>
               <Button
                 style={GlobalStyles.btnPrimary}
-                onPress={(e) => onCloseOrder(e)}
+                onPress={(e) => onConfirmOrder(e)}
               >
                 <Text style={GlobalStyles.textBtnSecundary}>
                   {t('pendingRecord.confirmOrder')}
@@ -352,22 +357,21 @@ function PendingRecord() {
             </View>
           )}
         </View>
-        <Button style={GlobalStyles.btnOutline} onPress={openModal}>
-          tiene disputa
-        </Button>
-        {
-          <ModalErrorDispute
-            showModal={showErrorDispute}
-            closeModal={closeModal}
-            handleOutsidePress={handleOutsidePress}
-            Title={t('pendingRecord.warningTitle')}
-            message={t('pendingRecord.warningFirstPart')}
-            messagep2={t('pendingRecord.warningSecondPart')}
-            messagep3={t('pendingRecord.warningThirdPart')}
-            message2={t('pendingRecord.modalButton')}
-            btnClose={t('pendingRecord.warningCancel')}
-          />
-        }
+        {/* MODAL DE DISPUTA ABIERTA */}
+        <ModalErrorDispute
+          showModal={showErrorDispute}
+          closeModal={closeModal}
+          onCloseOrder={onCloseOrder}
+          handleOutsidePress={handleOutsidePress}
+          Title={t('pendingRecord.warningTitle')}
+          message={t('pendingRecord.warningFirstPart')}
+          messagep2={t('pendingRecord.warningSecondPart')}
+          messagep3={t('pendingRecord.warningThirdPart')}
+          message2={t('pendingRecord.modalButton')}
+          btnClose={t('pendingRecord.warningCancel')}
+        />
+
+        {/* MODAL DE ORDEN CONFIRMADA */}
         <ModalConfirmOrder
           showModal={showConfirmOrder}
           closeModal={closeModal}

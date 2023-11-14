@@ -111,6 +111,7 @@ export const ModalErrorDispute = ({
   message = '',
   message2 = '',
   closeModal = () => {},
+  onCloseOrder = () => {},
   Title = '',
   showModal,
   btnClose,
@@ -137,7 +138,7 @@ export const ModalErrorDispute = ({
             </Text>
             <View style={[ModalStyle.buttons, { marginTop: 10 }]}>
               <TouchableOpacity
-                onPress={closeModal}
+                onPress={onCloseOrder}
                 style={[GlobalStyles.btnPrimary, ModalStyle.space]}
               >
                 <Text style={GlobalStyles.textBtnSecundary}>{message2}</Text>

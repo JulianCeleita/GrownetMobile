@@ -1,21 +1,20 @@
-import { Feather, MaterialIcons } from '@expo/vector-icons'
+import { Feather, FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import axios from '../../../axiosConfig'
+import { useFocusEffect } from '@react-navigation/native'
 import { isSameDay, parseISO } from 'date-fns'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import axios from '../../../axiosConfig'
 import { allStorageOrders } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { FontAwesome } from '@expo/vector-icons'
-import { useFocusEffect } from '@react-navigation/native'
 
 const Records = ({ navigation }) => {
   const { t } = useTranslation()
@@ -39,36 +38,35 @@ const Records = ({ navigation }) => {
   }
   useFocusEffect(
     React.useCallback(() => {
-    const fetchData = async () => {
-      if (selectedRestaurant === null) {
-        navigation.navigate('restaurants')
-        return
-      }
-      try {
-        const response = await axios.get(apiOrders, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      const fetchData = async () => {
+        if (selectedRestaurant === null) {
+          navigation.navigate('restaurants')
+          return
+        }
+        try {
+          const response = await axios.get(apiOrders, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
 
-        const closedOrders = response.data.orders.filter(
-          (order) => order.id_stateOrders === 5,
-        )
-        const pendingOrders = response.data.orders.filter(
-          (order) => order.id_stateOrders !== 5,
-        )
-        console.log('Closed orders:', closedOrders)
-        console.log('Pending orders:', pendingOrders)
-        setClosedOrders(closedOrders)
-        setPendingOrders(pendingOrders)
-      } catch (error) {
-        console.log('Error al llamar las ordenes', error)
+          const closedOrders = response.data.orders.filter(
+            (order) => order.id_stateOrders === 5,
+          )
+          const pendingOrders = response.data.orders.filter(
+            (order) => order.id_stateOrders !== 5,
+          )
+          console.log('Closed orders:', closedOrders)
+          console.log('Pending orders:', pendingOrders)
+          setClosedOrders(closedOrders)
+          setPendingOrders(pendingOrders)
+        } catch (error) {
+          console.log('Error al llamar las ordenes', error)
+        }
       }
-    }
-
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiOrders])
+      fetchData()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiOrders]),
   )
   const handleClosedOrderSelect = (orderReference) => {
     setSelectedPendingOrder(orderReference)
