@@ -62,40 +62,34 @@ function ProductsCategories({
 
   const renderItem = ({ item }) => {
     return (
-      <View
-        style={[
-          ProductsStyle.contenImage,
-          isCategoryActive(item) && ProductsStyle.activeCategory,
-        ]}
-      >
+      <View>
         {item === 'Favorites' && showFavorites ? (
-          <TouchableOpacity onPress={toggleShowFavorites}>
-            <Text>Volver</Text>
+          <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
+            <Text style={ProductsStyle.buttonCategory}>Volver</Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
-          <TouchableOpacity onPress={toggleShowFavorites}>
-            <Text>Favorites</Text>
+          <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
+            <Text style={ProductsStyle.buttonCategory}>Favorites</Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity
           key={item}
           onPress={() => filterCategory('All', item)}
+          activeOpacity={0.9}
         >
-          {item === 'All' && <Text>All</Text>}
+          {item === 'All' && (
+            <Text style={ProductsStyle.buttonCategory}>All</Text>
+          )}
         </TouchableOpacity>
         {categories?.map((categoryApi) => (
           <TouchableOpacity
             key={categoryApi.id}
             onPress={() => filterCategory(categoryApi.name, categoryApi.id)}
+            activeOpacity={0.9}
           >
             {item === categoryApi.name && (
               <>
-                <Text
-                  style={[
-                    ProductsStyle.text,
-                    isCategoryActive(item) && ProductsStyle.activeCategory,
-                  ]}
-                >
+                <Text style={ProductsStyle.buttonCategory}>
                   {categoryApi.name}
                 </Text>
               </>
@@ -113,7 +107,7 @@ function ProductsCategories({
       <LinearGradient
         colors={['rgba(255, 255, 255, 0)', 'white']}
         start={[0.5, 0.1]}
-        end={[0.5, 0.5]}
+        end={[0.5, 0.2]}
       >
         <Carousel
           data={updatedCategories}
