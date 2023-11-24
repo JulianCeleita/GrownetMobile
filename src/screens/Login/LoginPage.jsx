@@ -63,18 +63,11 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(validationApiUrl, state.form)
-      console.log('====================================')
-      console.log('respuesta axios:', response)
-      console.log('====================================')
       if (response.data.flag === 1) {
         navigation.navigate('otp', state.form)
-        // TODO QUITAR ESTE CONSOLE LOG CUANDO YA LLEGUEN LOS MENSAJES POR TWILIO
         console.log('Respuesta con CODIGO TWILIO:', response.data)
       } else {
         setShowModal(true)
-        console.log('====================================')
-        console.log('puusss')
-        console.log('====================================')
       }
     } catch (error) {
       console.log(error)

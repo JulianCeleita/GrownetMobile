@@ -54,7 +54,6 @@ const Otp = () => {
       if (response.data.flag === 1) {
         const token = response.data.token
         setToken(token)
-        console.log('token:', token)
       } else {
         setShowModal(true)
       }

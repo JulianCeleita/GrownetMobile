@@ -65,14 +65,10 @@ const ProductCards = ({
         ...prevState,
         isFavoritePending: false,
       }))
-
-      console.log('Toggle favorite response:', response.data)
-
       if (opacity) {
         await fetchFavorites()
       } else {
         await fetchProducts(currentPage)
-        console.log('currentPage:', currentPage)
       }
     } catch (error) {
       setProductState((prevState) => ({
@@ -98,7 +94,6 @@ const ProductCards = ({
 
   const handleUomToPayChange = useCallback(
     (event) => {
-      console.log('newUomToPay:', event)
       try {
         const { nameUoms } = event
         onUomChange(id, nameUoms)

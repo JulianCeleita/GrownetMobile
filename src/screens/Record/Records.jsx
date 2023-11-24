@@ -61,8 +61,6 @@ const Records = ({ navigation }) => {
           const pendingOrders = response.data.orders.filter(
             (order) => order.id_stateOrders !== 5,
           )
-          console.log('Closed orders:', closedOrders)
-          console.log('Pending orders:', pendingOrders)
           setClosedOrders(closedOrders)
           setPendingOrders(pendingOrders)
         } catch (error) {
@@ -101,7 +99,6 @@ const Records = ({ navigation }) => {
         setSelectedDate(selected)
         const formatted = selected.toDateString()
         setFormattedDate(formatted)
-        console.log('Fecha seleccionada:', selected)
       } else {
         setFormattedDate('All Orders')
       }

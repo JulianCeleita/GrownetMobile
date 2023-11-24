@@ -44,8 +44,7 @@ export default function Products() {
     if (loader === false) {
       try {
         setLoader(true)
-        console.log('EL LOADER SE ENCIENDE CON PAGINA NUMERO', page)
-        const requestBody = {
+         const requestBody = {
           id: selectedSupplier.id,
           country: countryCode,
           accountNumber: selectedRestaurant.accountNumber,
@@ -102,8 +101,7 @@ export default function Products() {
           }, 3000)
           return [...prevProducts, ...newProducts]
         })
-        console.log('EL LOADER SE APAGA DEBIDO A PETICIÓN EXITOSA', loader)
-      } catch (error) {
+        } catch (error) {
         console.error('Error al obtener los productos del proveedor:', error)
       }
     }
@@ -117,7 +115,6 @@ export default function Products() {
   // PAGINACION
 
   const handleScroll = (event) => {
-    console.log('REVISANDO SI ESTA SELECCIONADO EL ALL')
     if (selectedCategory === 'All' && loader === false) {
       const { contentOffset, contentSize, layoutMeasurement } =
         event.nativeEvent
@@ -127,13 +124,8 @@ export default function Products() {
       const screenHeight = layoutMeasurement.height
 
       if (offsetY >= contentHeight - screenHeight - 20) {
-        console.log('ACTIVANDO PAGINADO...')
         setCurrentPage((prevPage) => prevPage + 1)
       }
-      console.log(
-        'ALL SELECCIONADO, PAGE DENTRO DEL HANDLE SCROLL:',
-        currentPage,
-      )
     } else {
       return
     }

@@ -68,7 +68,6 @@ function DisputeRecord() {
         },
       })
       .then((response) => {
-        console.log(response.data)
         setShowOpenDispute(true)
       })
       .catch((error) => {
