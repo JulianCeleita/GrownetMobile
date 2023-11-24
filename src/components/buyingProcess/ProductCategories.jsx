@@ -43,6 +43,7 @@ function ProductsCategories({
     return false
   }
   useEffect(() => {
+    console.log(`${allCategories}${selectedSupplier.id}`)
     axios
       .get(`${allCategories}${selectedSupplier.id}`, {
         headers: {

@@ -30,3 +30,4 @@ export const favoritesBySupplier = process.env.EXPO_PUBLIC_FAVORITES_BY_SUPPLIER
 // DISPUTES
 export const createDisputeOrder = process.env.EXPO_PUBLIC_CREATE_DISPUTE_ORDER
 export const closeSelectedOrder = process.env.EXPO_PUBLIC_CLOSE_SELECTED_ORDER
+export const sendEmail = process.env.EXPO_PUBLIC_SEND_EMAIL

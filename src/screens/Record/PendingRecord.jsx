@@ -16,6 +16,7 @@ import {
   closeSelectedOrder,
   selectedStorageOrder,
   createDisputeOrder,
+  sendEmail,
 } from '../../config/urls.config'
 import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
@@ -149,6 +150,23 @@ function PendingRecord() {
     const newEvidences = [...evidences]
     newEvidences.splice(index, 1)
     setEvidences(newEvidences)
+  }
+
+  // ENVIAR CORREO DE DISPUTA
+
+  const onSendMail = () => {
+    console.log(`${sendEmail}/${selectedPendingOrder}`)
+    axios.get(`${sendEmail}/${selectedPendingOrder}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log('Error al enviar el correo', error)
+    })
   }
 
   // CERRAR LA ORDEN SELECCIONADA
@@ -450,6 +468,16 @@ function PendingRecord() {
                 </Button>
                 )}
               </View>
+              <Button
+                  style={DisputeStyle.buttonSendEmail}
+                  onPress={onSendMail}
+                >
+                  <Feather name="send" size={18} color="#04444F" />
+                  <Text style={DisputeStyle.textBtnUpload}>
+                    {' '}
+                    {t('uploadFile.sendEmail')}
+                  </Text>
+                </Button>
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onConfirmOrder(e)}

@@ -107,6 +107,7 @@ const esTranslations = {
   uploadFile: {
     customUpload: 'Agregar evidencia',
     submitEvidence: 'Enviar evidencia',
+    sendEmail: 'Enviar correo con disputas',
   },
   pendingRecord: {
     products: 'Productos',

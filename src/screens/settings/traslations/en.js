@@ -106,6 +106,7 @@ const enTranslations = {
   uploadFile: {
     customUpload: 'Add evidence',
     submitEvidence: 'Submit evidence',
+    sendEmail: 'Send email with disputes',
   },
   pendingRecord: {
     products: 'Products',
