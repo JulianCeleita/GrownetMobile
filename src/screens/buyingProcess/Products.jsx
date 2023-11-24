@@ -300,6 +300,15 @@ export default function Products() {
       console.error('Error al obtener productos al mostrar favoritos:', error)
     }
   }
+  const toggleShowFavorites2 = async () => {
+    setShowFavorites(!showFavorites)
+    resetInputSearcher()
+    try {
+      await fetchProducts(currentPage)
+    } catch (error) {
+      console.error('Error al obtener productos al mostrar favoritos:', error)
+    }
+  }
 
   // CAMBIO DE CANTIDAD DE ARTICULOS
   const handleAmountChange = (productId, newAmount) => {
@@ -445,7 +454,9 @@ export default function Products() {
       <ProductCategories
         showFavorites={showFavorites}
         toggleShowFavorites={toggleShowFavorites}
+        toggleShowFavorites2={toggleShowFavorites2}
         filterCategory={filterCategories}
+        selectedCategory={selectedCategory}
       />
     </View>
   )
