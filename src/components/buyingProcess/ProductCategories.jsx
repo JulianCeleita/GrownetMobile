@@ -25,6 +25,7 @@ function ProductsCategories({
   toggleShowFavorites,
   filterCategory,
   selectedCategory,
+  toggleShowFavorites2,
 }) {
   const { t } = useTranslation()
   const navigation = useNavigation()
@@ -33,15 +34,6 @@ function ProductsCategories({
   const { token } = useTokenStore()
   const { selectedSupplier } = useOrderStore()
 
-  const isCategoryActive = (category) => {
-    if (
-      category === selectedCategory ||
-      (category === 'All' && selectedCategory === 'All')
-    ) {
-      return true
-    }
-    return false
-  }
   useEffect(() => {
     axios
       .get(`${allCategories}${selectedSupplier.id}`, {
@@ -60,12 +52,13 @@ function ProductsCategories({
   const categoriesList = categories.map((e) => e.name)
   const updatedCategories = ['All', ...categoriesList, 'Favorites']
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
+    const isCurrentItem = index === isCarousel.current.currentIndex
     return (
       <View>
         {item === 'Favorites' && showFavorites ? (
-          <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory}>Volver</Text>
+          <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
+            <Text style={ProductsStyle.buttonCategory2}>Volver</Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
           <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
@@ -78,7 +71,15 @@ function ProductsCategories({
           activeOpacity={0.9}
         >
           {item === 'All' && (
-            <Text style={ProductsStyle.buttonCategory}>All</Text>
+            <Text
+              style={
+                selectedCategory === 'All' && !showFavorites
+                  ? ProductsStyle.buttonCategory2
+                  : ProductsStyle.buttonCategory
+              }
+            >
+              All
+            </Text>
           )}
         </TouchableOpacity>
         {categories?.map((categoryApi) => (
@@ -89,7 +90,13 @@ function ProductsCategories({
           >
             {item === categoryApi.name && (
               <>
-                <Text style={ProductsStyle.buttonCategory}>
+                <Text
+                  style={
+                    selectedCategory === categoryApi.name && !showFavorites
+                      ? ProductsStyle.buttonCategory2
+                      : ProductsStyle.buttonCategory
+                  }
+                >
                   {categoryApi.name}
                 </Text>
               </>

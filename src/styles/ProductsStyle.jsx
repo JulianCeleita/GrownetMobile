@@ -164,6 +164,19 @@ export const ProductsStyle = StyleSheet.create({
     shadowRadius: 10,
     marginBottom: 1,
   },
+  buttonCategory2: {
+    backgroundColor: '#62C471',
+    paddingVertical: 15,
+    paddingHorizontal: 2,
+    borderRadius: 10,
+    textAlign: 'center',
+    fontFamily: 'PoppinsMedium',
+    shadowColor: 'black',
+    elevation: 6,
+    shadowRadius: 10,
+    marginBottom: 1,
+  },
+
   activeCategory: {
     backgroundColor: '#62C471',
     color: 'white',
