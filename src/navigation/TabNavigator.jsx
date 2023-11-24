@@ -1,32 +1,33 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
-import { StatusBar, TouchableOpacity } from 'react-native'
-import Chat from '../screens/Chat'
-import PastRecord from '../screens/Record/PastRecord'
-import PendingRecord from '../screens/Record/PendingRecord'
-import Records from '../screens/Record/Records'
-import Settings from '../screens/settings/Settings'
-import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful'
-import Suppliers from '../screens/buyingProcess/Suppliers'
-import DisputeRecord from '../screens/Record/DisputeRecord'
-import TermsAndConditions from '../screens/TermsAndConditions'
-import { useTranslation } from 'react-i18next'
-import Faq from '../screens/settings/Faq'
-const Tab = createBottomTabNavigator()
-const Stack = createStackNavigator()
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { StatusBar, TouchableOpacity, Platform } from 'react-native';
+import Chat from '../screens/Chat';
+import PastRecord from '../screens/Record/PastRecord';
+import PendingRecord from '../screens/Record/PendingRecord';
+import Records from '../screens/Record/Records';
+import Settings from '../screens/settings/Settings';
+import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful';
+import Suppliers from '../screens/buyingProcess/Suppliers';
+import DisputeRecord from '../screens/Record/DisputeRecord';
+import TermsAndConditions from '../screens/TermsAndConditions';
+import { useTranslation } from 'react-i18next';
+import Faq from '../screens/settings/Faq';
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const HeaderLeft2 = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.navigate('restaurants')
-  }
+    navigation.navigate('restaurants');
+  };
 
   return (
-    <TouchableOpacity style={{ marginHorizontal: 28 }} onPress={goBack}>
+    <TouchableOpacity style={{ marginHorizontal: 28, marginTop: 50 }} onPress={goBack}>
       <MaterialCommunityIcons
         name="arrow-left"
         size={24}
@@ -34,11 +35,11 @@ const HeaderLeft2 = () => {
         style={{ position: 'relative' }}
       />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 function SettingsStack() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Stack.Navigator
       initialRouteName="Settings"
@@ -53,12 +54,11 @@ function SettingsStack() {
         component={Settings}
         options={{
           headerBackTitleVisible: false,
-
           title: t('menuPrimary.titleSettings'),
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110, 
           },
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
@@ -72,10 +72,9 @@ function SettingsStack() {
         component={Faq}
         options={{
           headerBackTitleVisible: false,
-
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 0,
+            height: StatusBar.currentHeight + 50,
           },
         }}
       />
@@ -87,7 +86,7 @@ function SettingsStack() {
           title: 'Terms & Conditions',
           headerStyle: {
             backgroundColor: '#f2f2f2',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
@@ -98,10 +97,11 @@ function SettingsStack() {
         }}
       />
     </Stack.Navigator>
-  )
+  );
 }
+
 function OrderStack() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Stack.Navigator
       initialRouteName="suppliers"
@@ -118,19 +118,17 @@ function OrderStack() {
         component={Suppliers}
         options={{
           headerShown: true,
-
           title: t('stackNavigator.suppliers'),
           headerStyle: {
             backgroundColor: '#f2f2f2',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
-          },
-          headerLeft: () => HeaderLeft2(),
+          }
         }}
       />
 
@@ -142,10 +140,11 @@ function OrderStack() {
         }}
       />
     </Stack.Navigator>
-  )
+  );
 }
+
 function RecordsStack() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Stack.Navigator
       initialRouteName="recordsStack"
@@ -162,7 +161,7 @@ function RecordsStack() {
           title: t('stackRecord.yourOrders'),
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
@@ -180,7 +179,7 @@ function RecordsStack() {
           title: t('stackRecord.orderDetails'),
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
@@ -197,7 +196,7 @@ function RecordsStack() {
           title: t('stackRecord.orderDetails'),
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
@@ -214,7 +213,7 @@ function RecordsStack() {
           title: t('stackRecord.whatWentWrong'),
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
@@ -226,8 +225,9 @@ function RecordsStack() {
         }}
       />
     </Stack.Navigator>
-  )
+  );
 }
+
 function ChatStack() {
   return (
     <Stack.Navigator
@@ -245,7 +245,7 @@ function ChatStack() {
           title: 'Chat',
           headerStyle: {
             backgroundColor: 'white',
-            height: StatusBar.currentHeight + 60,
+            height: StatusBar.currentHeight + 110,
           },
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -256,26 +256,25 @@ function ChatStack() {
         }}
       />
     </Stack.Navigator>
-  )
+  );
 }
 
-const tabBarIconProps =
-  (name) =>
-  ({ color, size }) => {
-    name === 'Settings'
-      ? (name = 'md-settings-outline') // ajustes
-      : name === 'orders'
-      ? (name = 'cart-outline') // orders
-      : name === 'records'
-      ? (name = 'receipt-outline') // historial
-      : name === 'chat'
-      ? (name = 'ios-chatbubble-ellipses-outline')
-      : ''
+const tabBarIconProps = (name) => ({ color, size }) => {
+  name === 'Settings'
+    ? (name = 'md-settings-outline') // ajustes
+    : name === 'orders'
+    ? (name = 'cart-outline') // orders
+    : name === 'records'
+    ? (name = 'receipt-outline') // historial
+    : name === 'chat'
+    ? (name = 'ios-chatbubble-ellipses-outline')
+    : '';
 
-    return <Ionicons name={name} size={size} color={color} />
-  }
+  return <Ionicons name={name} size={size} color={color} />;
+};
+
 const TabNavigator = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Tab.Navigator
       initialRouteName="Orders"
@@ -321,6 +320,7 @@ const TabNavigator = () => {
         }}
       />
     </Tab.Navigator>
-  )
-}
-export default TabNavigator
+  );
+};
+
+export default TabNavigator;

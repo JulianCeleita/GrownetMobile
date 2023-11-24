@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native';
+
 export const RestaurantStyle = StyleSheet.create({
   restaurants: {
     display: 'flex',

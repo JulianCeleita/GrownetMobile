@@ -17,6 +17,7 @@ export const ProductsStyle = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 30,
     height: 50,
+    marginTop: 25,
   },
 
   BgInput: {

@@ -453,8 +453,7 @@ const styles = StyleSheet.create({
     fontFamily: 'PoppinsSemi',
     fontSize: 22,
     textAlign: 'center',
-    marginVertical: 10,
-    marginTop: 18,
+    marginTop: Platform.OS === 'ios' ? 50 : 0,
     color: '#04444f',
   },
   tittleDiv: {
@@ -466,6 +465,7 @@ const styles = StyleSheet.create({
   iconFilter: {
     position: 'relative',
     left: 45,
+    marginTop: Platform.OS === 'ios' ? 50 : 0,
   },
   loadingMore: {
     paddingVertical: 20,
@@ -476,4 +476,4 @@ const styles = StyleSheet.create({
     color: '#04444f',
     fontSize: 15,
   },
-})
+});

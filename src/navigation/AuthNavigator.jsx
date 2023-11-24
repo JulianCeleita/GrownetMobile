@@ -6,7 +6,7 @@ import Home from '../screens/Home'
 import Login from '../screens/Login/LoginPage'
 import OTP from '../screens/Login/OtpPage'
 import Restauranst from '../screens/buyingProcess/Restaurants'
-import { StatusBar, TouchableOpacity } from 'react-native'
+import { StatusBar, TouchableOpacity, Platform } from 'react-native'
 import {
   useFonts,
   Poppins_700Bold,
@@ -54,7 +54,7 @@ const HeaderLeft = () => {
   const { goBack } = useHeaderLeftLogic()
 
   return (
-    <TouchableOpacity style={{ marginHorizontal: 28 }} onPress={goBack}>
+    <TouchableOpacity style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }} onPress={goBack}>
       <MaterialCommunityIcons
         name="arrow-left"
         size={24}
@@ -64,11 +64,12 @@ const HeaderLeft = () => {
     </TouchableOpacity>
   )
 }
+
 const HeaderLeft2 = () => {
   const { goBackProducts } = useHeaderLeftLogic2()
 
   return (
-    <TouchableOpacity style={{ marginHorizontal: 28 }} onPress={goBackProducts}>
+    <TouchableOpacity style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }} onPress={goBackProducts}>
       <MaterialCommunityIcons
         name="arrow-left"
         size={24}
@@ -78,12 +79,13 @@ const HeaderLeft2 = () => {
     </TouchableOpacity>
   )
 }
+
 const HeaderLeft3 = () => {
   const { goBackSuppliers } = useHeaderLeftLogic2()
 
   return (
     <TouchableOpacity
-      style={{ marginHorizontal: 28 }}
+      style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }}
       onPress={goBackSuppliers}
     >
       <MaterialCommunityIcons
@@ -95,6 +97,7 @@ const HeaderLeft3 = () => {
     </TouchableOpacity>
   )
 }
+
 function AuthNavigator() {
   const { t } = useTranslation()
   const [fontsLoaded] = useFonts({
@@ -130,21 +133,21 @@ function AuthNavigator() {
           <Stack.Screen
             name="restaurants"
             component={Restauranst}
-            options={{
+            options={({ route }) => ({
               headerShown: true,
-
               title: t('stackNavigator.chooseYourRestaurant'),
               headerStyle: {
                 backgroundColor: '#f2f2f2',
-                height: StatusBar.currentHeight + 60,
               },
-              headerTintColor: '#04444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
               },
-            }}
+              headerTitleContainerStyle: {
+                height: Platform.OS === 'ios' ? 50 : StatusBar.currentHeight + 60,
+              },
+            })}
           />
           <Stack.Screen
             name="TabNavigator"
@@ -154,29 +157,32 @@ function AuthNavigator() {
           <Stack.Screen
             name="products"
             component={Products}
-            options={{
+            options={({ route }) => ({
               headerShown: false,
-
               title: t('stackNavigator.makeYourOrder'),
               headerStyle: {
                 backgroundColor: 'white',
-                height: StatusBar.currentHeight + 50,
               },
-              headerTintColor: '#04444F',
+              headerTintColor: '#0444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
               },
               headerLeft: () => HeaderLeft3(),
-            }}
+              headerLeftContainerStyle: {
+                marginHorizontal: 28,
+              },
+              headerTitleContainerStyle: {
+                height: Platform.OS === 'ios' ? 100 : StatusBar.currentHeight + 50,
+              },
+            })}
           />
           <Stack.Screen
             name="ordersDetail"
             component={OrderDetail}
             options={{
               headerShown: true,
-
               title: t('stackNavigator.orderDetail'),
               headerStyle: {
                 backgroundColor: 'white',
@@ -189,15 +195,16 @@ function AuthNavigator() {
                 fontSize: 22,
               },
               headerLeft: () => HeaderLeft2(),
+              headerTitleContainerStyle: {
+                height: Platform.OS === 'ios' ? 80 : StatusBar.currentHeight + 60,
+              },
             }}
           />
-
-          <Stack.Screen
+         <Stack.Screen
             name="orderInformation"
             component={OrderInformation}
             options={{
               headerShown: true,
-
               title: t('stackNavigator.orderDetail'),
               headerStyle: {
                 backgroundColor: 'white',
@@ -210,6 +217,9 @@ function AuthNavigator() {
                 fontSize: 22,
               },
               headerLeft: () => HeaderLeft(),
+              headerTitleContainerStyle: {
+                height: Platform.OS === 'ios' ? 80 : StatusBar.currentHeight + 60,
+              },
             }}
           />
         </>

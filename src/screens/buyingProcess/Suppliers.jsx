@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native'
 import React, { useEffect } from 'react'
 import { ApiSuppliers } from '../../config/urls.config'
@@ -70,7 +71,7 @@ const Suppliers = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 30 : 0 }}>
       <ScrollView>
         <View style={SuppliersStyle.suppliers}>
           {suppliers.map((supplier) => {
@@ -86,7 +87,10 @@ const Suppliers = () => {
               >
                 <ImageBackground
                   resizeMode="cover"
-                  style={SuppliersStyle.suppliersBg}
+                  style={[
+                    SuppliersStyle.suppliersBg,
+                    { marginBottom: Platform.OS === 'ios' ? 10 : 0 },
+                  ]}
                   key={supplier.id}
                   source={{
                     uri: imageUrl,

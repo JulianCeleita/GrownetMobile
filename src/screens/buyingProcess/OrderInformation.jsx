@@ -3,7 +3,7 @@ import DatePickerAndroid from '@react-native-community/datetimepicker'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Keyboard, Text, TextInput, TouchableOpacity, View, SafeAreaView, Platform } from 'react-native'
 import axios from '../../../axiosConfig'
 import { createStorageOrder } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
@@ -94,7 +94,7 @@ const OrderInformation = () => {
       if (newOrderNumber) {
         navigation.navigate('orderSuccessful')
       } else {
-        console.log('No se obtuvo numero de orden')
+        console.log('No se obtuvo número de orden')
       }
     } catch (error) {
       console.log('Error enviando el correo', error)
@@ -102,64 +102,66 @@ const OrderInformation = () => {
   }
 
   return (
-    <View style={OrderInformationStyle.OrderInformation}>
-      <Text style={OrderInformationStyle.PrimaryTex}>
-        {t('deliveryDetail.address')}
-      </Text>
-      <View style={OrderInformationStyle.containerInputs}>
-        <TextInput
-          style={OrderInformationStyle.input}
-          value={selectedRestaurant.address}
-          editable={false}
-        />
-      </View>
-      <Text style={OrderInformationStyle.PrimaryTex}>
-        {t('deliveryDetail.deliver')}
-      </Text>
-      <View style={OrderInformationStyle.containerInputs}>
-        <TextInput
-          value={deliveryData.toLocaleDateString()}
-          onFocus={() => {
-            Keyboard.dismiss()
-            setShowDatePicker(true)
-          }}
-          style={OrderInformationStyle.input2}
-        />
-        {showDatePicker && (
-          <DatePickerAndroid
-            value={deliveryData}
-            mode={'date'}
-            display="default"
-            onChange={handleChangeDate}
-            minimumDate={tomorrow}
+    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 60 : 0 }}>
+      <View style={OrderInformationStyle.OrderInformation}>
+        <Text style={OrderInformationStyle.PrimaryTex}>
+          {t('deliveryDetail.address')}
+        </Text>
+        <View style={OrderInformationStyle.containerInputs}>
+          <TextInput
+            style={OrderInformationStyle.input}
+            value={selectedRestaurant.address}
+            editable={false}
           />
-        )}
+        </View>
+        <Text style={OrderInformationStyle.PrimaryTex}>
+          {t('deliveryDetail.deliver')}
+        </Text>
+        <View style={OrderInformationStyle.containerInputs}>
+          <TextInput
+            value={deliveryData.toLocaleDateString()}
+            onFocus={() => {
+              Keyboard.dismiss()
+              setShowDatePicker(true)
+            }}
+            style={OrderInformationStyle.input2}
+          />
+          {showDatePicker && (
+            <DatePickerAndroid
+              value={deliveryData}
+              mode={'date'}
+              display="default"
+              onChange={handleChangeDate}
+              minimumDate={tomorrow}
+            />
+          )}
+        </View>
+        <Text style={OrderInformationStyle.PrimaryTex}>
+          {t('deliveryDetail.specialRequirements')}
+        </Text>
+        <View style={OrderInformationStyle.containerInputs}>
+          <TextInput
+            value={specialRequirements}
+            onChangeText={(text) => setSpecialRequirements(text)}
+            style={OrderInformationStyle.inputRequirements}
+            multiline={true}
+            numberOfLines={8}
+            textAlignVertical="top"
+          />
+        </View>
+        <View style={OrderInformationStyle.containerButton}>
+          <TouchableOpacity
+            onPress={handleSubmit}
+            style={GlobalStyles.btnPrimary}
+          >
+            <Text style={GlobalStyles.textBtnSecundary}>
+              {' '}
+              {t('deliveryDetail.continue')}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <Text style={OrderInformationStyle.PrimaryTex}>
-        {t('deliveryDetail.specialRequirements')}
-      </Text>
-      <View style={OrderInformationStyle.containerInputs}>
-        <TextInput
-          value={specialRequirements}
-          onChangeText={(text) => setSpecialRequirements(text)}
-          style={OrderInformationStyle.inputRequirements}
-          multiline={true}
-          numberOfLines={8}
-          textAlignVertical="top"
-        />
-      </View>
-      <View style={OrderInformationStyle.containerButton}>
-        <TouchableOpacity
-          onPress={handleSubmit}
-          style={GlobalStyles.btnPrimary}
-        >
-          <Text style={GlobalStyles.textBtnSecundary}>
-            {' '}
-            {t('deliveryDetail.continue')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
