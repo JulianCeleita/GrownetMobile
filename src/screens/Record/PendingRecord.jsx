@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   ModalConfirmOrder,
   ModalErrorDispute,
+  ModalSendEmail,
 } from '../../components/ModalAlert'
 import {
   closeSelectedOrder,
@@ -42,6 +43,7 @@ function PendingRecord() {
   const [productColors, setProductColors] = useState({})
   const [activeTab, setActiveTab] = useState('reception')
   const [showErrorDispute, setShowErrorDispute] = useState(false)
+  const [showSendEmail, setShowSendEmail] = useState(false)
   const [showConfirmOrder, setShowConfirmOder] = useState(false)
   const [checkProduct, setCheckProduct] = useState({})
   const [evidences, setEvidences] = useState([])
@@ -97,7 +99,6 @@ function PendingRecord() {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
       })
-      console.log('Resultado del DocumentPicker', result.assets)
       setEvidences((prevEvidences) => [...prevEvidences, ...result.assets])
     } catch (error) {
       console.log('Error al seleccionar el archivo', error)
@@ -135,13 +136,10 @@ function PendingRecord() {
         },
       })
       .then((response) => {
-        console.log('FORMDATA EXITOSO', formData._parts)
-        console.log(response.data)
         setShowOpenDispute(true)
         setEvidences([])
       })
       .catch((error) => {
-        console.log('FORMDATA', formData._parts)
         console.error('Error al crear la disputa:', error)
       })
   }
@@ -155,14 +153,14 @@ function PendingRecord() {
   // ENVIAR CORREO DE DISPUTA
 
   const onSendMail = () => {
-    console.log(`${sendEmail}/${selectedPendingOrder}`)
-    axios.get(`${sendEmail}/${selectedPendingOrder}`, {
+    axios
+      .get(`${sendEmail}/${selectedPendingOrder}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
     .then((response) => {
-      console.log(response.data)
+      setShowSendEmail(true)
     })
     .catch((error) => {
       console.log('Error al enviar el correo', error)
@@ -191,7 +189,6 @@ function PendingRecord() {
         },
       })
       .then((response) => {
-        console.log(response.data)
         setShowErrorDispute(false)
         setShowConfirmOder(true)
       })
@@ -206,6 +203,7 @@ function PendingRecord() {
     } else {
       setShowErrorDispute(false)
       setShowOpenDispute(false)
+      setShowSendEmail(false)
     }
   }
   const handleOutsidePress = () => {
@@ -502,7 +500,28 @@ function PendingRecord() {
           message2={t('pendingRecord.modalButton')}
           btnClose={t('pendingRecord.warningCancel')}
         />
-
+        {/* MODAL DE ENVIO DE CORREO CON DISPUTA */}
+        <ModalSendEmail
+          showModal={showSendEmail}
+          closeModal={closeModal}
+          Title={t('pendingRecord.modalTittle')}
+          Title2="Grownet"
+          message={t('pendingRecord.modalMailText')}
+          message2={t('pendingRecord.modalButton')}
+        />
+        {/* MODAL DE DISPUTA ABIERTA */}
+        <ModalErrorDispute
+          showModal={showErrorDispute}
+          closeModal={closeModal}
+          onCloseOrder={onCloseOrder}
+          handleOutsidePress={handleOutsidePress}
+          Title={t('pendingRecord.warningTitle')}
+          message={t('pendingRecord.warningFirstPart')}
+          messagep2={t('pendingRecord.warningSecondPart')}
+          messagep3={t('pendingRecord.warningThirdPart')}
+          message2={t('pendingRecord.modalButton')}
+          btnClose={t('pendingRecord.warningCancel')}
+        />
         {/* MODAL DE ORDEN CONFIRMADA */}
         <ModalConfirmOrder
           showModal={showConfirmOrder}

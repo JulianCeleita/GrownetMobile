@@ -131,6 +131,7 @@ const enTranslations = {
     warningThirdPart: 'and you confirm that everything was resolved.',
     warningConfirm: 'Confirm order',
     warningCancel: 'Cancel',
+    modalMailText: "The email with the disputes was sent to the supplier.",
   },
   stackRecord: {
     yourOrders: 'Your orders',

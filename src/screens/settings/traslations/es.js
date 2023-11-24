@@ -132,6 +132,7 @@ const esTranslations = {
     warningThirdPart: 'y confirmas que todo se resolvió.',
     warningConfirm: 'Confirmar orden',
     warningCancel: 'Cancelar',
+    modalMailText: "El correo con las disputas fue enviado al proveedor.",
   },
   stackRecord: {
     yourOrders: 'Tus pedidos',

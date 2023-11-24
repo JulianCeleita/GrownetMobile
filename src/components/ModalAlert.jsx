@@ -157,6 +157,52 @@ export const ModalErrorDispute = ({
   )
 }
 
+export const ModalSendEmail = ({
+  message = '',
+  message2 = '',
+  closeModal = () => {},
+  Title = '',
+  showModal,
+  Title2,
+}) => {
+  return (
+    <Modal
+      visible={showModal}
+      animationType="fade"
+      transparent={true}
+      onRequestClose={closeModal}
+    >
+      <View style={ModalStyle.modalContainer}>
+        <View style={ModalStyle.centeredView}>
+          <View style={ModalStyle.modalView}>
+            <MaterialIcons name="celebration" size={45} color="#62c471" />
+            <Text
+              style={[
+                ModalStyle.modalTextTitle,
+                { marginTop: 10, color: '#62c471' },
+              ]}
+            >
+              {Title} <Text style={{ color: '#026cd2' }}>{Title2}</Text>
+            </Text>
+            <Text style={ModalStyle.modalText}>{message}</Text>
+
+            <TouchableOpacity
+              onPress={closeModal}
+              style={[
+                GlobalStyles.btnPrimary,
+                ModalStyle.space,
+                { marginTop: 8 },
+              ]}
+            >
+              <Text style={GlobalStyles.textBtnSecundary}>{message2}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  )
+}
+
 export const ModalConfirmOrder = ({
   message = '',
   message2 = '',

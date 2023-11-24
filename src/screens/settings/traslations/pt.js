@@ -131,6 +131,7 @@ const ptTranslations = {
     warningThirdPart: 'e confirme se tudo está resolvido.',
     warningConfirm: 'Confirmar pedido',
     warningCancel: 'Cancelar',
+    modalMailText: "O e-mail com as disputas foi enviado ao fornecedor.",
   },
   stackRecord: {
     yourOrders: 'Seus pedidos',
