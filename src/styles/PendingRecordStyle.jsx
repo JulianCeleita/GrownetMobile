@@ -116,6 +116,9 @@ export const DisputeStyle = StyleSheet.create({
   buttonUpload: {
     marginVertical: 25,
   },
+  buttonSendEmail: {
+    marginBottom: 25,
+  },
   textBtnUpload: {
     color: '#04444F',
     fontSize: 16,

@@ -29,27 +29,32 @@ export default function Products() {
   const [articles, setArticles] = useState(products)
   const { articlesToPay, selectedSupplier, selectedRestaurant, categories } =
     useOrderStore()
+    const { t } = useTranslation()
+const [showProductSearch, setShowProductSearch] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [resetInput, setResetInput] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-  const [isFetchingMore, setIsFetchingMore] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
+  const [loader, setLoader] = useState(false)
 
   const fetchProducts = async (page) => {
-    const requestBody = {
-      id: selectedSupplier.id,
-      country: countryCode,
-      accountNumber: selectedRestaurant.accountNumber,
-      page,
-    }
+    if (loader === false) {
     try {
-      setIsFetchingMore(true)
+      setLoader(true)
+      console.log('EL LOADER SE ENCIENDE CON PAGINA NUMERO', page)
+      const requestBody = {
+        id: selectedSupplier.id,
+        country: countryCode,
+        accountNumber: selectedRestaurant.accountNumber,
+        page: page,
+      }
+
       const response = await axios.post(`${supplierProducts}`, requestBody, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+
       const defaultProducts = response.data.products
 
       const productsWithTax = defaultProducts
@@ -83,62 +88,61 @@ export default function Products() {
             (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
           ),
         )
-      useOrderStore.setState({ articlesToPay: productsWithTax })
-
-      useOrderStore.setState({ categories: productsWithTax })
-
-      setArticles(productsWithTax)
-      setProducts(productsWithTax)
-
-      setHasMore(false)
+        setArticles((prevProducts) => {
+          const productIds = new Set(prevProducts.map((p) => p.id));
+          const newProducts = productsWithTax.filter(
+            (p) => !productIds.has(p.id)
+          );
+          setTimeout(() => {
+            setLoader(false);
+          }, 3000);
+          return [...prevProducts, ...newProducts];
+        });
+        console.log('EL LOADER SE APAGA DEBIDO A PETICIÓN EXITOSA', loader)
+      
     } catch (error) {
       console.error('Error al obtener los productos del proveedor:', error)
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (articlesToPay.length > 0) {
-        setArticles(articlesToPay)
-        setProducts(articlesToPay)
-        setIsLoading(false)
-      }
-
-      if (hasMore && !isFetchingMore) {
-        setIsFetchingMore(true)
-        try {
-          await fetchProducts(currentPage)
-          setIsFetchingMore(false)
-          setIsLoading(false)
-        } catch (error) {
-          console.error('Error al cargar más productos:', error)
-          setIsFetchingMore(false)
-          setIsLoading(false)
-        }
-      }
-    }
-
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage])
-
-  const handleLoadMore = () => {
-    if (!hasMore && !isFetchingMore) {
-      setHasMore(true)
-      setCurrentPage((prevPage) => {
-        const nextPage = prevPage + 1
-        return nextPage
-      })
-    }
   }
 
-  const fetchProductsByCategory = async (categoryId) => {
-    if (categoryId === 'All') {
-      await fetchProducts(currentPage)
-      console.log('entro aqui')
+  useEffect(() => {
+    fetchProducts(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage])
+  
+  // PAGINACION
+  
+  const handleScroll = (event) => {
+    console.log('REVISANDO SI ESTA SELECCIONADO EL ALL')
+    if (selectedCategory === 'All' && loader === false) {
+      
+    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
 
+    const offsetY = contentOffset.y
+    const contentHeight = contentSize.height
+    const screenHeight = layoutMeasurement.height
+
+    if (offsetY >= contentHeight - screenHeight - 20) {
+      console.log('ACTIVANDO PAGINADO...');
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+    console.log('ALL SELECCIONADO, PAGE DENTRO DEL HANDLE SCROLL:', currentPage)
+  } else {
+    return
+  }
+  }
+
+  // TRAER PRODUCTOS POR CATEGORIA
+
+  const fetchProductsByCategory = async (categoryId) => {
+    setLoader(true)
+    if (categoryId === 'All') {
+      setCurrentPage(0)
+      await fetchProducts(currentPage)
       return
     }
+    setCurrentPage(0)
     const requestBody = {
       supplier: selectedSupplier.id,
       categorie: categoryId,
@@ -157,24 +161,58 @@ export default function Products() {
 
       const productsWithTax = categorizedProducts
         .filter((product) => product.prices.some((price) => price.nameUoms))
-        .map((product) => ({
-          ...product,
-          amount: 0,
-          uomToPay: product.prices[0].nameUoms,
-          idUomToPay: product.prices[0].id,
-          prices: product.prices.map((price) => ({
-            ...price,
-            priceWithTax: (price.price + price.price * product.tax).toFixed(2),
-          })),
-        }))
-      useOrderStore.setState({ articlesToPay: productsWithTax })
+        .map((product) => {
+          const pricesWithTax = product.prices.map((price) => {
+            const priceWithTaxCalculation = (
+              price.price +
+              price.price * product.tax
+            ).toFixed(2);
+            return {
+              ...price,
+              priceWithTax:
+                isNaN(priceWithTaxCalculation) ||
+                parseFloat(priceWithTaxCalculation) === 0
+                  ? null
+                  : priceWithTaxCalculation,
+            };
+          });
 
-      setProducts(productsWithTax)
-      setArticles(productsWithTax)
+          return {
+            ...product,
+            amount: 0,
+            uomToPay: product.prices[0].nameUoms,
+            idUomToPay: product.prices[0].id,
+            prices: pricesWithTax,
+          };
+        })
+        .filter((product) =>
+          product.prices.some(
+            (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0
+          )
+        );
+
+      const updatedArticlesToPay = [
+        ...articlesToPay,
+        ...productsWithTax,
+      ].filter(
+        (product, index, self) =>
+          index ===
+          self.findIndex(
+            (p) => p.id === product.id && p.uomToPay === product.uomToPay
+          )
+      );
+
+      useOrderStore.setState({ articlesToPay: updatedArticlesToPay });
+
+      setArticles(updatedArticlesToPay);
+      setProducts(updatedArticlesToPay);
+      setLoader(false);
     } catch (error) {
       console.error('Error al obtener los productos por categoría:', error)
     }
   }
+
+  // TODO AGREGAR LA LOGICA DE LOS FAVORITOS DESDE LA PWA
 
   const resetInputSearcher = () => {
     setResetInput((prevKey) => prevKey + 1)
@@ -182,8 +220,14 @@ export default function Products() {
 
   const toggleShowFavorites = async () => {
     setShowFavorites(!showFavorites)
-    setSelectedCategory('All')
     resetInputSearcher()
+    if (showFavorites === true) {
+      setSelectedCategory('Favorites')
+      console.log('INGRESÉ A FAVORITOS:', selectedCategory)
+    } else {
+      setSelectedCategory('All')
+      console.log('SALÍ DE FAVORITOS:', selectedCategory)
+    }
 
     try {
       await fetchProducts()
@@ -192,6 +236,7 @@ export default function Products() {
     }
   }
 
+  // CAMBIO DE CANTIDAD DE ARTICULOS
   const handleAmountChange = (productId, newAmount) => {
     setArticles((prevArticles) =>
       prevArticles.map((article) =>
@@ -205,6 +250,7 @@ export default function Products() {
     useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
+  // CAMBIO DE UOM DE ARTICULOS (EACH, BOX, KG)
   const handleUomChange = (productId, newUomToPay) => {
     const updatedArticlesToPay = articles.map((article) => {
       if (article.id === productId) {
@@ -236,22 +282,8 @@ export default function Products() {
       console.error('Error al obtener productos al mostrar categoría:', error)
     }
   }
-  const handleScroll = (event) => {
-    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-
-    const offsetY = contentOffset.y
-    const contentHeight = contentSize.height
-    const screenHeight = layoutMeasurement.height
-
-    // SCROLL PAGINATION
-    if (offsetY >= contentHeight - screenHeight - 20) {
-      handleLoadMore()
-    }
-  }
-  const { t } = useTranslation()
-
+  
   //Filtro
-  const [showProductSearch, setShowProductSearch] = useState(false)
 
   const toggleProductSearch = () => {
     setShowProductSearch(!showProductSearch)
@@ -278,8 +310,8 @@ export default function Products() {
         />
       )}
       <SafeAreaView style={ProductsStyle.containerCards}>
-        {/* <ScrollView onScroll={handleScroll} onMomentumScrollEnd={handleScroll}> */}
-        <ScrollView>
+        <ScrollView onMomentumScrollEnd={handleScroll}>
+        
           {showSearchResults ? (
             <ProductsFind
               onAmountChange={handleAmountChange}
@@ -317,7 +349,7 @@ export default function Products() {
               )}
             </>
           )}
-          {/* {isFetchingMore && (
+          {loader && (
             <View style={styles.loadingMore}>
               <ActivityIndicator
                 animating={isLoading}
@@ -326,7 +358,7 @@ export default function Products() {
                 style={isLoading ? styles.loading : styles.hidden}
               />
             </View>
-          )} */}
+          )}
           <View style={{ height: 220 }} />
         </ScrollView>
       </SafeAreaView>
