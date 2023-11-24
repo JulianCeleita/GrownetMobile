@@ -15,7 +15,7 @@ const ProductCards = ({
   onAmountChange,
   onUomChange,
   opacity,
-  reloadFavorites,
+  fetchFavorites,
   fetchProducts,
   currentPage,
 }) => {
@@ -69,7 +69,7 @@ const ProductCards = ({
       console.log('Toggle favorite response:', response.data)
 
       if (opacity) {
-        await reloadFavorites()
+        await fetchFavorites()
       } else {
         await fetchProducts(currentPage)
         console.log('currentPage:', currentPage)
@@ -91,7 +91,7 @@ const ProductCards = ({
     selectedRestaurant.accountNumber,
     selectedSupplier.id,
     token,
-    reloadFavorites,
+    fetchFavorites,
     fetchProducts,
     currentPage,
   ])
