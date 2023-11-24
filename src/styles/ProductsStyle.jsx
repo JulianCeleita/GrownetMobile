@@ -174,6 +174,7 @@ export const ProductsStyle = StyleSheet.create({
     elevation: 6,
     shadowRadius: 10,
     marginBottom: 1,
+    color: '#ffffff',
   },
 
   activeCategory: {
