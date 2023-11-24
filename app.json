@@ -11,16 +11,24 @@
       "resizeMode": "contain",
       "backgroundColor": "#026CD2"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.heinera.grownetapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["INTERNET", "CAMERA", "ACCESS_FINE_LOCATION", "STORAGE"],
+      "permissions": [
+        "INTERNET",
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "STORAGE"
+      ],
       "package": "com.heinera.grownetapp"
     },
     "web": {
@@ -32,6 +40,8 @@
       }
     },
     "owner": "grownetapp",
-    "plugins": ["expo-localization"]
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
