@@ -3,7 +3,15 @@ import DatePickerAndroid from '@react-native-community/datetimepicker'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, Text, TextInput, TouchableOpacity, View, SafeAreaView, Platform } from 'react-native'
+import {
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  Platform,
+} from 'react-native'
 import axios from '../../../axiosConfig'
 import { createStorageOrder } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
@@ -42,7 +50,7 @@ const OrderInformation = () => {
   const handleChangeDate = async (event, newDate) => {
     if (event.type === 'set') {
       setDeliveryData(newDate)
-      }
+    }
     setShowDatePicker(false)
   }
 
@@ -102,8 +110,14 @@ const OrderInformation = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 60 : 0 }}>
-      <View style={OrderInformationStyle.OrderInformation}>
+    <SafeAreaView
+      style={{
+        flex: Platform.OS === 'ios' ? 1 : null,
+        marginTop: Platform.OS === 'ios' ? 60 : null,
+        ...OrderInformationStyle.OrderInformation,
+      }}
+    >
+      <View>
         <Text style={OrderInformationStyle.PrimaryTex}>
           {t('deliveryDetail.address')}
         </Text>

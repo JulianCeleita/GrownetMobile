@@ -6,7 +6,13 @@ import Home from '../screens/Home'
 import Login from '../screens/Login/LoginPage'
 import OTP from '../screens/Login/OtpPage'
 import Restauranst from '../screens/buyingProcess/Restaurants'
-import { StatusBar, TouchableOpacity, Platform } from 'react-native'
+import {
+  StatusBar,
+  TouchableOpacity,
+  Platform,
+  View,
+  StyleSheet,
+} from 'react-native'
 import {
   useFonts,
   Poppins_700Bold,
@@ -19,11 +25,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import TabNavigator from './TabNavigator'
 import { useTranslation } from 'react-i18next'
 import Products from '../screens/buyingProcess/Products'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import OrderDetail from '../screens/buyingProcess/OrderDetail'
 import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
+import { Ionicons } from '@expo/vector-icons'
 
 const Stack = createStackNavigator()
 
@@ -54,7 +61,13 @@ const HeaderLeft = () => {
   const { goBack } = useHeaderLeftLogic()
 
   return (
-    <TouchableOpacity style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }} onPress={goBack}>
+    <TouchableOpacity
+      style={{
+        marginHorizontal: 28,
+        marginBottom: Platform.OS === 'ios' ? 50 : null,
+      }}
+      onPress={goBack}
+    >
       <MaterialCommunityIcons
         name="arrow-left"
         size={24}
@@ -69,7 +82,13 @@ const HeaderLeft2 = () => {
   const { goBackProducts } = useHeaderLeftLogic2()
 
   return (
-    <TouchableOpacity style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }} onPress={goBackProducts}>
+    <TouchableOpacity
+      style={{
+        marginHorizontal: 28,
+        marginBottom: Platform.OS === 'ios' ? 50 : null,
+      }}
+      onPress={goBackProducts}
+    >
       <MaterialCommunityIcons
         name="arrow-left"
         size={24}
@@ -85,7 +104,10 @@ const HeaderLeft3 = () => {
 
   return (
     <TouchableOpacity
-      style={{ marginHorizontal: 28, marginBottom: Platform.OS === 'ios' ? 50 : 0 }}
+      style={{
+        marginHorizontal: 28,
+        marginBottom: Platform.OS === 'ios' ? 50 : null,
+      }}
       onPress={goBackSuppliers}
     >
       <MaterialCommunityIcons
@@ -96,6 +118,10 @@ const HeaderLeft3 = () => {
       />
     </TouchableOpacity>
   )
+}
+const headerRight = () => {
+  const route = useRoute()
+  return <TouchableOpacity onPress={route.onPressHandler} />
 }
 
 function AuthNavigator() {
@@ -133,19 +159,24 @@ function AuthNavigator() {
           <Stack.Screen
             name="restaurants"
             component={Restauranst}
-            options={({ route }) => ({
+            options={() => ({
               headerShown: true,
               title: t('stackNavigator.chooseYourRestaurant'),
               headerStyle: {
                 backgroundColor: '#f2f2f2',
+                height:
+                  Platform.OS === 'android'
+                    ? StatusBar.currentHeight + 50
+                    : null,
               },
+              headerTintColor: '#04444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
               },
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 50 : StatusBar.currentHeight + 60,
+                height: Platform.OS === 'ios' ? 50 : null,
               },
             })}
           />
@@ -157,24 +188,30 @@ function AuthNavigator() {
           <Stack.Screen
             name="products"
             component={Products}
-            options={({ route }) => ({
-              headerShown: false,
+            options={() => ({
+              headerShown: true,
               title: t('stackNavigator.makeYourOrder'),
               headerStyle: {
                 backgroundColor: 'white',
+                height:
+                  Platform.OS === 'android'
+                    ? StatusBar.currentHeight + 60
+                    : null,
               },
-              headerTintColor: '#0444F',
+              headerTintColor: '#04444F',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
+                marginRight: 22,
               },
+              headerRight: () => headerRight(),
               headerLeft: () => HeaderLeft3(),
               headerLeftContainerStyle: {
                 marginHorizontal: 28,
               },
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 100 : StatusBar.currentHeight + 50,
+                height: Platform.OS === 'ios' ? 100 : null,
               },
             })}
           />
@@ -186,7 +223,10 @@ function AuthNavigator() {
               title: t('stackNavigator.orderDetail'),
               headerStyle: {
                 backgroundColor: 'white',
-                height: StatusBar.currentHeight + 60,
+                height:
+                  Platform.OS === 'android'
+                    ? StatusBar.currentHeight + 50
+                    : null,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -196,11 +236,11 @@ function AuthNavigator() {
               },
               headerLeft: () => HeaderLeft2(),
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 80 : StatusBar.currentHeight + 60,
+                height: Platform.OS === 'ios' ? 80 : null,
               },
             }}
           />
-         <Stack.Screen
+          <Stack.Screen
             name="orderInformation"
             component={OrderInformation}
             options={{
@@ -208,7 +248,10 @@ function AuthNavigator() {
               title: t('stackNavigator.orderDetail'),
               headerStyle: {
                 backgroundColor: 'white',
-                height: StatusBar.currentHeight + 60,
+                height:
+                  Platform.OS === 'android'
+                    ? StatusBar.currentHeight + 60
+                    : null,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -218,7 +261,7 @@ function AuthNavigator() {
               },
               headerLeft: () => HeaderLeft(),
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 80 : StatusBar.currentHeight + 60,
+                height: Platform.OS === 'ios' ? 80 : null,
               },
             }}
           />

@@ -23,8 +23,10 @@ import {
 import { ProductsStyle } from '../../styles/ProductsStyle'
 import { useTranslation } from 'react-i18next'
 import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Products() {
+  const navigation = useNavigation()
   const { token, countryCode } = useTokenStore()
   const [showFavorites, setShowFavorites] = useState(false)
   const [showSearchResults, setShowSearchResults] = useState(false)
@@ -44,7 +46,7 @@ export default function Products() {
     if (loader === false) {
       try {
         setLoader(true)
-         const requestBody = {
+        const requestBody = {
           id: selectedSupplier.id,
           country: countryCode,
           accountNumber: selectedRestaurant.accountNumber,
@@ -101,7 +103,7 @@ export default function Products() {
           }, 3000)
           return [...prevProducts, ...newProducts]
         })
-        } catch (error) {
+      } catch (error) {
         console.error('Error al obtener los productos del proveedor:', error)
       }
     }
@@ -352,20 +354,22 @@ export default function Products() {
   const toggleProductSearch = () => {
     setShowProductSearch(!showProductSearch)
   }
+  const onPressHandler = () => {
+    toggleProductSearch()
+  }
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={{ marginRight: 22 }}>
+          <TouchableOpacity onPress={onPressHandler}>
+            <Ionicons name="search-circle-outline" size={32} color="#04444f" />
+          </TouchableOpacity>
+        </View>
+      ),
+    })
+  }, [toggleProductSearch])
   return (
     <View style={styles.container}>
-      <View style={styles.tittleDiv}>
-        <Text style={styles.textTittle}>
-          {t('stackNavigator.makeYourOrder')}
-        </Text>
-        <TouchableOpacity
-          style={styles.iconFilter}
-          onPress={toggleProductSearch}
-        >
-          <Ionicons name="search-circle-outline" size={32} color="#04444f" />
-        </TouchableOpacity>
-      </View>
-
       {showProductSearch && (
         <ProductSearcher
           products={articlesToPay}
@@ -460,24 +464,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: 'white',
   },
-  textTittle: {
-    fontFamily: 'PoppinsSemi',
-    fontSize: 22,
-    textAlign: 'center',
-    marginTop: Platform.OS === 'ios' ? 50 : 0,
-    color: '#04444f',
-  },
-  tittleDiv: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconFilter: {
-    position: 'relative',
-    left: 45,
-    marginTop: Platform.OS === 'ios' ? 50 : 0,
-  },
+
   loadingMore: {
     paddingVertical: 20,
     alignItems: 'center',
@@ -487,4 +474,4 @@ const styles = StyleSheet.create({
     color: '#04444f',
     fontSize: 15,
   },
-});
+})

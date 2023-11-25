@@ -29,7 +29,13 @@ export default function OrderDetails() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 70 : 0 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 70 : null,
+        ...(Platform.OS === 'android' ? OrderDetailStyle.details : {}),
+      }}
+    >
       <ScrollView>
         <View
           style={{

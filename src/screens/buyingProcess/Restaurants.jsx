@@ -7,23 +7,23 @@ import {
   TouchableOpacity,
   View,
   Platform,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { availableRestaurants } from '../../config/urls.config';
-import { RestaurantStyle } from '../../styles/RestaurantsStyle';
-import axios from '../../../axiosConfig';
-import useTokenStore from '../../store/useTokenStore';
-import useOrderStore from '../../store/useOrderStore';
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { availableRestaurants } from '../../config/urls.config'
+import { RestaurantStyle } from '../../styles/RestaurantsStyle'
+import axios from '../../../axiosConfig'
+import useTokenStore from '../../store/useTokenStore'
+import useOrderStore from '../../store/useOrderStore'
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 const Restaurants = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
-  const { token } = useTokenStore();
-  const { restaurants, setRestaurants, setSelectedRestaurant } = useOrderStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation()
+  const navigation = useNavigation()
+  const { token } = useTokenStore()
+  const { restaurants, setRestaurants, setSelectedRestaurant } = useOrderStore()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
@@ -32,42 +32,42 @@ const Restaurants = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
+        })
 
-        setSelectedRestaurant(null);
-        setRestaurants(response.data.customersChef);
+        setSelectedRestaurant(null)
+        setRestaurants(response.data.customersChef)
 
         if (response.data.customersChef.length === 1) {
-          setSelectedRestaurant(response.data.customersChef[0]);
-          navigation.navigate('suppliers');
+          setSelectedRestaurant(response.data.customersChef[0])
+          navigation.navigate('suppliers')
         }
       } catch (error) {
-        console.error('Error al obtener los restaurantes:', error);
+        console.error('Error al obtener los restaurantes:', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
-    fetchData();
-  }, [setRestaurants, setSelectedRestaurant, token, navigation]);
+    fetchData()
+  }, [setRestaurants, setSelectedRestaurant, token, navigation])
 
-  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG;
+  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' });
-  };
+    navigation.navigate('TabNavigator', { screen: 'Chat' })
+  }
 
   const onPressSuppliers = (restaurant) => {
-    setSelectedRestaurant(restaurant);
-    navigation.navigate('TabNavigator');
-  };
-
+    setSelectedRestaurant(restaurant)
+    navigation.navigate('TabNavigator')
+  }
+  const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 30 } : {}
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 30 : 0 }}>
+    <SafeAreaView style={{ ...iosStyles }}>
       {!isLoading && (
         <ScrollView contentContainerStyle={RestaurantStyle.restaurants}>
           {restaurants.map((restaurant) => {
-            const imageUrl = `${urlImg}${restaurant.image}`;
+            const imageUrl = `${urlImg}${restaurant.image}`
 
             return (
               <TouchableOpacity
@@ -93,7 +93,7 @@ const Restaurants = () => {
                   </Text>
                 </ImageBackground>
               </TouchableOpacity>
-            );
+            )
           })}
           <TouchableOpacity
             onPress={onPressAdd}
@@ -114,7 +114,7 @@ const Restaurants = () => {
         </ScrollView>
       )}
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default Restaurants;
+export default Restaurants
