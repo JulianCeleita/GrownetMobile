@@ -5,15 +5,79 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
+        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
+        "EXPO_PUBLIC_OTP": "/authenticate/login",
+        "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
+        "EXPO_PUBLIC_COUNTRIES": "/countries/all",
+        "EXPO_PUBLIC_RESTAURANTS": "/customers/chef",
+        "EXPO_PUBLIC_SUPPLIERS": "/suppliers/customer",
+        "EXPO_PUBLIC_CATEGORIES": "/categories/supplier/",
+        "EXPO_PUBLIC_SELECT_CATEGORY": "/categoriesProducts/products/{id}",
+        "EXPO_PUBLIC_SELECT_SUPPLIER_PRODUCTS": "/products/supplier",
+        "EXPO_PUBLIC_STORAGE_ORDER": "/orders/create",
+        "EXPO_PUBLIC_ALL_STORAGE_ORDERS": "/orders/chef/",
+        "EXPO_PUBLIC_SELECTED_STORAGE_ORDER": "/orders",
+        "EXPO_PUBLIC_ADD_FAVORITES": "/products/favorite",
+        "EXPO_PUBLIC_CREATE_DISPUTE_ORDER": "/disputeOrder/create",
+        "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
+        "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
+        "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
+      }
     },
     "preview": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
+        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
+        "EXPO_PUBLIC_OTP": "/authenticate/login",
+        "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
+        "EXPO_PUBLIC_COUNTRIES": "/countries/all",
+        "EXPO_PUBLIC_RESTAURANTS": "/customers/chef",
+        "EXPO_PUBLIC_SUPPLIERS": "/suppliers/customer",
+        "EXPO_PUBLIC_CATEGORIES": "/categories/supplier/",
+        "EXPO_PUBLIC_SELECT_CATEGORY": "/categoriesProducts/products/{id}",
+        "EXPO_PUBLIC_SELECT_SUPPLIER_PRODUCTS": "/products/supplier",
+        "EXPO_PUBLIC_STORAGE_ORDER": "/orders/create",
+        "EXPO_PUBLIC_ALL_STORAGE_ORDERS": "/orders/chef/",
+        "EXPO_PUBLIC_SELECTED_STORAGE_ORDER": "/orders",
+        "EXPO_PUBLIC_ADD_FAVORITES": "/products/favorite",
+        "EXPO_PUBLIC_CREATE_DISPUTE_ORDER": "/disputeOrder/create",
+        "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
+        "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
+        "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
       }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
+        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
+        "EXPO_PUBLIC_OTP": "/authenticate/login",
+        "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
+        "EXPO_PUBLIC_COUNTRIES": "/countries/all",
+        "EXPO_PUBLIC_RESTAURANTS": "/customers/chef",
+        "EXPO_PUBLIC_SUPPLIERS": "/suppliers/customer",
+        "EXPO_PUBLIC_CATEGORIES": "/categories/supplier/",
+        "EXPO_PUBLIC_SELECT_CATEGORY": "/categoriesProducts/products/{id}",
+        "EXPO_PUBLIC_SELECT_SUPPLIER_PRODUCTS": "/products/supplier",
+        "EXPO_PUBLIC_STORAGE_ORDER": "/orders/create",
+        "EXPO_PUBLIC_ALL_STORAGE_ORDERS": "/orders/chef/",
+        "EXPO_PUBLIC_SELECTED_STORAGE_ORDER": "/orders",
+        "EXPO_PUBLIC_ADD_FAVORITES": "/products/favorite",
+        "EXPO_PUBLIC_CREATE_DISPUTE_ORDER": "/disputeOrder/create",
+        "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
+        "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
+        "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
+      }
+    }
   },
   "submit": {
     "production": {}
