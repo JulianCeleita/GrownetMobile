@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 export const ProductsStyle = StyleSheet.create({
   products: {
@@ -17,7 +17,7 @@ export const ProductsStyle = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 30,
     height: 50,
-    marginTop: 25,
+    marginTop: Platform.OS === 'ios' ? 25 : null,
   },
 
   BgInput: {

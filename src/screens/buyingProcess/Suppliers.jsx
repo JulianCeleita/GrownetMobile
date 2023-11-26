@@ -69,9 +69,9 @@ const Suppliers = () => {
   const onPressAdd = () => {
     navigation.navigate('TabNavigator', { screen: 'Chat' })
   }
-
+  const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 30 } : {}
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 30 : 0 }}>
+    <SafeAreaView style={{ ...iosStyles }}>
       <ScrollView>
         <View style={SuppliersStyle.suppliers}>
           {suppliers.map((supplier) => {
@@ -89,7 +89,7 @@ const Suppliers = () => {
                   resizeMode="cover"
                   style={[
                     SuppliersStyle.suppliersBg,
-                    { marginBottom: Platform.OS === 'ios' ? 10 : 0 },
+                    { marginBottom: Platform.OS === 'ios' ? 10 : null },
                   ]}
                   key={supplier.id}
                   source={{
