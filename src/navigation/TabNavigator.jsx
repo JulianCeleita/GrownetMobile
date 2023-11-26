@@ -154,7 +154,21 @@ function OrderStack() {
         name="orderSuccessful"
         component={OrderSuccessful}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: t('stackNavigator.orderSuccessful'),
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
         }}
       />
     </Stack.Navigator>
@@ -273,6 +287,7 @@ function ChatStack() {
         component={Chat}
         options={{
           title: 'Chat',
+          headerShown: false,
           headerStyle: {
             backgroundColor: 'white',
             height:

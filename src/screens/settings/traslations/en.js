@@ -43,6 +43,7 @@ const enTranslations = {
     suppliers: 'Suppliers',
     makeYourOrder: 'Make your order',
     orderDetail: 'Order detail',
+    orderSuccessful: 'Successful order',
   },
 
   productSearcher: {
@@ -74,6 +75,7 @@ const enTranslations = {
     yourOrderSuccessful: 'Your order is successful',
     yourOrders: 'Your orders',
     downloadPDF: 'Download PDF',
+    newOrder: 'Create new order',
   },
   record: {
     searchPlaceholder: 'Search for products',

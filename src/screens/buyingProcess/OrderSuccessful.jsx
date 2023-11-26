@@ -281,6 +281,9 @@ const OrderSuccessful = () => {
   const rocordsNavigate = () => {
     navigation.navigate('Records', { screen: 'recordsStack' })
   }
+  const newOrderNavigate = () => {
+    navigation.navigate('Orders', { screen: 'suppliers' })
+  }
   return (
     <View style={OrderSuccessfulStyle.container}>
       <View style={OrderSuccessfulStyle.containerImage}>
@@ -315,6 +318,16 @@ const OrderSuccessful = () => {
           </Text>
         </TouchableOpacity>
       </View>
+      <View style={OrderSuccessfulStyle.containerButtons}>
+        <TouchableOpacity
+          style={[GlobalStyles.btnPrimary, OrderSuccessfulStyle.newOrderBttn]}
+          onPress={newOrderNavigate}
+        >
+          <Text style={GlobalStyles.textBtnSecundary}>
+            {t('orderSuccessful.newOrder')}
+          </Text>
+        </TouchableOpacity>
+        </View>
     </View>
   )
 }

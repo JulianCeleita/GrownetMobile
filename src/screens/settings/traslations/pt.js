@@ -43,6 +43,7 @@ const ptTranslations = {
     suppliers: 'Fornecedores',
     makeYourOrder: 'Faça seu pedido',
     orderDetail: 'Detalhes do pedido',
+    orderSuccessful: 'Pedido bem-sucedido',
   },
 
   productSearcher: {
@@ -74,6 +75,7 @@ const ptTranslations = {
     yourOrderSuccessful: 'Seu pedido foi bem-sucedido',
     yourOrders: 'Seus pedidos',
     downloadPDF: 'Baixar PDF',
+    newOrder: 'Criar novo pedido',
   },
   record: {
     searchPlaceholder: 'Buscar produtos',

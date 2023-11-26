@@ -101,6 +101,7 @@ const OrderInformation = () => {
       const newOrderNumber = await getOrderNumber()
       if (newOrderNumber) {
         navigation.navigate('orderSuccessful')
+        setSpecialRequirements('')
       } else {
         console.log('No se obtuvo número de orden')
       }

@@ -44,6 +44,7 @@ const esTranslations = {
     suppliers: 'Proveedores',
     makeYourOrder: 'Realiza tu pedido',
     orderDetail: 'Detalle del pedido',
+    orderSuccessful: 'Orden exitosa',
   },
 
   productSearcher: {
@@ -75,6 +76,7 @@ const esTranslations = {
     yourOrderSuccessful: 'Tu pedido se realizó con éxito',
     yourOrders: 'Tus pedidos',
     downloadPDF: 'Descargar PDF',
+    newOrder: 'Crear nueva orden',
   },
   record: {
     searchPlaceholder: 'Buscar productos',

@@ -34,4 +34,8 @@ export const OrderSuccessfulStyle = StyleSheet.create({
   spaceBttn: {
     marginHorizontal: 4,
   },
+  newOrderBttn:{
+    marginTop: 16,
+    backgroundColor: '#62c471',
+  }
 })
