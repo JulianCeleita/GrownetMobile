@@ -64,7 +64,8 @@ const HeaderLeft = () => {
     <TouchableOpacity
       style={{
         marginHorizontal: 28,
-        marginBottom: Platform.OS === 'ios' ? 50 : null,
+        marginTop: Platform.OS === 'ios' ? 0 : null,
+        marginBottom: Platform.OS === 'ios' ? 0 : null,
       }}
       onPress={goBack}
     >
@@ -85,7 +86,8 @@ const HeaderLeft2 = () => {
     <TouchableOpacity
       style={{
         marginHorizontal: 28,
-        marginBottom: Platform.OS === 'ios' ? 50 : null,
+        marginTop: Platform.OS === 'ios' ? 0 : null,
+        marginBottom: Platform.OS === 'ios' ? 0 : null,
       }}
       onPress={goBackProducts}
     >
@@ -106,7 +108,8 @@ const HeaderLeft3 = () => {
     <TouchableOpacity
       style={{
         marginHorizontal: 28,
-        marginBottom: Platform.OS === 'ios' ? 50 : null,
+        marginTop: Platform.OS === 'ios' ? 30 : null,
+        marginBottom: Platform.OS === 'ios' ? 0 : null,
       }}
       onPress={goBackSuppliers}
     >
@@ -167,7 +170,7 @@ function AuthNavigator() {
                 height:
                   Platform.OS === 'android'
                     ? StatusBar.currentHeight + 50
-                    : null,
+                    : StatusBar.currentHeight + 70,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -196,7 +199,7 @@ function AuthNavigator() {
                 height:
                   Platform.OS === 'android'
                     ? StatusBar.currentHeight + 60
-                    : null,
+                    : StatusBar.currentHeight + 130,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -226,7 +229,7 @@ function AuthNavigator() {
                 height:
                   Platform.OS === 'android'
                     ? StatusBar.currentHeight + 50
-                    : null,
+                    : StatusBar.currentHeight + 120,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -236,7 +239,7 @@ function AuthNavigator() {
               },
               headerLeft: () => HeaderLeft2(),
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 80 : null,
+                height: Platform.OS === 'ios' ? 70 : null,
               },
             }}
           />
@@ -251,7 +254,7 @@ function AuthNavigator() {
                 height:
                   Platform.OS === 'android'
                     ? StatusBar.currentHeight + 60
-                    : null,
+                    : StatusBar.currentHeight + 120,
               },
               headerTintColor: '#04444F',
               headerTitleAlign: 'center',
@@ -261,7 +264,7 @@ function AuthNavigator() {
               },
               headerLeft: () => HeaderLeft(),
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 80 : null,
+                height: Platform.OS === 'ios' ? 70 : null,
               },
             }}
           />

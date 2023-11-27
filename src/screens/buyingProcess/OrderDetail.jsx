@@ -32,7 +32,7 @@ export default function OrderDetails() {
     <SafeAreaView
       style={{
         flex: 1,
-        marginTop: Platform.OS === 'ios' ? 70 : null,
+        marginTop: Platform.OS === 'ios' ? 40 : null,
         ...(Platform.OS === 'android' ? OrderDetailStyle.details : {}),
       }}
     >

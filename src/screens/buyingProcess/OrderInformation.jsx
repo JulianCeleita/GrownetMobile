@@ -114,7 +114,7 @@ const OrderInformation = () => {
     <SafeAreaView
       style={{
         flex: Platform.OS === 'ios' ? 1 : null,
-        marginTop: Platform.OS === 'ios' ? 60 : null,
+        marginTop: Platform.OS === 'ios' ? 0 : null,
         ...OrderInformationStyle.OrderInformation,
       }}
     >

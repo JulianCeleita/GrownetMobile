@@ -66,7 +66,7 @@ function SettingsStack() {
             backgroundColor: 'white',
             height:
               Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
+                ? StatusBar.currentHeight + 130
                 : StatusBar.currentHeight + 60,
           },
           headerTitleStyle: {

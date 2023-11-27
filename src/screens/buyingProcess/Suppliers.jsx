@@ -69,7 +69,7 @@ const Suppliers = () => {
   const onPressAdd = () => {
     navigation.navigate('TabNavigator', { screen: 'Chat' })
   }
-  const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 30 } : {}
+  const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 15 } : {}
   return (
     <SafeAreaView style={{ ...iosStyles }}>
       <ScrollView>
