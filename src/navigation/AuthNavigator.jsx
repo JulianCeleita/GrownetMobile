@@ -211,7 +211,7 @@ function AuthNavigator() {
                 marginHorizontal: 28,
               },
               headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 100 : null,
+                height: Platform.OS === 'ios' ? 80 : null,
               },
             })}
           />
