@@ -133,6 +133,7 @@ function OrderStack() {
         component={Suppliers}
         options={{
           headerShown: true,
+          headerBackTitleVisible: false,
           title: t('stackNavigator.suppliers'),
           headerStyle: {
             backgroundColor: '#f2f2f2',
