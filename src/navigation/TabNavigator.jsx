@@ -231,6 +231,7 @@ function RecordsStack() {
         name="pendingRecord"
         component={PendingRecord}
         options={{
+          headerBackTitleVisible: false,
           title: t('stackRecord.orderDetails'),
           headerStyle: {
             backgroundColor: 'white',

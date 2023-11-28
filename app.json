@@ -4,7 +4,7 @@
     "slug": "grownet",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/adaptive-icon.png",
+    "icon": "./assets/iosIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logo.png",
@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.heinera.grownetapp",
-      "icon": "./assets/adaptive-icon.png",
+      "icon": "./assets/iosIcon.png",
       "buildNumber": "1.0.1"
     },
     "android": {
