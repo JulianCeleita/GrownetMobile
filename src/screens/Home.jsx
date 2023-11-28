@@ -68,7 +68,7 @@ const Home = () => {
         />
       </View>
       <View style={CarouselStyle.containerButtton}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={GlobalStyles.btnSecundary}
           onPress={() => navigation.navigate('login')}
         >
@@ -76,7 +76,7 @@ const Home = () => {
             {' '}
             {t('home.register')}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={GlobalStyles.btnWhite}
           onPress={() => navigation.navigate('login')}
