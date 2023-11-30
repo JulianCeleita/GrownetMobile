@@ -9,7 +9,7 @@ const useTokenStore = create(
       countryCode: null,
       setToken: (newToken) => {
         set({ token: newToken })
-        console.log('Token guardado:', newToken) // Agrega esta línea
+        console.log('Token guardado:', newToken)
       },
       initializeToken: async () => {
         try {
@@ -17,7 +17,7 @@ const useTokenStore = create(
 
           if (storedToken) {
             set({ token: JSON.parse(storedToken) })
-            console.log('Token recuperado:', JSON.parse(storedToken)) // Agrega esta línea
+            console.log('Token recuperado:', JSON.parse(storedToken))
           } else {
             console.error('no se encontro el token')
           }
