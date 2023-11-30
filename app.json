@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grownet",
     "slug": "grownet",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/iosIcon.png",
     "userInterfaceStyle": "light",
@@ -18,10 +18,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.heinera.grownetapp",
       "icon": "./assets/iosIcon.png",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.3"
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
