@@ -1,37 +1,45 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-AsyncStorage.clear()
-AsyncStorage.getItem('test')
-
 import { persist } from 'zustand/middleware'
 import { create } from 'zustand'
 
 const useTokenStore = create(
-  (set) => ({
-    token: null,
-    countryCode: null,
-    setToken: (newToken) => set({ token: newToken }),
-    initializeToken: async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem('token')
+  persist(
+    (set) => ({
+      token: null,
+      countryCode: null,
+      setToken: (newToken) => {
+        set({ token: newToken })
+        console.log('Token guardado:', newToken) // Agrega esta línea
+      },
+      initializeToken: async () => {
+        try {
+          const storedToken = await AsyncStorage.getItem('token')
 
-        if (storedToken) {
-          set({ token: storedToken })
-        } else {
-          console.error('no se encontro el token')
+          if (storedToken) {
+            set({ token: JSON.parse(storedToken) })
+            console.log('Token recuperado:', JSON.parse(storedToken)) // Agrega esta línea
+          } else {
+            console.error('no se encontro el token')
+          }
+        } catch (error) {
+          console.error('Error al obtener el token de AsyncStorage:', error)
         }
-      } catch (error) {
-        console.error('Error al obtener el token de AsyncStorage:', error)
-      }
+      },
+      setCountryCode: (newCountryCode) => set({ countryCode: newCountryCode }),
+    }),
+    {
+      name: 'token-storage',
+      storage: {
+        getItem: async (name) => {
+          const result = await AsyncStorage.getItem(name)
+          return result ? JSON.parse(result) : null
+        },
+        setItem: async (name, value) => {
+          await AsyncStorage.setItem(name, JSON.stringify(value))
+        },
+      },
     },
-    setCountryCode: (newCountryCode) => set({ countryCode: newCountryCode }),
-  }),
-
-  {
-    name: 'token-storage',
-  },
-
-  persist,
+  ),
 )
 
 export default useTokenStore
