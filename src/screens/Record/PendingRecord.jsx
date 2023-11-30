@@ -49,6 +49,7 @@ function PendingRecord() {
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
 
+  console.log('detailsToShow', detailsToShow)
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
       ...prevColors,
@@ -99,7 +100,6 @@ function PendingRecord() {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
       })
-
       console.log('Result from DocumentPicker:', result)
 
       if (!result.canceled) {
@@ -473,13 +473,15 @@ function PendingRecord() {
                   </Button>
                 )}
               </View>
-              <Button style={DisputeStyle.buttonSendEmail} onPress={onSendMail}>
-                <Feather name="send" size={18} color="#04444F" />
-                <Text style={DisputeStyle.textBtnUpload}>
-                  {' '}
-                  {t('uploadFile.sendEmail')}
-                </Text>
-              </Button>
+              {detailsToShow.id_stateOrders === 6 && (
+                 <Button style={DisputeStyle.buttonSendEmail} onPress={onSendMail}>
+                 <Feather name="send" size={18} color="#04444F" />
+                 <Text style={DisputeStyle.textBtnUpload}>
+                   {' '}
+                   {t('uploadFile.sendEmail')}
+                 </Text>
+               </Button>
+              )}             
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onConfirmOrder(e)}
