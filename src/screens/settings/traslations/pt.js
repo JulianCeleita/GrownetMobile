@@ -137,7 +137,7 @@ const ptTranslations = {
     warningThirdPart: 'e confirme se tudo está resolvido.',
     warningConfirm: 'Confirmar pedido',
     warningCancel: 'Cancelar',
-    modalMailText: "O e-mail com as disputas foi enviado ao fornecedor.",
+    modalMailText: 'O e-mail com as disputas foi enviado ao fornecedor.',
   },
   stackRecord: {
     yourOrders: 'Seus pedidos',
@@ -195,6 +195,47 @@ const ptTranslations = {
       "Acesse o menu e vá para a seção 'Registro'. Lá, você encontrará seus pedidos atuais e anteriores. Você pode filtrar por data e acessar mais detalhes sobre todos os seus produtos.",
     answer5:
       "Vá para o menu e acesse a seção 'Registro'. Procure o pedido na categoria de 'Pedidos Atuais', onde você pode filtrar por data ou fazer uma busca manual. Selecione 'Ver detalhes' e abra uma disputa para o produto que chegou incompleto.",
+  },
+  termsAndConditions: {
+    title: 'Termos e condições de uso para',
+    availableDate: 'Data de vigência: Setembro',
+    subtitle: 'Introdução',
+    paragraphOne:
+      'Estes termos e condições (doravante referidos como os "Termos") regem o uso dos serviços oferecidos pela Grownet ("Nós," "Nos," ou "Nosso") por meio de nosso aplicativo móvel e site (doravante referidos como o "Site"). Ao utilizar nosso Site, você concorda com estes Termos e se compromete a cumpri-los.',
+    subtitleTwo: 'Registro e conta de usuário',
+    paragraphTwo:
+      'Para utilizar nossos serviços, você deve se registrar no Site. O registro requer fornecer informações precisas e atualizadas.',
+    subtitleTwo: 'Registro e Conta do Usuário',
+    paragraphTwo:
+      'Para utilizar nossos serviços, você deve se cadastrar no Site. O cadastro requer fornecer informações precisas e atualizadas.',
+    subtitleThree: 'Pedidos e Entregas',
+    paragraphThreeOne:
+      'A Grownet atua como intermediária entre restaurantes e fornecedores. Restaurantes podem fazer pedidos de produtos através do nosso Site.',
+    paragraphThreeTwo:
+      'Facilitamos a comunicação entre restaurantes e fornecedores, mas não assumimos a responsabilidade pela qualidade dos produtos ou serviços fornecidos pelos fornecedores.',
+    paragraphThreeThree:
+      'Os preços dos produtos e os prazos de entrega são definidos pelos fornecedores e podem estar sujeitos a alterações sem aviso prévio.',
+    paragraphThreeFour:
+      'As entregas serão feitas no endereço especificado no pedido. Os restaurantes são responsáveis por fornecer um endereço preciso e estar disponíveis para receber os produtos no horário combinado.',
+    subtitleFour: 'Cancelamentos e Devoluções',
+    paragraphFourOne:
+      'As políticas de cancelamento e devolução estão sujeitas às políticas de cada fornecedor. Recomendamos revisar as políticas de cada fornecedor antes de fazer um pedido.',
+    subtitleFive: 'Responsabilidade e Garantia',
+    paragraphFiveOne:
+      'A Grownet não assume responsabilidade pelos produtos ou serviços fornecidos pelos fornecedores.',
+    subtitleSix: 'Privacidade',
+    paragraphSixOne:
+      'Sua privacidade é importante para nós. Consulte nossa Política de Privacidade para saber como coletamos, usamos e protegemos seus dados pessoais.',
+    subtitleSeven: 'Alterações nos Termos',
+    paragraphSevenOne:
+      'A Grownet reserva o direito de modificar estes Termos a qualquer momento. As modificações serão efetivas assim que forem publicadas no Site.',
+    subtitleEight: 'Lei Aplicável e Jurisdição',
+    paragraphEightOne:
+      'Estes Termos são regidos pelas leis do Reino Unido, e quaisquer disputas relacionadas a estes Termos estarão sujeitas à jurisdição exclusiva dos tribunais do Reino Unido.',
+    subtitleNine: 'Contato',
+    paragraphNineOne:
+      'Se você tiver alguma dúvida ou preocupação sobre estes Termos, entre em contato conosco em ',
+    paragraphNineLink: 'www.grownetapp.com',
   },
 }
 

@@ -49,7 +49,6 @@ function PendingRecord() {
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
 
-  console.log('detailsToShow', detailsToShow)
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
       ...prevColors,
