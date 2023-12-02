@@ -1,4 +1,6 @@
+import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Image,
   SafeAreaView,
@@ -7,26 +9,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { FaqStyle } from '../../styles/FaqStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { AntDesign } from '@expo/vector-icons'
 const Faq = () => {
   const { t, i18n } = useTranslation()
 
-  const [expandedSections, setExpandedSections] = useState({
-    section1: false,
-    section2: false,
-    section3: false,
-    section4: false,
-    section5: false,
-  })
+  const [expandedSection, setExpandedSection] = useState(null)
 
   const toggleExpand = (section) => {
-    setExpandedSections((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
-    }))
+    setExpandedSection((prevSection) =>
+      prevSection === section ? null : section,
+    )
   }
   const cards = [
     {
@@ -73,7 +66,7 @@ const Faq = () => {
                 <Text style={FaqStyle.faqHead}> {t(card.title)}</Text>
               </TouchableOpacity>
 
-              {expandedSections[`section${index + 1}`] && (
+              {expandedSection === `section${index + 1}` && (
                 <View>
                   <Text style={FaqStyle.faqContent}>{t(card.content)}</Text>
                 </View>
