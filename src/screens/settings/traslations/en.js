@@ -37,6 +37,8 @@ const enTranslations = {
     records: 'Records',
     chat: 'Chat',
     titleSettings: 'Settings',
+    faq: 'FAQ',
+    termsAndConditions: 'Terms & conditions',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Choose your restaurant',

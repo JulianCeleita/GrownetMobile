@@ -80,13 +80,20 @@ function SettingsStack() {
         name="Faq"
         component={Faq}
         options={{
-          headerBackTitleVisible: false,
+          headerShown: true,
+          title: t('menuPrimary.faq'),
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: '#f2f2f2',
             height:
               Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 50
-                : StatusBar.currentHeight + 0,
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
           },
         }}
       />
@@ -95,7 +102,7 @@ function SettingsStack() {
         component={TermsAndConditions}
         options={{
           headerShown: true,
-          title: 'Terms & Conditions',
+          title: t('menuPrimary.termsAndConditions'),
           headerStyle: {
             backgroundColor: '#f2f2f2',
             height:

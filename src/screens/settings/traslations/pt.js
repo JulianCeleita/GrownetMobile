@@ -37,6 +37,8 @@ const ptTranslations = {
     records: 'Histórico',
     chat: 'Chat',
     titleSettings: 'Configurações',
+    faq: 'Perguntas frequentes',
+    termsAndConditions: 'Termos e Condições',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Escolha seu restaurante',

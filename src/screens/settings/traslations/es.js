@@ -38,6 +38,8 @@ const esTranslations = {
     records: 'Historial',
     chat: 'Chat',
     titleSettings: 'Configuración',
+    faq: 'Preguntas frecuentes',
+    termsAndConditions: 'Términos y condiciones',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Elige tu restaurante',
