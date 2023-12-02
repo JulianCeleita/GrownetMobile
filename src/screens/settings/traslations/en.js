@@ -24,6 +24,8 @@ const enTranslations = {
     message: 'The code you entered is incorrect',
     code: 'Try again',
     message2Modal: 'Please enter the code.',
+    waitFirstPart: "Wait for ",
+    waitSecondPart: " seconds",
   },
   restaurants: {
     addRestaurant: 'Contact us to add a restaurant!',

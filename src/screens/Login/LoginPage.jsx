@@ -15,10 +15,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const LoginPage = () => {
   const { t } = useTranslation()
   const navigation = useNavigation()
-  const [phoneNumber, setPhoneNumber] = useState('')
   const [phoneDos, setPhoneDos] = useState('')
   const [countries, setCountries] = useState([])
-  const { setCountryCode, countryCode } = useTokenStore()
+  const { setCountryCode, countryCode, phoneNumber, setPhoneNumber } = useTokenStore()
   const [showModal, setShowModal] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
 

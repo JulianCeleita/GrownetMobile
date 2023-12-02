@@ -24,6 +24,8 @@ const ptTranslations = {
     message: 'O código que você digitou está incorreto',
     code: 'Tentar novamente',
     message2Modal: 'Por favor, digite o código',
+    waitFirstPart: "Aguarde ",
+    waitSecondPart: " segundos",
   },
   restaurants: {
     addRestaurant: 'Entre em contato para adicionar restaurante!',

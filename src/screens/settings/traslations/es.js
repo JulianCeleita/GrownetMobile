@@ -25,6 +25,8 @@ const esTranslations = {
     message: 'El código que ingresaste es incorrecto',
     code: 'Intentar de nuevo',
     message2Modal: 'Por favor ingresa el código.',
+    waitFirstPart: "Espera durante ",
+    waitSecondPart: " segundos",
   },
   restaurants: {
     addRestaurant: '¡Contáctanos para agregar restaurantes!',

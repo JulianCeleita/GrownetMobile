@@ -7,6 +7,8 @@ const useTokenStore = create(
     (set) => ({
       token: null,
       countryCode: null,
+      phoneNumber: '',
+      setPhoneNumber: (newPhoneNumber) => set({ phoneNumber: newPhoneNumber }),
       setToken: (newToken) => {
         set({ token: newToken })
         console.log('Token guardado:', newToken)
