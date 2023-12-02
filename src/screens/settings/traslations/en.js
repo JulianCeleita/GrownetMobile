@@ -54,6 +54,7 @@ const enTranslations = {
     findSecondPart: ' favorites products:',
   },
   categoriesMenu: {
+    goBack: 'Go back',
     favorites: 'Favorites',
     continue: 'Continue',
   },

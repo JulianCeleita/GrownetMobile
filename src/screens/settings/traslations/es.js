@@ -55,6 +55,7 @@ const esTranslations = {
     findSecondPart: ' favoritos encontrados:',
   },
   categoriesMenu: {
+    goBack: 'Volver',
     favorites: 'Favoritos',
     continue: 'Continuar',
   },

@@ -58,11 +58,11 @@ function ProductsCategories({
       <View>
         {item === 'Favorites' && showFavorites ? (
           <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory2}>Volver</Text>
+            <Text style={ProductsStyle.buttonCategory2}>{t('categoriesMenu.goBack')}</Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
           <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory}>Favorites</Text>
+            <Text style={ProductsStyle.buttonCategory}>{t('categoriesMenu.favorites')}</Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity
