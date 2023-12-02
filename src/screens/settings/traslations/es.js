@@ -58,6 +58,7 @@ const esTranslations = {
     goBack: 'Volver',
     favorites: 'Favoritos',
     continue: 'Continuar',
+    all: 'Todos',
   },
   orderDetails: {
     paymentDetails: 'Detalles del pago',

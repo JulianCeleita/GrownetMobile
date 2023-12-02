@@ -57,6 +57,7 @@ const enTranslations = {
     goBack: 'Go back',
     favorites: 'Favorites',
     continue: 'Continue',
+    all: 'All',
   },
   orderDetails: {
     paymentDetails: 'Payment details',

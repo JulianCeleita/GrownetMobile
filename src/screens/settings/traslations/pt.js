@@ -57,6 +57,7 @@ const ptTranslations = {
     goBack: 'Voltar',
     favorites: 'Favoritos',
     continue: 'Continuar',
+    all: 'Todos',
   },
   orderDetails: {
     paymentDetails: 'Detalhes de pagamento',
