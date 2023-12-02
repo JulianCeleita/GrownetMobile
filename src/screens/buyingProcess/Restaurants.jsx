@@ -32,15 +32,14 @@ const Restaurants = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        }).then((response) => {
+          setSelectedRestaurant(null)
+          setRestaurants(response.data.customersChef) 
+          if (response.data.customersChef.length === 1) {
+            setSelectedRestaurant(response.data.customersChef[0])
+            navigation.navigate('TabNavigator', { screen: 'Orders'})
+          }
         })
-
-        setSelectedRestaurant(null)
-        setRestaurants(response.data.customersChef)
-
-        if (response.data.customersChef.length === 1) {
-          setSelectedRestaurant(response.data.customersChef[0])
-          navigation.navigate('suppliers')
-        }
       } catch (error) {
         console.error('Error al obtener los restaurantes:', error)
       } finally {
