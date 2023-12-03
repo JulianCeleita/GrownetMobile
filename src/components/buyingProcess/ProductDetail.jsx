@@ -80,7 +80,6 @@ export default function ProductDetail({
     return parseFloat(totalNet.toFixed(2))
   }
 
-  // CALCULAR TAXES
    // CALCULAR TAXES 
    const calculateItemTaxes = (prices, tax, amount, uomToPay) => {
     const selectedPrice = prices.find((price) => price.nameUoms === uomToPay);

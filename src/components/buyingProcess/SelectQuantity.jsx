@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ProductsStyle } from '../../styles/ProductsStyle'
 
@@ -10,9 +10,16 @@ const SelectQuantity = ({
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
+  const timerRef = useRef(null);
 
   useEffect(() => {
     onAmountChange(id, amount)
+    if (amount === '' || isNaN(amount)) {
+      timerRef.current = setTimeout(() => {
+        setAmount(0);
+      }, 3000);
+    }
+    return () => clearTimeout(timerRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
@@ -31,9 +38,10 @@ const SelectQuantity = ({
       <TextInput
         style={ProductsStyle.countSelect}
         keyboardType="numeric"
-        value={amount.toString()}
+        value={isNaN(amount) ? '' : amount.toString()}
         onChangeText={(value) => {
-          setAmount(parseInt(value, 10))
+        const numericValue = parseInt(value, 10);
+        setAmount(isNaN(numericValue) ? '' : numericValue);
         }}
       />
 
