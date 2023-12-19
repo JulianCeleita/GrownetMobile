@@ -153,7 +153,6 @@ export default function ProductDetail({
     <View>
       {articles
         .filter((article) => {
-          console.log('article.amount', article.amount)
           return (
             article.amount > 0 || isNaN(article.amount) || article.amount === ''
           )
