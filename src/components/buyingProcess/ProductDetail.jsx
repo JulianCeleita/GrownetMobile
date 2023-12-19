@@ -80,16 +80,16 @@ export default function ProductDetail({
     return parseFloat(totalNet.toFixed(2))
   }
 
-   // CALCULAR TAXES 
-   const calculateItemTaxes = (prices, tax, amount, uomToPay) => {
-    const selectedPrice = prices.find((price) => price.nameUoms === uomToPay);
+  // CALCULAR TAXES
+  const calculateItemTaxes = (prices, tax, amount, uomToPay) => {
+    const selectedPrice = prices.find((price) => price.nameUoms === uomToPay)
     if (!selectedPrice || isNaN(tax) || isNaN(amount)) {
-      return 0;
+      return 0
     }
-    const taxes = selectedPrice.price * tax * amount;
-    const parsedTaxes = parseFloat(taxes.toFixed(2));
-  return isNaN(parsedTaxes) ? 0 : parsedTaxes;
-  };
+    const taxes = selectedPrice.price * tax * amount
+    const parsedTaxes = parseFloat(taxes.toFixed(2))
+    return isNaN(parsedTaxes) ? 0 : parsedTaxes
+  }
 
   const calculateTotalTaxes = (articls) => {
     const totalTaxes = articls.reduce((total, article) => {
@@ -152,7 +152,11 @@ export default function ProductDetail({
   return (
     <View>
       {articles
-        .filter((article) => article.amount > 0)
+        .filter((article) => {
+          return (
+            article.amount > 0 || isNaN(article.amount) || article.amount === ''
+          )
+        })
         .map((article) => (
           <View key={article.id}>
             <View style={OrderDetailStyle.cardProduct}>

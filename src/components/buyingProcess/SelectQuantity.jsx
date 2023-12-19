@@ -10,16 +10,10 @@ const SelectQuantity = ({
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
-  const timerRef = useRef(null);
 
   useEffect(() => {
     onAmountChange(id, amount)
-    if (amount === '' || isNaN(amount)) {
-      timerRef.current = setTimeout(() => {
-        setAmount(0);
-      }, 3000);
-    }
-    return () => clearTimeout(timerRef.current);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
@@ -38,10 +32,14 @@ const SelectQuantity = ({
       <TextInput
         style={ProductsStyle.countSelect}
         keyboardType="numeric"
-        value={isNaN(amount) ? '' : amount.toString()}
+        value={amount.toString()}
         onChangeText={(value) => {
-        const numericValue = parseInt(value, 10);
-        setAmount(isNaN(numericValue) ? '' : numericValue);
+          const numericValue = parseInt(value, 10)
+          if (isNaN(numericValue)) {
+            setAmount('')
+          } else {
+            setAmount(numericValue)
+          }
         }}
       />
 

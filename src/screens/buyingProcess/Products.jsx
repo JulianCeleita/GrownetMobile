@@ -93,6 +93,7 @@ export default function Products() {
                 price.priceWithTax && parseFloat(price.priceWithTax) > 0,
             ),
           )
+
         setArticles((prevProducts) => {
           const productIds = new Set(prevProducts.map((p) => p.id))
           const newProducts = productsWithTax.filter(
@@ -165,7 +166,7 @@ export default function Products() {
           const pricesWithTax = product.prices.map((price) => {
             const priceWithTaxCalculation = (
               price.price +
-              price.price * product.tax
+              price.price * price.tax
             ).toFixed(2)
             return {
               ...price,
@@ -224,7 +225,7 @@ export default function Products() {
       supplier_id: selectedSupplier.id,
       accountNumber: selectedRestaurant.accountNumber,
     }
-
+    console.log('requestBody', requestBody)
     try {
       const response = await axios.post(favoritesBySupplier, requestBody, {
         headers: {
@@ -233,6 +234,8 @@ export default function Products() {
       })
 
       const defaultFavorites = response.data.favorites
+      console.log('defaultFavorites', defaultFavorites)
+      console.log('productsWithTax', productsWithTax)
 
       const productsWithTax = defaultFavorites
         .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -240,7 +243,7 @@ export default function Products() {
           const pricesWithTax = product.prices.map((price) => {
             const priceWithTaxCalculation = (
               price.price +
-              price.price * product.tax
+              price.price * price.tax
             ).toFixed(2)
 
             return {
@@ -281,7 +284,7 @@ export default function Products() {
 
       setLoader(false)
     } catch (error) {
-      console.error('Error al obtener los productos del proveedor:', error)
+      console.error('Error al obtener los productos favoritos:', error)
     }
   }
   const toggleShowFavorites = async () => {
@@ -368,6 +371,8 @@ export default function Products() {
       ),
     })
   }, [toggleProductSearch])
+
+  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {showProductSearch && (
