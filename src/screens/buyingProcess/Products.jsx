@@ -27,7 +27,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function Products() {
   const navigation = useNavigation()
-  const { token, countryCode } = useTokenStore()
+  const { token } = useTokenStore()
   const [showFavorites, setShowFavorites] = useState(false)
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [products, setProducts] = useState([])
@@ -48,7 +48,6 @@ export default function Products() {
         setLoader(true)
         const requestBody = {
           id: selectedSupplier.id,
-          country: countryCode,
           accountNumber: selectedRestaurant.accountNumber,
           page: page,
         }
@@ -58,8 +57,9 @@ export default function Products() {
             Authorization: `Bearer ${token}`,
           },
         })
-
+        console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
+        console.log('Estos son los productos', defaultProducts)
 
         const productsWithTax = defaultProducts
           .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -101,7 +101,8 @@ export default function Products() {
           )
           setTimeout(() => {
             setLoader(false)
-          }, 3000)
+          }, 2000)
+           console.log('Estos son los productos con tax', productsWithTax)
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
@@ -126,7 +127,7 @@ export default function Products() {
       const contentHeight = contentSize.height
       const screenHeight = layoutMeasurement.height
 
-      if (offsetY >= contentHeight - screenHeight - 20) {
+      if (offsetY >= contentHeight - screenHeight - 80) {
         setCurrentPage((prevPage) => prevPage + 1)
       }
     } else {
