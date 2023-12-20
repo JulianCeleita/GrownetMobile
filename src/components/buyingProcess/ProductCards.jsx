@@ -115,7 +115,7 @@ const ProductCards = ({
       >
         <View style={ProductsStyle.containerImage}>
           <Image
-            source={{ uri: process.env.EXPO_PUBLIC_BASE_IMG + image }}
+            source={{ uri: image }}
             style={ProductsStyle.ImageCardProduct}
             resizeMode="contain"
           />
