@@ -168,7 +168,7 @@ export const ProductsStyle = StyleSheet.create({
     shadowColor: 'black',
     elevation: 12,
     shadowRadius: 10,
-    margin: 4,
+    margin: 1,
     marginVertical: 8,
   },
   buttonCategory2: {
