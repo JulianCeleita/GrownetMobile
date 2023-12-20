@@ -371,7 +371,6 @@ export default function Products() {
     })
   }, [toggleProductSearch])
 
-  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {showProductSearch && (
