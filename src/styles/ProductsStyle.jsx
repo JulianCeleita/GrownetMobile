@@ -6,9 +6,9 @@ export const ProductsStyle = StyleSheet.create({
     position: 'relative',
   },
   viewCategories: {
-    position: 'absolute',
-    bottom: 10,
-    zIndex: 1,
+    //position: 'absolute',
+    //bottom: 10,
+    //zIndex: 1,
   },
   // MAKE YOUR ORDER
 
@@ -132,9 +132,9 @@ export const ProductsStyle = StyleSheet.create({
   containerCards: { flex: 1, marginTop: 10 },
   // PRODUCT CATEGORIES
   fixedContainer: {
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
+    //overflow: 'hidden',
+    //position: 'absolute',
+    //bottom: 0,
   },
   textButton: {
     fontFamily: 'PoppinsSemi',
@@ -153,36 +153,38 @@ export const ProductsStyle = StyleSheet.create({
     width: 'auto',
   },
   categoriesMenu: {
-    shadowColor: '#144D56',
-    elevation: 8,
-    marginVertical: 4,
+    //shadowColor: '#144D56',
+    //elevation: 8,
+    //marginVertical: 4,
   },
   buttonCategory: {
     backgroundColor: 'white',
     paddingVertical: 15,
-    paddingHorizontal: 2,
+    paddingHorizontal: 5,
     overflow: Platform.OS === 'ios' ? 'hidden' : null,
-    borderRadius: 10,
+    borderRadius: 50,
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',
     shadowColor: 'black',
     elevation: 12,
     shadowRadius: 10,
-    marginBottom: 1,
+    margin: 4,
+    marginVertical: 8,
   },
   buttonCategory2: {
     backgroundColor: '#62C471',
     paddingVertical: 15,
-    paddingHorizontal: 2,
+    paddingHorizontal: 5,
     overflow: Platform.OS === 'ios' ? 'hidden' : null,
-    borderRadius: 10,
+    borderRadius: 50,
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',
     shadowColor: 'black',
     elevation: 6,
     shadowRadius: 10,
-    marginBottom: 1,
     color: '#ffffff',
+    margin: 1,
+    marginVertical: 8,
   },
 
   activeCategory: {

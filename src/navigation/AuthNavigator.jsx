@@ -192,7 +192,7 @@ function AuthNavigator() {
             name="products"
             component={Products}
             options={() => ({
-              headerShown: true,
+              headerShown: false,
               title: t('stackNavigator.makeYourOrder'),
               headerStyle: {
                 backgroundColor: 'white',
@@ -206,12 +206,12 @@ function AuthNavigator() {
               headerTitleStyle: {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
-                marginRight: 22,
+                marginRight: 10,
               },
               headerRight: () => headerRight(),
               headerLeft: () => HeaderLeft3(),
               headerLeftContainerStyle: {
-                marginHorizontal: 28,
+                marginHorizontal: 10,
               },
               headerTitleContainerStyle: {
                 height: Platform.OS === 'ios' ? 80 : null,

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { ActivityIndicator } from 'react-native-paper'
 import axios from '../../../axiosConfig'
 import ProductCard from '../../components/buyingProcess/ProductCards'
@@ -371,15 +371,29 @@ export default function Products() {
 
   return (
     <View style={styles.container}>
-      {showProductSearch && (
+      {/*showProductSearch && (
         <ProductSearcher
           products={articlesToPay}
           setShowSearchResults={setShowSearchResults}
           resetInput={resetInput}
         />
-      )}
+      )*/}
+
       <SafeAreaView style={ProductsStyle.containerCards}>
         <ScrollView onMomentumScrollEnd={handleScroll}>
+          <View
+            style={{
+              backgroundColor: 'white',
+            }}
+          >
+            <ProductCategories
+              showFavorites={showFavorites}
+              toggleShowFavorites={toggleShowFavorites}
+              toggleShowFavorites2={toggleShowFavorites2}
+              filterCategory={filterCategories}
+              selectedCategory={selectedCategory}
+            />
+          </View>
           {showSearchResults ? (
             <ProductsFind
               onAmountChange={handleAmountChange}
@@ -447,14 +461,14 @@ export default function Products() {
           <View style={{ height: 220 }} />
         </ScrollView>
       </SafeAreaView>
-      <View style={ProductsStyle.viewCategories} />
+      {/*<View style={ProductsStyle.viewCategories} />
       <ProductCategories
         showFavorites={showFavorites}
         toggleShowFavorites={toggleShowFavorites}
         toggleShowFavorites2={toggleShowFavorites2}
         filterCategory={filterCategories}
         selectedCategory={selectedCategory}
-      />
+          />*/}
     </View>
   )
 }
