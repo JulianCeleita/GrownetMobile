@@ -59,7 +59,6 @@ export default function Products() {
         })
         console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
-        console.log('Estos son los productos', defaultProducts)
 
         const productsWithTax = defaultProducts
           .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -102,7 +101,7 @@ export default function Products() {
           setTimeout(() => {
             setLoader(false)
           }, 2000)
-           console.log('Estos son los productos con tax', productsWithTax)
+
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
@@ -225,7 +224,7 @@ export default function Products() {
       supplier_id: selectedSupplier.id,
       accountNumber: selectedRestaurant.accountNumber,
     }
-    console.log('requestBody', requestBody)
+
     try {
       const response = await axios.post(favoritesBySupplier, requestBody, {
         headers: {
@@ -234,8 +233,6 @@ export default function Products() {
       })
 
       const defaultFavorites = response.data.favorites
-      console.log('defaultFavorites', defaultFavorites)
-      console.log('productsWithTax', productsWithTax)
 
       const productsWithTax = defaultFavorites
         .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -372,7 +369,6 @@ export default function Products() {
     })
   }, [toggleProductSearch])
 
-  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {showProductSearch && (
