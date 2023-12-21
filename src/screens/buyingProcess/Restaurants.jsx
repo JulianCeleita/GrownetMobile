@@ -58,7 +58,7 @@ const Restaurants = () => {
 
   const onPressSuppliers = (restaurant) => {
     setSelectedRestaurant(restaurant)
-    navigation.navigate('TabNavigator')
+    navigation.navigate('suppliers')
   }
   const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 30 } : {}
   return (
