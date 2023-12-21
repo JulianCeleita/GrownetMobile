@@ -30,8 +30,6 @@ const Suppliers = () => {
     selectedRestaurant,
   } = useOrderStore()
 
-  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
-
   useEffect(() => {
     if (selectedRestaurant === null) {
       navigation.navigate('restaurants')
@@ -75,8 +73,6 @@ const Suppliers = () => {
       <ScrollView>
         <View style={SuppliersStyle.suppliers}>
           {suppliers.map((supplier) => {
-            const imageUrl = `${urlImg}${supplier.image}`
-
             return (
               <TouchableOpacity
                 key={supplier.id}
@@ -93,7 +89,7 @@ const Suppliers = () => {
                   ]}
                   key={supplier.id}
                   source={{
-                    uri: imageUrl,
+                    uri: supplier.image,
                     cache: 'reload',
                   }}
                 />

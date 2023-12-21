@@ -50,8 +50,6 @@ const Restaurants = () => {
     fetchData()
   }, [setRestaurants, setSelectedRestaurant, token, navigation])
 
-  const urlImg = process.env.EXPO_PUBLIC_BASE_IMG
-
   const onPressAdd = () => {
     navigation.navigate('TabNavigator', { screen: 'Chat' })
   }
@@ -66,8 +64,6 @@ const Restaurants = () => {
       {!isLoading && (
         <ScrollView contentContainerStyle={RestaurantStyle.restaurants}>
           {restaurants.map((restaurant) => {
-            const imageUrl = `${urlImg}${restaurant.image}`
-
             return (
               <TouchableOpacity
                 onPress={() => onPressSuppliers(restaurant)}
@@ -79,7 +75,7 @@ const Restaurants = () => {
                 >
                   <Image
                     source={{
-                      uri: imageUrl,
+                      uri: restaurant.image,
                     }}
                     style={{ width: 160, height: 160 }}
                   />
