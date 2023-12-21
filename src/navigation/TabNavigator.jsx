@@ -23,6 +23,7 @@ import Products from '../screens/buyingProcess/Products'
 import OrderDetails from '../screens/buyingProcess/OrderDetail'
 import Favorites from '../screens/buyingProcess/Favorites'
 import ProductSearcher from '../components/buyingProcess/ProductSearch'
+import Search from '../screens/buyingProcess/Search'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -184,7 +185,7 @@ function OrderStack() {
         name="products"
         component={Products}
         options={() => ({
-          headerShown: true,
+          headerShown: false,
           title: t('stackNavigator.makeYourOrder'),
           headerStyle: {
             backgroundColor: 'white',
@@ -431,7 +432,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={ProductSearcher}
+        component={Search}
         options={{
           tabBarIcon: tabBarIconFeather('search'),
           headerShown: false,
