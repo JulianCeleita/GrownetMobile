@@ -36,7 +36,7 @@ const esTranslations = {
   },
   menuPrimary: {
     Settings: 'Ajustes',
-    orders: 'Órdenes',
+    orders: 'Carrito',
     records: 'Historial',
     chat: 'Chat',
     titleSettings: 'Configuración',

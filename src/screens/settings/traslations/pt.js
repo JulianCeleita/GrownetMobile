@@ -35,7 +35,7 @@ const ptTranslations = {
   },
   menuPrimary: {
     Settings: 'Configurações',
-    orders: 'Pedidos',
+    orders: 'Carrinho',
     records: 'Histórico',
     chat: 'Chat',
     titleSettings: 'Configurações',

@@ -35,7 +35,7 @@ const enTranslations = {
   },
   menuPrimary: {
     Settings: 'Settings',
-    orders: 'Orders',
+    orders: 'Cart',
     records: 'Records',
     chat: 'Chat',
     titleSettings: 'Settings',
