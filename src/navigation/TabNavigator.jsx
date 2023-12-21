@@ -471,7 +471,7 @@ const TabNavigator = () => {
         component={Favorites}
         options={{
           tabBarIcon: tabBarIconFavorites('heart'),
-          headerShown: false,
+          headerShown: true,
         }}
       />
       {/* <Tab.Screen
