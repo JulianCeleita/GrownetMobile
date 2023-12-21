@@ -24,8 +24,8 @@ import {
 import { createStackNavigator } from '@react-navigation/stack'
 import TabNavigator from './TabNavigator'
 import { useTranslation } from 'react-i18next'
-import Products from '../screens/buyingProcess/Products'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import Suppliers from '../screens/buyingProcess/Suppliers'
+import { useNavigation } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import OrderDetail from '../screens/buyingProcess/OrderDetail'
 import OrderInformation from '../screens/buyingProcess/OrderInformation'
@@ -101,32 +101,6 @@ const HeaderLeft2 = () => {
   )
 }
 
-const HeaderLeft3 = () => {
-  const { goBackSuppliers } = useHeaderLeftLogic2()
-
-  return (
-    <TouchableOpacity
-      style={{
-        marginHorizontal: 28,
-        marginTop: Platform.OS === 'ios' ? 30 : null,
-        marginBottom: Platform.OS === 'ios' ? 0 : null,
-      }}
-      onPress={goBackSuppliers}
-    >
-      <MaterialCommunityIcons
-        name="arrow-left"
-        size={24}
-        color="#04444F"
-        style={{ position: 'relative', width: 20 }}
-      />
-    </TouchableOpacity>
-  )
-}
-const headerRight = () => {
-  const route = useRoute()
-  return <TouchableOpacity onPress={route.onPressHandler} />
-}
-
 function AuthNavigator() {
   const { t } = useTranslation()
   const [fontsLoaded] = useFonts({
@@ -184,65 +158,33 @@ function AuthNavigator() {
             })}
           />
           <Stack.Screen
+            name="suppliers"
+            component={Suppliers}
+            options={{
+              headerShown: true,
+              headerBackTitleVisible: false,
+              title: t('stackNavigator.suppliers'),
+              headerStyle: {
+                backgroundColor: '#f2f2f2',
+                height:
+                  Platform.OS === 'ios'
+                    ? StatusBar.currentHeight + 110
+                    : StatusBar.currentHeight + 60,
+              },
+              headerTintColor: '#04444F',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'PoppinsSemi',
+                fontSize: 22,
+              },
+            }}
+          />
+          <Stack.Screen
             name="TabNavigator"
             component={TabNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="products"
-            component={Products}
-            options={() => ({
-              headerShown: true,
-              title: t('stackNavigator.makeYourOrder'),
-              headerStyle: {
-                backgroundColor: 'white',
-                height:
-                  Platform.OS === 'android'
-                    ? StatusBar.currentHeight + 60
-                    : StatusBar.currentHeight + 130,
-              },
-              headerTintColor: '#04444F',
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontFamily: 'PoppinsSemi',
-                fontSize: 22,
-                marginRight: 22,
-              },
-              headerRight: () => headerRight(),
-              headerLeft: () => HeaderLeft3(),
-              headerLeftContainerStyle: {
-                marginHorizontal: 28,
-              },
-              headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 80 : null,
-              },
-            })}
-          />
-          <Stack.Screen
-            name="ordersDetail"
-            component={OrderDetail}
-            options={{
-              headerShown: true,
-              title: t('stackNavigator.orderDetail'),
-              headerStyle: {
-                backgroundColor: 'white',
-                height:
-                  Platform.OS === 'android'
-                    ? StatusBar.currentHeight + 50
-                    : StatusBar.currentHeight + 120,
-              },
-              headerTintColor: '#04444F',
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontFamily: 'PoppinsSemi',
-                fontSize: 22,
-              },
-              headerLeft: () => HeaderLeft2(),
-              headerTitleContainerStyle: {
-                height: Platform.OS === 'ios' ? 70 : null,
-              },
-            }}
-          />
+
           <Stack.Screen
             name="orderInformation"
             component={OrderInformation}

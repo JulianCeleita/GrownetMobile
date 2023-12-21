@@ -28,18 +28,20 @@ const Restaurants = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(availableRestaurants, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => {
-          setSelectedRestaurant(null)
-          setRestaurants(response.data.customersChef) 
-          if (response.data.customersChef.length === 1) {
-            setSelectedRestaurant(response.data.customersChef[0])
-            navigation.navigate('TabNavigator', { screen: 'Orders'})
-          }
-        })
+        const response = await axios
+          .get(availableRestaurants, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            setSelectedRestaurant(null)
+            setRestaurants(response.data.customersChef)
+            if (response.data.customersChef.length === 1) {
+              setSelectedRestaurant(response.data.customersChef[0])
+              navigation.navigate('TabNavigator', { screen: 'Orders' })
+            }
+          })
       } catch (error) {
         console.error('Error al obtener los restaurantes:', error)
       } finally {
@@ -58,7 +60,7 @@ const Restaurants = () => {
 
   const onPressSuppliers = (restaurant) => {
     setSelectedRestaurant(restaurant)
-    navigation.navigate('TabNavigator')
+    navigation.navigate('suppliers')
   }
   const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 30 } : {}
   return (
