@@ -1,7 +1,7 @@
 import {
   Ionicons,
   MaterialCommunityIcons,
-  Foundation,
+  Octicons,
   Feather,
 } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -22,7 +22,6 @@ import Faq from '../screens/settings/Faq'
 import Products from '../screens/buyingProcess/Products'
 import OrderDetails from '../screens/buyingProcess/OrderDetail'
 import Favorites from '../screens/buyingProcess/Favorites'
-import ProductSearcher from '../components/buyingProcess/ProductSearch'
 import Search from '../screens/buyingProcess/Search'
 
 const Tab = createBottomTabNavigator()
@@ -398,18 +397,33 @@ function ChatStack() {
 const tabBarIconProps =
   (name) =>
   ({ size, color }) => {
-    return <Ionicons name={name} size={33} color={color} />
+    return <Ionicons name={name} size={39} color={color} />
   }
 
-const tabBarIconFeather =
+const tabBarIconFavorites =
+  (name) =>
+  ({ focused, color }) => {
+    if (focused) {
+      return <MaterialCommunityIcons name={name} size={38} color={color} />
+    } else {
+      return <Feather name={name} size={36} color={color} />
+    }
+  }
+
+const tabBarIconSearch =
   (name) =>
   ({ size, color }) => {
-    return <Feather name={name} size={33} color={color} />
+    return <Feather name={name} size={36} color={color} />
+  }
+const tabBarIconHome =
+  (name) =>
+  ({ size, color }) => {
+    return <Octicons name={name} size={35} color={color} />
   }
 const tabBarIconAcount =
   (name) =>
   ({ size, color }) => {
-    return <MaterialCommunityIcons name={name} size={33} color={color} />
+    return <MaterialCommunityIcons name={name} size={39} color={color} />
   }
 const TabNavigator = () => {
   const { t } = useTranslation()
@@ -419,24 +433,28 @@ const TabNavigator = () => {
       initialRouteName="Orders"
       screenOptions={{
         tabBarActiveTintColor: '#04444F',
+        tabBarStyle: {
+          height: 70,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        },
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
         name="Orders"
         component={OrderStack}
         options={{
-          tabBarIcon: tabBarIconAcount('home-outline'),
+          tabBarIcon: tabBarIconHome('home'),
           headerShown: false,
-          title: '',
         }}
       />
       <Tab.Screen
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: tabBarIconFeather('search'),
+          tabBarIcon: tabBarIconSearch('search'),
           headerShown: false,
-          title: '',
         }}
       />
       <Tab.Screen
@@ -446,16 +464,14 @@ const TabNavigator = () => {
           title: t('menuPrimary.orders'),
           tabBarIcon: tabBarIconProps('cart-outline'),
           headerShown: false,
-          title: '',
         }}
       />
       <Tab.Screen
         name="Favorites"
         component={Favorites}
         options={{
-          tabBarIcon: tabBarIconFeather('heart'),
+          tabBarIcon: tabBarIconFavorites('heart'),
           headerShown: false,
-          title: '',
         }}
       />
       {/* <Tab.Screen
@@ -482,7 +498,6 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: tabBarIconAcount('account-outline'),
           headerShown: false,
-          title: '',
         }}
       />
     </Tab.Navigator>
