@@ -241,6 +241,12 @@ const enTranslations = {
     title: 'What are you looking for?',
     text: 'Easily find what you need',
   },
+  favorites: {
+    title: 'Your Favorites',
+    titleCard: "You don't have favorites yet",
+    text: 'Explore products and choose your favorites by selecting the heart icon',
+    buttonText: 'Go to products',
+  },
 }
 
 export default enTranslations

@@ -242,6 +242,12 @@ const esTranslations = {
     title: '¿Qué estás buscando?',
     text: 'Encuentra fácilmente lo que necesitas',
   },
+  favorites: {
+    title: 'Tus favoritos',
+    titleCard: 'Aún no tienes favoritos',
+    text: 'Explora productos y elige tus favoritos seleccionando el icono del corazón',
+    buttonText: 'Ir a productos',
+  },
 }
 
 export default esTranslations

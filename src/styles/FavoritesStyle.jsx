@@ -4,11 +4,18 @@ export const FavoritesStyle = StyleSheet.create({
   favorites: {
     backgroundColor: 'white',
     height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tittleFavorites: {
+    fontFamily: 'PoppinsSemi',
+    fontSize: 22,
   },
   card: {
     backgroundColor: 'white',
-    padding: 20,
+    padding: 25,
     margin: 25,
+    marginTop: 0,
     borderRadius: 15,
     alignItems: 'center',
   },
@@ -22,7 +29,6 @@ export const FavoritesStyle = StyleSheet.create({
   tittle: {
     fontFamily: 'PoppinsSemi',
     fontSize: 18,
-    marginTop: 20,
     textAlign: 'center',
   },
 })

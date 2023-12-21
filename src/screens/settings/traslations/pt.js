@@ -244,6 +244,12 @@ const ptTranslations = {
     title: 'O que você está procurando?',
     text: 'Encontre facilmente o que você precisa',
   },
+  favorites: {
+    title: 'Seus favoritos',
+    titleCard: 'Você ainda não tem favoritos',
+    text: 'Explore produtos e escolha seus favoritos selecionando o ícone do coração',
+    buttonText: 'Ir para produtos',
+  },
 }
 
 export default ptTranslations
