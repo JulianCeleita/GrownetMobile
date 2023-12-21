@@ -237,8 +237,8 @@ const enTranslations = {
     paragraphNineLink: 'www.grownetapp.com',
   },
   search: {
-    placeholder: 'Search for your products here',
-    title: 'What can we help you with today?',
+    placeholder: 'Search your products here',
+    title: 'What are you looking for?',
     text: 'Easily find what you need',
   },
 }

@@ -239,7 +239,7 @@ const esTranslations = {
   },
   search: {
     placeholder: 'Busca tus productos aquí',
-    title: '¿En qué podemos ayudarte hoy?',
+    title: '¿Qué estás buscando?',
     text: 'Encuentra fácilmente lo que necesitas',
   },
 }

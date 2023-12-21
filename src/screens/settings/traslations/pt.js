@@ -241,7 +241,7 @@ const ptTranslations = {
   },
   search: {
     placeholder: 'Pesquise seus produtos aqui',
-    title: 'Em que podemos ajudar hoje?',
+    title: 'O que você está procurando?',
     text: 'Encontre facilmente o que você precisa',
   },
 }
