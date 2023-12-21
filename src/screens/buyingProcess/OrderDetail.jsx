@@ -83,6 +83,7 @@ export default function OrderDetails() {
           <TouchableOpacity
             style={[GlobalStyles.btnPrimary, OrderDetailStyle.spaceButton]}
             onPress={() => navigation.navigate('orderInformation')}
+            disabled={totalToPay === 0}
           >
             <Text style={GlobalStyles.textBtnSecundary}>
               {t('orderDetails.continue')}

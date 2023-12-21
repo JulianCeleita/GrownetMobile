@@ -24,6 +24,8 @@ const enTranslations = {
     message: 'The code you entered is incorrect',
     code: 'Try again',
     message2Modal: 'Please enter the code.',
+    waitFirstPart: "Wait for ",
+    waitSecondPart: " seconds",
   },
   restaurants: {
     addRestaurant: 'Contact us to add a restaurant!',
@@ -37,6 +39,8 @@ const enTranslations = {
     records: 'Records',
     chat: 'Chat',
     titleSettings: 'Settings',
+    faq: 'FAQ',
+    termsAndConditions: 'Terms & conditions',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Choose your restaurant',
@@ -54,8 +58,10 @@ const enTranslations = {
     findSecondPart: ' favorites products:',
   },
   categoriesMenu: {
+    goBack: 'Go back',
     favorites: 'Favorites',
     continue: 'Continue',
+    all: 'All',
   },
   orderDetails: {
     paymentDetails: 'Payment details',
@@ -133,7 +139,7 @@ const enTranslations = {
     warningThirdPart: 'and you confirm that everything was resolved.',
     warningConfirm: 'Confirm order',
     warningCancel: 'Cancel',
-    modalMailText: "The email with the disputes was sent to the supplier.",
+    modalMailText: 'The email with the disputes was sent to the supplier.',
   },
   stackRecord: {
     yourOrders: 'Your orders',
@@ -191,6 +197,44 @@ const enTranslations = {
       "Go to the menu and access the 'Records' section. There, you'll find your current and previous orders. You can filter by date and view more details about all your products.",
     answer5:
       "Go to the menu and navigate to the 'Records' section. Search for the order under 'Current Orders'. You can filter by date or manually search for the order. Choose 'View details' and open a dispute for the incomplete product.",
+  },
+  termsAndConditions: {
+    title: 'Terms and conditions of use for',
+    availableDate: 'Effective Date: September',
+    subtitleOne: 'Introduction',
+    paragraphOne:
+      'Th ese terms and conditions (hereinafter referred to as the "Terms") govern the use of the services offered by Grownet ("We, "Us," or "Our") through our mobile application and website (hereinafter referred to as the "Site"). By using our Site, you agree to these Terms and commit to abide by them.',
+    subtitleTwo: 'Registration and User Account',
+    paragraphTwo:
+      'To utilize our services, you must register on the Site. Registration requires providing accurate and up-to-date information.',
+    subtitleThree: 'Orders and Deliveries',
+    paragraphThreeOne:
+      'Grownet acts as an intermediary between restaurants and suppliers. Restaurants can place orders for products through our Site.',
+    paragraphThreeTwo:
+      'We facilitate communication between restaurants and suppliers but do not assume responsibility for the quality of products or services provided by the suppliers.',
+    paragraphThreeThree:
+      'Prices for products and delivery times are set by the suppliers and may be subject to change without prior notice.',
+    paragraphThreeFour:
+      'Deliveries will be made to the address specified in the order. Restaurants are responsible for providing an accurate address and being available to receive products at the agreed-upon time.',
+    subtitleFour: 'Cancellation and Returns',
+    paragraphFourOne:
+      'Cancellation and return policies are subject to the policies of each supplier. We recommend reviewing the policies of each supplier before placing an order.',
+    subtitleFive: 'Liability and Warranty',
+    paragraphFiveOne:
+      'Grownet does not assume responsibility for the products or services provided by suppliers.',
+    subtitleSix: 'Privacy',
+    paragraphSixOne:
+      'Your privacy is important to us. Please refer to our Privacy Policy to learn how we collect, use, and protect your personal data.',
+    subtitleSeven: 'Changes to the Terms',
+    paragraphSevenOne:
+      'Grownet reserves the right to modify these Terms at any time. Modifications will become effective as soon as they are published on the Site.',
+    subtitleEight: 'Applicable Law and Jurisdiction',
+    paragraphEightOne:
+      'These Terms are governed by the laws of the United Kingdom, and any disputes arising in connection with these Terms will be subject to the exclusive jurisdiction of the courts of the United Kingdom.',
+    subtitleNine: 'Contact',
+    paragraphNineOne:
+      'If you have any questions or concerns about these Terms, please contact us at ',
+    paragraphNineLink: 'www.grownetapp.com',
   },
 }
 

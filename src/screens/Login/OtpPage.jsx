@@ -6,11 +6,11 @@ import {
   View,
   SafeAreaView,
 } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { GlobalStyles } from '../../styles/Styles'
 import { OtpStyle } from '../../styles/LoginStyle'
 import { useRoute } from '@react-navigation/native'
-import { otpApiUrl } from '../../config/urls.config'
+import { otpApiUrl, validationApiUrl } from '../../config/urls.config'
 import axios from '../../../axiosConfig'
 import useTokenStore from '../../store/useTokenStore'
 import { useTranslation } from 'react-i18next'
@@ -19,23 +19,52 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const Otp = () => {
   const { t } = useTranslation()
-
   const [showModal, setShowModal] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
   const [OtpValue, setOtpValue] = useState('')
-
   const pin1Ref = useRef()
   const pin2Ref = useRef()
   const pin3Ref = useRef()
   const pin4Ref = useRef()
-
   const [pin1, setPin1] = useState('')
   const [pin2, setPin2] = useState('')
   const [pin3, setPin3] = useState('')
   const [pin4, setPin4] = useState('')
-
   const route = useRoute()
-  const { setToken } = useTokenStore()
+  const { setToken, countryCode, phoneNumber } = useTokenStore()
+  const [seconds, setSeconds] = useState(20)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1)
+      }
+      if (seconds === 0) {
+        setShow(true)
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [seconds])
+
+  // REENVIAR EL OTP
+  const resendOtpCode = async () => {
+    const state = {
+      form: {
+        country: parseInt(countryCode, 10),
+        telephone: parseInt(phoneNumber, 10),
+      },
+    }
+
+    try {
+      const response = await axios.post(validationApiUrl, state.form)
+      if (response.data.flag === 1) {
+        console.log('Respuesta con CODIGO TWILIO:', response.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const enviarOTP = async () => {
     const otp = pin1 + pin2 + pin3 + pin4
@@ -68,6 +97,13 @@ const Otp = () => {
   const handleOutsidePress = () => {
     closeModal()
   }
+
+  const handleResendCode = () => {
+    resendOtpCode()
+    setSeconds(20)
+    setShow(false)
+  }
+
   const ContainerComponent =
     Platform.OS === 'ios' ? KeyboardAwareScrollView : SafeAreaView
 
@@ -149,12 +185,24 @@ const Otp = () => {
           {t('codeOtp.verifyAndProceed')}
         </Text>
       </TouchableOpacity>
-      <View style={OtpStyle.ContainerdidntCode}>
-        <Text style={OtpStyle.textP}>{t('codeOtp.didntReceiveCode')}</Text>
-        <TouchableOpacity>
-          <Text style={OtpStyle.sendCode}>{t('codeOtp.sendAgain')}</Text>
-        </TouchableOpacity>
-      </View>
+      {show ? (
+        <View style={OtpStyle.ContainerdidntCode}>
+          <Text style={OtpStyle.textP}>{t('codeOtp.didntReceiveCode')}</Text>
+          <TouchableOpacity>
+            <Text onPress={handleResendCode} style={OtpStyle.sendCode}>
+              {t('codeOtp.sendAgain')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={OtpStyle.ContainerdidntCode}>
+          <Text style={OtpStyle.textP}>
+            {t('codeOtp.waitFirstPart')}
+            {seconds}
+            {t('codeOtp.waitSecondPart')}
+          </Text>
+        </View>
+      )}
       <ModalAlert
         showModal={showModal}
         closeModal={closeModal}

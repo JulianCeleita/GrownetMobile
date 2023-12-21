@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, Text, TextInput, View } from 'react-native'
+import { Platform, ScrollView, Text, TextInput, View } from 'react-native'
 import { Button, Checkbox } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ModalOpenDispute } from '../../components/ModalAlert'
@@ -12,6 +12,7 @@ import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { DisputeStyle } from '../../styles/PendingRecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function DisputeRecord() {
   const { t } = useTranslation()
@@ -165,12 +166,24 @@ function DisputeRecord() {
     margin: 8,
   }
 
+  const ContainerComponent =
+    Platform.OS === 'ios' ? KeyboardAwareScrollView : SafeAreaView
+
+  const containerProps =
+    Platform.OS === 'ios'
+      ? {
+          resetScrollToCoords: { x: 0, y: 0 },
+          contentContainerStyle: DisputeStyle.container,
+          scrollEnabled: true,
+        }
+      : {
+          style:
+            (DisputeStyle.dispute,
+            { backgroundColor: 'white', height: '100%' }),
+        }
+
   return (
-    <SafeAreaView
-      style={
-        (DisputeStyle.dispute, { backgroundColor: 'white', height: '100%' })
-      }
-    >
+    <ContainerComponent {...containerProps}>
       <ScrollView>
         <View style={DisputeStyle.cardTittle}>
           <MaterialIcons name="error-outline" size={60} color="#62c471" />
@@ -221,7 +234,7 @@ function DisputeRecord() {
           message2={t('pendingRecord.modalButton')}
         />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   )
 }
 

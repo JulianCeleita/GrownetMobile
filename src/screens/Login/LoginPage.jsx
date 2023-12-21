@@ -15,10 +15,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const LoginPage = () => {
   const { t } = useTranslation()
   const navigation = useNavigation()
-  const [phoneNumber, setPhoneNumber] = useState('')
   const [phoneDos, setPhoneDos] = useState('')
   const [countries, setCountries] = useState([])
-  const { setCountryCode, countryCode } = useTokenStore()
+  const { setCountryCode, countryCode, phoneNumber, setPhoneNumber } =
+    useTokenStore()
   const [showModal, setShowModal] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
 
@@ -31,7 +31,7 @@ const LoginPage = () => {
         const countryNames = countriesData.map((country) =>
           country.short_name.toUpperCase(),
         )
-
+        setPhoneNumber('')
         setCountries(countryNames)
       } catch (error) {
         console.error('Error obteniendo los paises disponibles:', error)
@@ -113,8 +113,10 @@ const LoginPage = () => {
             defaultCode={'GB'}
             placeholder={t('login.phoneNumber')}
             defaultValue={phoneNumber}
+            maxLength={11}
             onChangeText={(text) => {
-              setPhoneNumber(text)
+              const formattedText = text.startsWith('0') ? text.slice(1) : text
+              setPhoneNumber(formattedText)
             }}
             countryCode={(info) => {
               setPhoneDos(info)

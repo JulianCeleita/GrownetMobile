@@ -36,6 +36,7 @@ const OrderInformation = () => {
   } = useOrderStore()
   const [data, setData] = useState([])
   const [showDatePicker, setShowDatePicker] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { token } = useTokenStore()
   const navigation = useNavigation()
   const tomorrow = new Date()
@@ -44,6 +45,7 @@ const OrderInformation = () => {
   useEffect(() => {
     setData(articlesToPay)
     setDeliveryData(tomorrow)
+    setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -97,6 +99,8 @@ const OrderInformation = () => {
   // ENVIAR FORMULARIO
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setLoading(true)
+    console.log('Enviando formulario')
     try {
       const newOrderNumber = await getOrderNumber()
       if (newOrderNumber) {
@@ -168,6 +172,7 @@ const OrderInformation = () => {
           <TouchableOpacity
             onPress={handleSubmit}
             style={GlobalStyles.btnPrimary}
+            disabled={loading}
           >
             <Text style={GlobalStyles.textBtnSecundary}>
               {' '}

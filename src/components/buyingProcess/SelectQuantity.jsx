@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ProductsStyle } from '../../styles/ProductsStyle'
 
@@ -13,6 +13,7 @@ const SelectQuantity = ({
 
   useEffect(() => {
     onAmountChange(id, amount)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
@@ -33,7 +34,12 @@ const SelectQuantity = ({
         keyboardType="numeric"
         value={amount.toString()}
         onChangeText={(value) => {
-          setAmount(parseInt(value, 10))
+          const numericValue = parseInt(value, 10)
+          if (isNaN(numericValue)) {
+            setAmount('')
+          } else {
+            setAmount(numericValue)
+          }
         }}
       />
 

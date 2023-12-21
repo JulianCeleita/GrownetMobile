@@ -27,7 +27,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function Products() {
   const navigation = useNavigation()
-  const { token, countryCode } = useTokenStore()
+  const { token } = useTokenStore()
   const [showFavorites, setShowFavorites] = useState(false)
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [products, setProducts] = useState([])
@@ -48,7 +48,6 @@ export default function Products() {
         setLoader(true)
         const requestBody = {
           id: selectedSupplier.id,
-          country: countryCode,
           accountNumber: selectedRestaurant.accountNumber,
           page: page,
         }
@@ -58,7 +57,7 @@ export default function Products() {
             Authorization: `Bearer ${token}`,
           },
         })
-
+        console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
 
         const productsWithTax = defaultProducts
@@ -67,7 +66,7 @@ export default function Products() {
             const pricesWithTax = product.prices.map((price) => {
               const priceWithTaxCalculation = (
                 price.price +
-                price.price * product.tax
+                price.price * price.tax
               ).toFixed(2)
               return {
                 ...price,
@@ -93,6 +92,7 @@ export default function Products() {
                 price.priceWithTax && parseFloat(price.priceWithTax) > 0,
             ),
           )
+
         setArticles((prevProducts) => {
           const productIds = new Set(prevProducts.map((p) => p.id))
           const newProducts = productsWithTax.filter(
@@ -100,7 +100,8 @@ export default function Products() {
           )
           setTimeout(() => {
             setLoader(false)
-          }, 3000)
+          }, 2000)
+
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
@@ -125,7 +126,7 @@ export default function Products() {
       const contentHeight = contentSize.height
       const screenHeight = layoutMeasurement.height
 
-      if (offsetY >= contentHeight - screenHeight - 20) {
+      if (offsetY >= contentHeight - screenHeight - 80) {
         setCurrentPage((prevPage) => prevPage + 1)
       }
     } else {
@@ -146,7 +147,6 @@ export default function Products() {
     const requestBody = {
       supplier: selectedSupplier.id,
       categorie: categoryId,
-      country: countryCode,
       accountNumber: selectedRestaurant.accountNumber,
     }
 
@@ -165,7 +165,7 @@ export default function Products() {
           const pricesWithTax = product.prices.map((price) => {
             const priceWithTaxCalculation = (
               price.price +
-              price.price * product.tax
+              price.price * price.tax
             ).toFixed(2)
             return {
               ...price,
@@ -240,7 +240,7 @@ export default function Products() {
           const pricesWithTax = product.prices.map((price) => {
             const priceWithTaxCalculation = (
               price.price +
-              price.price * product.tax
+              price.price * price.tax
             ).toFixed(2)
 
             return {
@@ -281,7 +281,7 @@ export default function Products() {
 
       setLoader(false)
     } catch (error) {
-      console.error('Error al obtener los productos del proveedor:', error)
+      console.error('Error al obtener los productos favoritos:', error)
     }
   }
   const toggleShowFavorites = async () => {
@@ -368,6 +368,7 @@ export default function Products() {
       ),
     })
   }, [toggleProductSearch])
+
   return (
     <View style={styles.container}>
       {showProductSearch && (

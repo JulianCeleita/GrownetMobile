@@ -152,6 +152,11 @@ export const ProductsStyle = StyleSheet.create({
     elevation: 4,
     width: 'auto',
   },
+  categoriesMenu: {
+    shadowColor: '#144D56',
+    elevation: 8,
+    marginVertical: 4,
+  },
   buttonCategory: {
     backgroundColor: 'white',
     paddingVertical: 15,
@@ -161,7 +166,7 @@ export const ProductsStyle = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',
     shadowColor: 'black',
-    elevation: 6,
+    elevation: 12,
     shadowRadius: 10,
     marginBottom: 1,
   },

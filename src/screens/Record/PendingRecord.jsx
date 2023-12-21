@@ -99,9 +99,15 @@ function PendingRecord() {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
       })
-      setEvidences((prevEvidences) => [...prevEvidences, ...result.assets])
+      console.log('Result from DocumentPicker:', result)
+
+      if (!result.canceled) {
+        setEvidences((prevEvidences) => [...prevEvidences, ...result.assets])
+      } else {
+        console.log('Document picking canceled')
+      }
     } catch (error) {
-      console.log('Error al seleccionar el archivo', error)
+      console.error('Error al seleccionar el archivo', error)
     }
   }
 
@@ -118,15 +124,15 @@ function PendingRecord() {
       }
     }
     evidences.forEach((file) => {
-      const fileUri = file.uri;
-      const fileName = fileUri.split('/').pop();
-      const fileType = fileUri.match(/\.(\w+)$/)?.[1];
-      formData.append("evidences[]", {
+      const fileUri = file.uri
+      const fileName = fileUri.split('/').pop()
+      const fileType = fileUri.match(/\.(\w+)$/)?.[1]
+      formData.append('evidences[]', {
         uri: fileUri,
-        name: fileName || "image",
-        type: `image/${fileType}` || "image/jpg",
-      });
-    });
+        name: fileName || 'image',
+        type: `image/${fileType}` || 'image/jpg',
+      })
+    })
 
     axios
       .post(createDisputeOrder, formData, {
@@ -155,16 +161,16 @@ function PendingRecord() {
   const onSendMail = () => {
     axios
       .get(`${sendEmail}/${selectedPendingOrder}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      setShowSendEmail(true)
-    })
-    .catch((error) => {
-      console.log('Error al enviar el correo', error)
-    })
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setShowSendEmail(true)
+      })
+      .catch((error) => {
+        console.log('Error al enviar el correo', error)
+      })
   }
 
   // CERRAR LA ORDEN SELECCIONADA
@@ -441,41 +447,40 @@ function PendingRecord() {
                   ))}
               </View>
               <View>
-              {evidences.length < 4 && (
-                <Button
-                  style={DisputeStyle.buttonUpload}
-                  onPress={pickDocument}
-                >
-                  <Feather name="upload" size={18} color="#04444F" />
-                  <Text style={DisputeStyle.textBtnUpload}>
-                    {' '}
-                    {t('uploadFile.customUpload')}
-                  </Text>
-                </Button>
+                {evidences.length < 4 && (
+                  <Button
+                    style={DisputeStyle.buttonUpload}
+                    onPress={pickDocument}
+                  >
+                    <Feather name="upload" size={18} color="#04444F" />
+                    <Text style={DisputeStyle.textBtnUpload}>
+                      {' '}
+                      {t('uploadFile.customUpload')}
+                    </Text>
+                  </Button>
                 )}
                 {evidences.length > 0 && (
-                <Button
-                  style={DisputeStyle.buttonUpload}
-                  onPress={onSendEvidences}
-                >
-                  <Feather name="send" size={18} color="#04444F" />
-                  <Text style={DisputeStyle.textBtnUpload}>
-                    {' '}
-                    {t('uploadFile.submitEvidence')}
-                  </Text>
-                </Button>
+                  <Button
+                    style={DisputeStyle.buttonUpload}
+                    onPress={onSendEvidences}
+                  >
+                    <Feather name="send" size={18} color="#04444F" />
+                    <Text style={DisputeStyle.textBtnUpload}>
+                      {' '}
+                      {t('uploadFile.submitEvidence')}
+                    </Text>
+                  </Button>
                 )}
               </View>
-              <Button
-                  style={DisputeStyle.buttonSendEmail}
-                  onPress={onSendMail}
-                >
-                  <Feather name="send" size={18} color="#04444F" />
-                  <Text style={DisputeStyle.textBtnUpload}>
-                    {' '}
-                    {t('uploadFile.sendEmail')}
-                  </Text>
-                </Button>
+              {detailsToShow.id_stateOrders === 6 && (
+                 <Button style={DisputeStyle.buttonSendEmail} onPress={onSendMail}>
+                 <Feather name="send" size={18} color="#04444F" />
+                 <Text style={DisputeStyle.textBtnUpload}>
+                   {' '}
+                   {t('uploadFile.sendEmail')}
+                 </Text>
+               </Button>
+              )}             
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onConfirmOrder(e)}

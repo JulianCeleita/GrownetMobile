@@ -82,7 +82,7 @@ const Suppliers = () => {
                 key={supplier.id}
                 onPress={() => {
                   handleSupplierSelect(supplier)
-                  navigation.navigate('products')
+                  navigation.navigate('TabNavigator')
                 }}
               >
                 <ImageBackground

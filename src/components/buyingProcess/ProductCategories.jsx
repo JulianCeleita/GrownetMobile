@@ -55,14 +55,14 @@ function ProductsCategories({
   const renderItem = ({ item, index }) => {
     const isCurrentItem = index === isCarousel.current.currentIndex
     return (
-      <View>
+      <View style={ProductsStyle.categoriesMenu}>
         {item === 'Favorites' && showFavorites ? (
           <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory2}>Volver</Text>
+            <Text style={ProductsStyle.buttonCategory2}>{t('categoriesMenu.goBack')}</Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
           <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory}>Favorites</Text>
+            <Text style={ProductsStyle.buttonCategory}>{t('categoriesMenu.favorites')}</Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity
@@ -78,7 +78,7 @@ function ProductsCategories({
                   : ProductsStyle.buttonCategory
               }
             >
-              All
+              {t('categoriesMenu.all')}
             </Text>
           )}
         </TouchableOpacity>
@@ -114,14 +114,14 @@ function ProductsCategories({
       <LinearGradient
         colors={['rgba(255, 255, 255, 0)', 'white']}
         start={[0.5, 0.1]}
-        end={[0.5, 0.2]}
+        end={[0.5, 0.1]}
       >
         <Carousel
           data={updatedCategories}
           renderItem={renderItem}
           sliderWidth={width}
           itemWidth={width / 3}
-          autoplay={true}
+          autoplay={false}
           loop={true}
           layout="default"
           useScrollView={true}
