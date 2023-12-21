@@ -24,8 +24,8 @@ const enTranslations = {
     message: 'The code you entered is incorrect',
     code: 'Try again',
     message2Modal: 'Please enter the code.',
-    waitFirstPart: "Wait for ",
-    waitSecondPart: " seconds",
+    waitFirstPart: 'Wait for ',
+    waitSecondPart: ' seconds',
   },
   restaurants: {
     addRestaurant: 'Contact us to add a restaurant!',
@@ -235,6 +235,11 @@ const enTranslations = {
     paragraphNineOne:
       'If you have any questions or concerns about these Terms, please contact us at ',
     paragraphNineLink: 'www.grownetapp.com',
+  },
+  search: {
+    placeholder: 'Search for your products here',
+    title: 'What can we help you with today?',
+    text: 'Easily find what you need',
   },
 }
 

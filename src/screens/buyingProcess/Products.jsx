@@ -66,7 +66,8 @@ export default function Products() {
             const pricesWithTax = product.prices.map((price) => {
               const priceWithTaxCalculation = (
                 price.price +
-                price.price * price.tax
+                //To do cambiar a price.tax
+                price.price * product.tax
               ).toFixed(2)
               return {
                 ...price,

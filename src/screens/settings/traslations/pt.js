@@ -24,8 +24,8 @@ const ptTranslations = {
     message: 'O código que você digitou está incorreto',
     code: 'Tentar novamente',
     message2Modal: 'Por favor, digite o código',
-    waitFirstPart: "Aguarde ",
-    waitSecondPart: " segundos",
+    waitFirstPart: 'Aguarde ',
+    waitSecondPart: ' segundos',
   },
   restaurants: {
     addRestaurant: 'Entre em contato para adicionar restaurante!',
@@ -238,6 +238,11 @@ const ptTranslations = {
     paragraphNineOne:
       'Se você tiver alguma dúvida ou preocupação sobre estes Termos, entre em contato conosco em ',
     paragraphNineLink: 'www.grownetapp.com',
+  },
+  search: {
+    placeholder: 'Pesquise seus produtos aqui',
+    title: 'Em que podemos ajudar hoje?',
+    text: 'Encontre facilmente o que você precisa',
   },
 }
 
