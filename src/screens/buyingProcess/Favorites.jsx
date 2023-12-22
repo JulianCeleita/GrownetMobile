@@ -37,7 +37,7 @@ const Favorites = () => {
     }
 
     fetchData()
-  }, [favorites])
+  }, [])
 
   const fetchFavorites = async () => {
     const requestBody = {
@@ -53,6 +53,7 @@ const Favorites = () => {
       })
 
       const defaultFavorites = response.data.favorites
+      console.log('defaultFavorites', defaultFavorites)
 
       const productsWithTax = defaultFavorites
         .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -85,10 +86,10 @@ const Favorites = () => {
           const isValidProduct = product.prices.some(
             (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
           )
-
+          console.log('isValidProduct', isValidProduct)
           return isValidProduct
         })
-
+      console.log('productsWithTax', productsWithTax)
       setFavorites(productsWithTax)
     } catch (error) {
       console.error('Error al obtener los productos favoritos:', error)
