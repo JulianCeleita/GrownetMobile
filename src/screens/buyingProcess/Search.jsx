@@ -23,6 +23,24 @@ function Search() {
   const [search, setSearch] = useState('')
   const [productSearch, setProductSearch] = useState([])
 
+  const [debouncedSearch, setDebouncedSearch] = useState(search)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 1000)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [search])
+
+  useEffect(() => {
+    if (debouncedSearch !== '') {
+      SearchByName()
+    }
+  }, [debouncedSearch])
+
   const SearchByName = async () => {
     if (search === '') {
       setProductSearch([])
@@ -45,7 +63,7 @@ function Search() {
       })
 
       const defaultProducts = response.data.products
-
+      console.log('defaultProducts:', defaultProducts)
       const productsWithTax = defaultProducts
         .filter((product) => product.prices.some((price) => price.nameUoms))
         .map((product) => {
@@ -85,10 +103,6 @@ function Search() {
     }
   }
 
-  useEffect(() => {
-    SearchByName()
-    console.log('search', search)
-  }, [search])
   // CAMBIO DE CANTIDAD DE ARTICULOS
   const handleAmountChange = (productId, newAmount) => {
     setProductSearch((prevArticles) =>
@@ -96,12 +110,31 @@ function Search() {
         article.id === productId ? { ...article, amount: newAmount } : article,
       ),
     )
-    const updatedArticlesToPay = productSearch?.map((article) =>
-      article.id === productId ? { ...article, amount: newAmount } : article,
+
+    const currentArticlesToPay = useOrderStore.getState().articlesToPay
+
+    const isProductInArticlesToPay = currentArticlesToPay.some(
+      (article) => article.id === productId,
     )
 
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
+    if (isProductInArticlesToPay) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: prevState.articlesToPay.map((article) =>
+          article.id === productId
+            ? { ...article, amount: newAmount }
+            : article,
+        ),
+      }))
+    } else {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: [
+          ...prevState.articlesToPay,
+          { id: productId, amount: newAmount },
+        ],
+      }))
+    }
   }
+
   // CAMBIO DE UOM DE ARTICULOS (EACH, BOX, KG)
   const handleUomChange = (productId, newUomToPay) => {
     const updatedArticlesToPay = productSearch?.map((article) => {
@@ -118,28 +151,48 @@ function Search() {
       }
       return article
     })
-    setProductSearch(updatedArticlesToPay)
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
-  }
 
-  function debounce(func, delay) {
-    let debounceTimer
-    return function (...args) {
-      const context = this
-      if (debounceTimer) clearTimeout(debounceTimer)
-      debounceTimer = setTimeout(() => func.apply(context, args), delay)
+    const currentArticlesToPay = useOrderStore.getState().articlesToPay
+
+    const isProductInArticlesToPay = currentArticlesToPay.some(
+      (article) => article.id === productId,
+    )
+
+    if (isProductInArticlesToPay) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: prevState.articlesToPay.map((article) =>
+          article.id === productId
+            ? {
+                ...article,
+                uomToPay: newUomToPay,
+                idUomToPay: selectedPrice.id,
+                priceWithTax: selectedPrice.priceWithTax,
+              }
+            : article,
+        ),
+      }))
+    } else {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: [
+          ...prevState.articlesToPay,
+          {
+            id: productId,
+            uomToPay: newUomToPay,
+            idUomToPay: selectedPrice.id,
+            priceWithTax: selectedPrice.priceWithTax,
+          },
+        ],
+      }))
     }
-  }
 
-  const debouncedHandleReset = debounce(SearchByName, 1000)
+    setProductSearch(updatedArticlesToPay)
+  }
 
   const handleSearchChange = (text) => {
     setSearch(text)
 
     if (!text.trim()) {
       setProductSearch([])
-    } else {
-      debouncedHandleReset(text)
     }
   }
 
