@@ -36,7 +36,7 @@ const esTranslations = {
   },
   menuPrimary: {
     Settings: 'Ajustes',
-    orders: 'Órdenes',
+    orders: 'Carrito',
     records: 'Historial',
     chat: 'Chat',
     titleSettings: 'Configuración',
@@ -54,7 +54,7 @@ const esTranslations = {
   productSearcher: {
     placeholder: 'Buscar productos',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'Usted tiene ',
     findSecondPart: ' favoritos encontrados:',
   },

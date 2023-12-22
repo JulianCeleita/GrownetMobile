@@ -35,7 +35,7 @@ const enTranslations = {
   },
   menuPrimary: {
     Settings: 'Settings',
-    orders: 'Orders',
+    orders: 'Cart',
     records: 'Records',
     chat: 'Chat',
     titleSettings: 'Settings',
@@ -53,7 +53,7 @@ const enTranslations = {
   productSearcher: {
     placeholder: 'Search for products',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'You have ',
     findSecondPart: ' favorites products:',
   },
