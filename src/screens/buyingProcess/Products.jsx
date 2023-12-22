@@ -37,16 +37,15 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [loader, setLoader] = useState(false)
+  const [continuePagination, setContinuePagination] = useState(true);
 
   const fetchProducts = async (page) => {
-    if (loader === false) {
+    if (loader === false && continuePagination) {
       try {
         setLoader(true)
         const requestBody = {
           id: selectedSupplier.id,
           accountNumber: selectedRestaurant.accountNumber,
-          /* TODO QUITAR EL COUNTRY ANTES DE ENVIAR A PRODUCCIÓN */
-          //country: 44,
           page: page,
         }
 
@@ -58,6 +57,12 @@ export default function Products() {
         console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
         console.log('Estos son los productos', defaultProducts)
+        if (defaultProducts.length === 0) {
+          // Si no hay más productos, detener la carga.
+          setContinuePagination(false);
+          setLoader(false);
+          return;
+        }
 
         const productsWithTax = defaultProducts
           .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -65,7 +70,6 @@ export default function Products() {
             const pricesWithTax = product.prices.map((price) => {
               const priceWithTaxCalculation = (
                 price.price +
-                /* TODO CAMBIAR ESTE PRODUCT POR PRICE.TAX */
                 price.price * price.tax
               ).toFixed(2)
               return {
@@ -110,7 +114,7 @@ export default function Products() {
   useEffect(() => {
     fetchProducts(currentPage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [continuePagination])
 
   // PAGINACION
 
@@ -122,15 +126,15 @@ export default function Products() {
       const offsetY = contentOffset.y
       const contentHeight = contentSize.height
       const screenHeight = layoutMeasurement.height
-      const middlePosition = contentHeight / 2 - screenHeight/2;
+      const seventyPercentPosition = contentHeight * 0.7
 
-      if (offsetY >= middlePosition) {
+      if (offsetY >= seventyPercentPosition && continuePagination) {
         setCurrentPage((prevPage) => {
           const updatedPage = prevPage + 1;
           fetchProducts(updatedPage);
           return updatedPage;
         }); 
-        console.log("eightyPercentPosition", eightyPercentPosition)
+        console.log("eightyPercentPosition", seventyPercentPosition)
       }
     } else {
       return
