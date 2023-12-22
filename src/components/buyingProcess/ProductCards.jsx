@@ -15,6 +15,8 @@ const ProductCards = ({
   onAmountChange,
   onUomChange,
   opacity,
+  search,
+  SearchByName,
   fetchFavorites,
   fetchProducts,
   currentPage,
@@ -67,6 +69,8 @@ const ProductCards = ({
       }))
       if (opacity) {
         await fetchFavorites()
+      } else if (search) {
+        await SearchByName()
       } else {
         await fetchProducts(currentPage)
       }
