@@ -54,7 +54,7 @@ const esTranslations = {
   productSearcher: {
     placeholder: 'Buscar productos',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'Usted tiene ',
     findSecondPart: ' favoritos encontrados:',
   },

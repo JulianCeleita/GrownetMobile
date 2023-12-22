@@ -53,7 +53,7 @@ const ptTranslations = {
   productSearcher: {
     placeholder: 'Buscar produtos',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'Você tem ',
     findSecondPart: ' favoritos encontrados:',
   },

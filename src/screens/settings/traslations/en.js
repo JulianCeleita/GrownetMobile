@@ -53,7 +53,7 @@ const enTranslations = {
   productSearcher: {
     placeholder: 'Search for products',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'You have ',
     findSecondPart: ' favorites products:',
   },
