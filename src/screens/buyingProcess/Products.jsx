@@ -46,7 +46,7 @@ export default function Products() {
           id: selectedSupplier.id,
           accountNumber: selectedRestaurant.accountNumber,
           //To do quitar country
-          country: 44,
+          //country: 44,
           page: page,
         }
 
@@ -65,7 +65,7 @@ export default function Products() {
               const priceWithTaxCalculation = (
                 price.price +
                 //To do cambiar a price.tax
-                price.price * product.tax
+                price.price * price.tax
               ).toFixed(2)
               return {
                 ...price,

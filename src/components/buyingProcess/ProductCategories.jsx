@@ -1,16 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import { Ionicons } from '@expo/vector-icons';
-import axios from '../../../axiosConfig';
-import { allCategories } from '../../config/urls.config';
-import useOrderStore from '../../store/useOrderStore';
-import useTokenStore from '../../store/useTokenStore';
-import { ProductsStyle } from '../../styles/ProductsStyle';
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  Dimensions,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Carousel from 'react-native-snap-carousel'
+import { Ionicons } from '@expo/vector-icons'
+import axios from '../../../axiosConfig'
+import { allCategories } from '../../config/urls.config'
+import useOrderStore from '../../store/useOrderStore'
+import useTokenStore from '../../store/useTokenStore'
+import { ProductsStyle } from '../../styles/ProductsStyle'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 function ProductsCategories({
   showFavorites,
@@ -19,13 +25,12 @@ function ProductsCategories({
   selectedCategory,
   toggleShowFavorites2,
 }) {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
-  const isCarousel = useRef(null);
-  const [categories, setCategories] = useState([]);
-  const { token } = useTokenStore();
-  const { selectedSupplier } = useOrderStore();
-  
+  const { t } = useTranslation()
+  const navigation = useNavigation()
+  const isCarousel = useRef(null)
+  const [categories, setCategories] = useState([])
+  const { token } = useTokenStore()
+  const { selectedSupplier } = useOrderStore()
 
   useEffect(() => {
     axios
@@ -35,15 +40,15 @@ function ProductsCategories({
         },
       })
       .then((response) => {
-        setCategories(response.data.categories);
+        setCategories(response.data.categories)
       })
       .catch((error) => {
-        console.error('Error al obtener los datos de la API:', error);
-      });
-  }, [selectedSupplier, token]);
+        console.error('Error al obtener los datos de la API:', error)
+      })
+  }, [selectedSupplier, token])
 
-  const categoriesList = categories.map((e) => e.name);
-  const updatedCategories = ['All', ...categoriesList];
+  const categoriesList = categories.map((e) => e.name)
+  const updatedCategories = ['All', ...categoriesList]
 
   const renderItem = ({ item }) => {
     if (item === 'Favorites' && showFavorites) {
@@ -53,7 +58,7 @@ function ProductsCategories({
             {t('categoriesMenu.goBack')}
           </Text>
         </TouchableOpacity>
-      );
+      )
     } else if (item === 'Favorites') {
       return (
         <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
@@ -61,7 +66,7 @@ function ProductsCategories({
             {t('categoriesMenu.favorites')}
           </Text>
         </TouchableOpacity>
-      );
+      )
     } else if (item === 'All') {
       return (
         <TouchableOpacity
@@ -79,9 +84,9 @@ function ProductsCategories({
             {t('categoriesMenu.all')}
           </Text>
         </TouchableOpacity>
-      );
+      )
     } else {
-      const categoryApi = categories.find(category => category.name === item);
+      const categoryApi = categories.find((category) => category.name === item)
       if (categoryApi) {
         return (
           <TouchableOpacity
@@ -99,15 +104,15 @@ function ProductsCategories({
               {categoryApi.name}
             </Text>
           </TouchableOpacity>
-        );
+        )
       }
     }
-    return null;
-  };
+    return null
+  }
 
   const handleGoBack = () => {
-    navigation.goBack();
-  };
+    navigation.goBack()
+  }
 
   return (
     <SafeAreaView style={ProductsStyle.fixedContainer}>
@@ -137,7 +142,7 @@ function ProductsCategories({
         />
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
-export default ProductsCategories;
+export default ProductsCategories
