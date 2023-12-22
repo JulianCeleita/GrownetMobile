@@ -30,11 +30,38 @@ export const ModalStepperStyle = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  textTitle: {
+    color: '#62C471',
+    fontSize: 20,
+    //textAlign: 'left',
+    fontFamily: 'PoppinsSemi',
+    marginLeft: 5,
+  },
+  close: {
+    //alignItems: 'flex-end',
+    //justifyContent: 'flex-end',
+    //marginRight: 20,
+    //marginBottom: 20,
+    //width: '100%',
+  },
   text: {
     color: '#04444f',
-    fontSize: 20,
+    fontSize: 17,
     textAlign: 'left',
-    fontFamily: 'PoppinsSemi',
+    fontFamily: 'PoppinsMedium',
+    marginBottom: 0,
+  },
+  textPrice: {
+    color: '#04444f',
+    fontSize: 17,
+    textAlign: 'left',
+    fontFamily: 'PoppinsRegular',
     marginBottom: 10,
   },
   btn: {
@@ -58,11 +85,10 @@ export const ModalStepperStyle = StyleSheet.create({
     borderColor: '#f2f2f2',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginRight: 5,
-    width: 80,
-    height: 45,
-    borderRadius: 51,
     textAlign: 'center',
+    width: 300,
+    height: 80,
+    borderRadius: 10,
   },
   countOrderD: {
     flexDirection: 'row',
@@ -104,11 +130,14 @@ export const ModalStepperStyle = StyleSheet.create({
   //Desplegable
   product: {
     backgroundColor: 'white',
-    marginBottom: 20,
+    marginBottom: 5,
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
     justifyContent: 'space-around',
+  },
+  uoms: {
+    width: '50%',
   },
   containerDrop: {
     width: 150,

@@ -1,35 +1,35 @@
 import React, { useState } from 'react'
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Modal,
+  Text,
   TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native'
-import { GlobalStyles } from '../../styles/Styles'
-import { MaterialIcons } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-import ProductCards from './ProductCards'
-import SelectQuantity from './SelectQuantity'
-import { ProductsStyle } from '../../styles/ProductsStyle'
-import { ModalStepperStyle } from '../../styles/ModalStepperStyle'
 import { Dropdown } from 'react-native-element-dropdown'
-import { Platform, StyleSheet } from 'react-native'
+import { ModalStepperStyle } from '../../styles/ModalStepperStyle'
+import { AntDesign } from '@expo/vector-icons'
+import { ModalStyle } from '../../styles/LoginStyle'
+import { GlobalStyles } from '../../styles/Styles'
+import SelectQuantity from './SelectQuantity'
+import { useTranslation } from 'react-i18next'
 
-const ModalStepper = () => {
-  const [amount, setAmount] = useState('')
+const ModalStepper = ({
+  setIsModalVisible,
+  name,
+  prices,
+  uomToPay,
+  isFocus,
+  setIsFocus,
+  handleUomToPayChange,
+  productData,
+  onAmountChange,
+  counter,
+}) => {
+  const { t } = useTranslation()
   const [selectedValue, setSelectedValue] = useState(null)
-  const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-  ]
+
   console.log(selectedValue)
   const handleDropdownChange = (value, index) => {
     // Aquí puedes realizar acciones basadas en el cambio de selección
@@ -43,32 +43,58 @@ const ModalStepper = () => {
       onRequestClose=""
     >
       <TouchableWithoutFeedback>
-        {/*modal*/}
         <View style={ModalStepperStyle.modalContainer}>
           <View style={ModalStepperStyle.centeredView}>
             <View style={ModalStepperStyle.modalView}>
+              <View style={ModalStepperStyle.title}>
+                <Text style={ModalStepperStyle.textTitle}>{name}</Text>
+                <TouchableOpacity
+                  style={ModalStepperStyle.close}
+                  onPress={() => setIsModalVisible(false)}
+                >
+                  <AntDesign name="close" size={25} color="#7E7E7E" />
+                </TouchableOpacity>
+              </View>
               <View style={ModalStepperStyle.product}>
-                <Text style={ModalStepperStyle.text}>Cucumber</Text>
+                <View style={ModalStepperStyle.uoms}>
+                  <Text style={ModalStepperStyle.text}>
+                    {prices.find((price) => price.nameUoms === uomToPay).name}
+                  </Text>
+                  <Text style={ModalStepperStyle.textPrice}>
+                    £{' '}
+                    {
+                      prices.find((price) => price.nameUoms === uomToPay)
+                        .priceWithTax
+                    }
+                  </Text>
+                </View>
+
                 <Dropdown
-                  style={[ModalStepperStyle.dropdown]}
-                  containerStyle={{ borderRadius: 20, marginBottom: 10 }}
+                  style={[
+                    ModalStepperStyle.dropdown,
+                    isFocus && { borderColor: '#04444f' },
+                  ]}
+                  containerStyle={{ borderRadius: 20 }}
                   placeholderStyle={ModalStepperStyle.placeholderStyle}
                   selectedTextStyle={ModalStepperStyle.selectedTextStyle}
-                  data={data}
+                  data={prices}
                   maxHeight={200}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="box"
-                  value={selectedValue}
-                  onChange={handleDropdownChange}
-                  //placeholder={!isFocus ? uomToPay : '...'}
-                  //value={uomToPay}
-                  //onFocus={() => setIsFocus(true)}
-                  //onBlur={() => setIsFocus(false)}
-                  //onChange={handleUomToPayChange}
+                  labelField="nameUoms"
+                  valueField="nameUoms"
+                  placeholder={!isFocus ? uomToPay : '...'}
+                  value={uomToPay}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={handleUomToPayChange}
                 />
               </View>
-              <View style={ModalStepperStyle.countOrderD}>
+              <SelectQuantity
+                productData={productData}
+                onAmountChange={onAmountChange}
+                counter={0}
+                style={ModalStepperStyle}
+              />
+              {/*<View style={ModalStepperStyle.countOrderD}>
                 <TouchableOpacity>
                   <Text style={ModalStepperStyle.button}>-</Text>
                 </TouchableOpacity>
@@ -78,15 +104,29 @@ const ModalStepper = () => {
                   keyboardType="numeric"
                   //value={0}
                 />
-
                 <TouchableOpacity>
                   <Text style={ModalStepperStyle.button2}>+</Text>
                 </TouchableOpacity>
               </View>
+              <View style={[ModalStyle.buttons, { marginTop: 10 }]}>
+                <TouchableOpacity
+                  style={[GlobalStyles.btnPrimary, ModalStyle.space]}
+                >
+                  <Text style={GlobalStyles.textBtnSecundary}>
+                    Añadir a la orden
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={GlobalStyles.btnOutline}>
+                  <Text style={GlobalStyles.textBtnOutline}>Close</Text>
+                </TouchableOpacity>
+                </View>*/}
               <View>
                 <TouchableOpacity style={ModalStepperStyle.btn}>
-                  <Text style={ModalStepperStyle.textBtn}>
-                    Añadir a la order
+                  <Text
+                    style={ModalStepperStyle.textBtn}
+                    onPress={() => setIsModalVisible(false)}
+                  >
+                    {t('modalStepper.textBtn')}
                   </Text>
                 </TouchableOpacity>
               </View>

@@ -7,6 +7,7 @@ const SelectQuantity = ({
   productData,
   onAmountChange,
   counter,
+  style,
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
@@ -18,7 +19,7 @@ const SelectQuantity = ({
   }, [amount])
 
   return (
-    <View style={widthOrder ? ProductsStyle.countOrderD : ProductsStyle.count}>
+    <View style={widthOrder ? style.countOrderD : style.count}>
       <TouchableOpacity
         onPress={() => {
           if (amount > counter) {
@@ -26,11 +27,11 @@ const SelectQuantity = ({
           }
         }}
       >
-        <Text style={ProductsStyle.button}>-</Text>
+        <Text style={style.button}>-</Text>
       </TouchableOpacity>
 
       <TextInput
-        style={ProductsStyle.countSelect}
+        style={style.countSelect}
         keyboardType="numeric"
         value={amount.toString()}
         onChangeText={(value) => {
@@ -48,7 +49,7 @@ const SelectQuantity = ({
           setAmount(amount + 1)
         }}
       >
-        <Text style={ProductsStyle.button2}>+</Text>
+        <Text style={style.button2}>+</Text>
       </TouchableOpacity>
     </View>
   )

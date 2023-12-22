@@ -248,6 +248,9 @@ const esTranslations = {
     text: 'Explora productos y elige tus favoritos seleccionando el icono del corazón',
     buttonText: 'Ir a productos',
   },
+  modalStepper: {
+    textBtn: 'Añadir a la orden',
+  },
 }
 
 export default esTranslations

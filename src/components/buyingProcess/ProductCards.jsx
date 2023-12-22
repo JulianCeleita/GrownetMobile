@@ -9,6 +9,7 @@ import { ProductsStyle } from '../../styles/ProductsStyle'
 import { addFavorites } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
+import ModalStepper from './ModalStepper'
 
 const ProductCards = ({
   productData,
@@ -19,6 +20,7 @@ const ProductCards = ({
   fetchProducts,
   currentPage,
 }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const { id, name, image, prices, uomToPay, active } = productData
 
   const { selectedSupplier, selectedRestaurant } = useOrderStore()
@@ -30,7 +32,6 @@ const ProductCards = ({
     isFavoritePending: false,
     isBeingUpdated: false,
   })
-
   const handleToggleFavorite = useCallback(async () => {
     if (productState.isFavoritePending) return
 
@@ -103,7 +104,8 @@ const ProductCards = ({
     },
     [id, onUomChange],
   )
-
+  const imageUrl =
+    'https://static.vecteezy.com/system/resources/previews/025/064/813/original/broccoli-with-ai-generated-free-png.png'
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
       <View
@@ -113,16 +115,19 @@ const ProductCards = ({
           opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
         ]}
       >
-        <View style={ProductsStyle.containerImage}>
+        <TouchableOpacity
+          style={ProductsStyle.containerImage}
+          onPress={() => setIsModalVisible(true)}
+        >
           <Image
-            source={{ uri: image }}
+            source={{ uri: imageUrl }}
             style={ProductsStyle.ImageCardProduct}
             resizeMode="contain"
           />
-        </View>
+        </TouchableOpacity>
         <View>
           <View style={ProductsStyle.containName}>
-            <View>
+            <TouchableOpacity onPress={() => setIsModalVisible(true)}>
               <Text style={ProductsStyle.textName}>
                 {name}{' '}
                 {prices.find((price) => price.nameUoms === uomToPay).name}
@@ -134,18 +139,22 @@ const ProductCards = ({
                     .priceWithTax
                 }
               </Text>
-            </View>
-
-            <TouchableOpacity onPress={handleToggleFavorite}>
-              <Icon
-                name={productState.isFavorite ? 'heart' : 'heart-o'}
-                size={24}
-                color="#62C471"
-                style={{ marginTop: 5 }}
-              />
             </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+              <TouchableOpacity onPress={handleToggleFavorite}>
+                <Icon
+                  name={productState.isFavorite ? 'heart' : 'heart-o'}
+                  size={24}
+                  color="#62C471"
+                  style={{ marginTop: 5 }}
+                />
+              </TouchableOpacity>
+              <View style={ProductsStyle.quantity}>
+                <Text style={ProductsStyle.textQuantity}>100</Text>
+              </View>
+            </View>
           </View>
-          <View style={ProductsStyle.containerSelect}>
+          {/*<View style={ProductsStyle.containerSelect}>
             <SelectQuantity
               productData={productData}
               onAmountChange={onAmountChange}
@@ -168,9 +177,24 @@ const ProductCards = ({
                 onChange={handleUomToPayChange}
               />
             </View>
-          </View>
+          </View>*/}
         </View>
       </View>
+      {isModalVisible && (
+        <ModalStepper
+          setIsModalVisible={setIsModalVisible}
+          name={name}
+          prices={prices}
+          uomToPay={uomToPay}
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          handleUomToPayChange={handleUomToPayChange}
+          //Variables selectQuantity
+          productData={productData}
+          onAmountChange={onAmountChange}
+          counter={0}
+        />
+      )}
     </View>
   )
 }

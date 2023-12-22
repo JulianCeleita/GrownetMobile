@@ -30,7 +30,6 @@ function Search() {
           </TouchableOpacity>
         </View>
       </View>
-      <ModalStepper />
       <View style={SearchStyle.suggestion}>
         <Text style={SearchStyle.tittle}>{t('search.title')} 🔍</Text>
       </View>

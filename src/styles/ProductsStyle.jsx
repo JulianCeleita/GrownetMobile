@@ -56,6 +56,7 @@ export const ProductsStyle = StyleSheet.create({
   containName: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    width: '75%',
   },
   count: {
     flexDirection: 'row',
@@ -71,34 +72,34 @@ export const ProductsStyle = StyleSheet.create({
   },
   countOrderD: {
     flexDirection: 'row',
-    borderWidth: 1.5,
-    borderColor: '#f2f2f2',
+    //borderWidth: 1.5,
+    //borderColor: '#f2f2f2',
     alignItems: 'center',
     justifyContent: 'space-around',
     marginRight: 5,
-    width: 200,
-    height: 80,
+    width: 100,
+    height: 45,
     borderRadius: 51,
     textAlign: 'center',
   },
   button: {
     backgroundColor: 'transparent',
-    fontSize: 35,
+    fontSize: 25,
     color: '#62c471',
     fontFamily: 'PoppinsSemi',
     marginLeft: 4,
   },
   countSelect: {
-    fontSize: 30,
+    fontSize: 16,
     color: '#04444f',
     fontFamily: 'PoppinsMedium',
     marginLeft: 6,
-    width: 90,
+    //width: 90,
     textAlign: 'center',
   },
   button2: {
     backgroundColor: 'transparent',
-    fontSize: 35,
+    fontSize: 25,
     color: '#62c471',
     fontFamily: 'PoppinsSemi',
     textAlign: 'center',
@@ -115,7 +116,7 @@ export const ProductsStyle = StyleSheet.create({
   textName: {
     color: '#04444f',
     fontSize: 15,
-    width: 120,
+    width: 130,
     fontFamily: 'PoppinsMedium',
   },
   textName1: {
@@ -130,7 +131,22 @@ export const ProductsStyle = StyleSheet.create({
     fontSize: 15,
     marginTop: -5,
   },
-
+  quantity: {
+    backgroundColor: '#026CD2',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    marginTop: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textQuantity: {
+    fontSize: 15,
+    fontFamily: 'PoppinsRegular',
+    padding: 5,
+    textAlign: 'center',
+    color: 'white',
+  },
   containerCards: { flex: 1, marginTop: 10 },
   // PRODUCT CATEGORIES
   fixedContainer: {

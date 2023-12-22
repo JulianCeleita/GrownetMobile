@@ -247,6 +247,9 @@ const enTranslations = {
     text: 'Explore products and choose your favorites by selecting the heart icon',
     buttonText: 'Go to products',
   },
+  modalStepper: {
+    textBtn: 'Add to Order',
+  },
 }
 
 export default enTranslations
