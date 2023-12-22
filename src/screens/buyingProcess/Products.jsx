@@ -49,6 +49,8 @@ export default function Products() {
         const requestBody = {
           id: selectedSupplier.id,
           accountNumber: selectedRestaurant.accountNumber,
+          /* TODO QUITAR EL COUNTRY ANTES DE ENVIAR A PRODUCCIÓN */
+          //country: 44,
           page: page,
         }
 
@@ -59,6 +61,7 @@ export default function Products() {
         })
         console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
+        console.log('Estos son los productos', defaultProducts)
 
         const productsWithTax = defaultProducts
           .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -66,6 +69,7 @@ export default function Products() {
             const pricesWithTax = product.prices.map((price) => {
               const priceWithTaxCalculation = (
                 price.price +
+                /* TODO CAMBIAR ESTE PRODUCT POR PRICE.TAX */
                 price.price * price.tax
               ).toFixed(2)
               return {
@@ -94,18 +98,15 @@ export default function Products() {
           )
 
         setArticles((prevProducts) => {
-          const productIds = new Set(prevProducts.map((p) => p.id))
-          const newProducts = productsWithTax.filter(
-            (p) => !productIds.has(p.id),
-          )
-          setTimeout(() => {
-            setLoader(false)
-          }, 2000)
+          const newProducts = productsWithTax.filter((p) => !prevProducts.some((prevP) => prevP.id === p.id));
 
+            setLoader(false)
+           console.log('Estos son los productos con tax', productsWithTax)
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
         console.error('Error al obtener los productos del proveedor:', error)
+        setLoader(false)
       }
     }
   }
@@ -113,7 +114,7 @@ export default function Products() {
   useEffect(() => {
     fetchProducts(currentPage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage])
+  }, [])
 
   // PAGINACION
 
@@ -125,9 +126,15 @@ export default function Products() {
       const offsetY = contentOffset.y
       const contentHeight = contentSize.height
       const screenHeight = layoutMeasurement.height
+      const middlePosition = contentHeight / 2 - screenHeight/2;
 
-      if (offsetY >= contentHeight - screenHeight - 80) {
-        setCurrentPage((prevPage) => prevPage + 1)
+      if (offsetY >= middlePosition) {
+        setCurrentPage((prevPage) => {
+          const updatedPage = prevPage + 1;
+          fetchProducts(updatedPage);
+          return updatedPage;
+        });
+        console.log("eightyPercentPosition", eightyPercentPosition)
       }
     } else {
       return
@@ -224,7 +231,7 @@ export default function Products() {
       supplier_id: selectedSupplier.id,
       accountNumber: selectedRestaurant.accountNumber,
     }
-
+    console.log('requestBody', requestBody)
     try {
       const response = await axios.post(favoritesBySupplier, requestBody, {
         headers: {
@@ -233,6 +240,8 @@ export default function Products() {
       })
 
       const defaultFavorites = response.data.favorites
+      console.log('defaultFavorites', defaultFavorites)
+      console.log('productsWithTax', productsWithTax)
 
       const productsWithTax = defaultFavorites
         .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -369,6 +378,7 @@ export default function Products() {
     })
   }, [toggleProductSearch])
 
+  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {showProductSearch && (
