@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { favoritesBySupplier } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import ProductCards from '../../components/buyingProcess/ProductCards'
 import { useTranslation } from 'react-i18next'
 import axios from '../../../axiosConfig'
 import useTokenStore from '../../store/useTokenStore'
+import { FavoritesStyle } from '../../styles/FavoritesStyle'
+import { GlobalStyles } from '../../styles/Styles'
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState()
+  const navigation = useNavigation()
   const { t } = useTranslation()
   const { token } = useTokenStore()
 
@@ -25,7 +37,7 @@ const Favorites = () => {
     }
 
     fetchData()
-  }, [])
+  }, [favorites])
 
   const fetchFavorites = async () => {
     const requestBody = {
@@ -89,7 +101,7 @@ const Favorites = () => {
         article.id === productId ? { ...article, amount: newAmount } : article,
       ),
     )
-    const updatedArticlesToPay = favorites.map((article) =>
+    const updatedArticlesToPay = favorites?.map((article) =>
       article.id === productId ? { ...article, amount: newAmount } : article,
     )
 
@@ -97,7 +109,7 @@ const Favorites = () => {
   }
   // CAMBIO DE UOM DE ARTICULOS (EACH, BOX, KG)
   const handleUomChange = (productId, newUomToPay) => {
-    const updatedArticlesToPay = favorites.map((article) => {
+    const updatedArticlesToPay = favorites?.map((article) => {
       if (article.id === productId) {
         const selectedPrice = article.prices.find(
           (price) => price.nameUoms === newUomToPay,
@@ -114,17 +126,42 @@ const Favorites = () => {
     setFavorites(updatedArticlesToPay)
     useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
+
   return (
-    <ScrollView>
-      <Text style={styles.StyleText}>
-        {t('favorites.findFirstPart')}{' '}
-        {favorites?.filter((favorite) => favorite.active === 1).length}{' '}
-        {t('favorites.findSecondPart')}{' '}
-      </Text>
-      {favorites
-        ?.filter((favorite) => favorite.active === 1)
-        .map((favorite) => (
-          <View key={favorite.id}>
+    <SafeAreaView style={FavoritesStyle.favorites}>
+      <ScrollView
+        contentContainerStyle={[FavoritesStyle.card, GlobalStyles.boxShadow]}
+      >
+        {favorites?.length > 0 && (
+          <View>
+            <Text style={styles.StyleText}>
+              {t('favorites2.findFirstPart')}{' '}
+              {favorites?.filter((favorite) => favorite.active === 1).length}{' '}
+              {t('favorites2.findSecondPart')}{' '}
+            </Text>
+          </View>
+        )}
+
+        {favorites?.length === 0 && (
+          <View style={styles.container}>
+            <Ionicons name="md-heart-circle" size={65} color="#62C471" />
+            <Text style={FavoritesStyle.tittle}>
+              {t('favorites.titleCard')}
+            </Text>
+            <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('products')}
+              style={[GlobalStyles.btnPrimary, { width: 200 }]}
+            >
+              <Text style={GlobalStyles.textBtnSecundary}>
+                {t('favorites.buttonText')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {favorites?.map((favorite) => (
+          <View key={favorite.id} style={{ marginTop: 10 }}>
             <ProductCards
               key={favorite.id}
               productData={favorite}
@@ -137,15 +174,22 @@ const Favorites = () => {
             />
           </View>
         ))}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
 export default Favorites
+
 const styles = StyleSheet.create({
   StyleText: {
     textAlign: 'center',
     color: '#04444f',
     fontSize: 15,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

@@ -463,15 +463,34 @@ const TabNavigator = () => {
         options={{
           title: t('menuPrimary.orders'),
           tabBarIcon: tabBarIconProps('cart-outline'),
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
         }}
       />
       <Tab.Screen
-        name="Favorites"
+        name={t('favorites.title')}
         component={Favorites}
         options={{
           tabBarIcon: tabBarIconFavorites('heart'),
           headerShown: true,
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
         }}
       />
       {/* <Tab.Screen

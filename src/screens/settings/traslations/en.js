@@ -35,7 +35,7 @@ const enTranslations = {
   },
   menuPrimary: {
     Settings: 'Settings',
-    orders: 'Orders',
+    orders: 'Cart',
     records: 'Records',
     chat: 'Chat',
     titleSettings: 'Settings',
@@ -53,7 +53,7 @@ const enTranslations = {
   productSearcher: {
     placeholder: 'Search for products',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'You have ',
     findSecondPart: ' favorites products:',
   },
@@ -237,9 +237,15 @@ const enTranslations = {
     paragraphNineLink: 'www.grownetapp.com',
   },
   search: {
-    placeholder: 'Search for your products here',
-    title: 'What can we help you with today?',
+    placeholder: 'Search your products here',
+    title: 'What are you looking for?',
     text: 'Easily find what you need',
+  },
+  favorites: {
+    title: 'Your Favorites',
+    titleCard: "You don't have favorites yet",
+    text: 'Explore products and choose your favorites by selecting the heart icon',
+    buttonText: 'Go to products',
   },
 }
 

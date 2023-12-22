@@ -35,7 +35,7 @@ const ptTranslations = {
   },
   menuPrimary: {
     Settings: 'Configurações',
-    orders: 'Pedidos',
+    orders: 'Carrinho',
     records: 'Histórico',
     chat: 'Chat',
     titleSettings: 'Configurações',
@@ -53,7 +53,7 @@ const ptTranslations = {
   productSearcher: {
     placeholder: 'Buscar produtos',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'Você tem ',
     findSecondPart: ' favoritos encontrados:',
   },
@@ -241,8 +241,14 @@ const ptTranslations = {
   },
   search: {
     placeholder: 'Pesquise seus produtos aqui',
-    title: 'Em que podemos ajudar hoje?',
+    title: 'O que você está procurando?',
     text: 'Encontre facilmente o que você precisa',
+  },
+  favorites: {
+    title: 'Seus favoritos',
+    titleCard: 'Você ainda não tem favoritos',
+    text: 'Explore produtos e escolha seus favoritos selecionando o ícone do coração',
+    buttonText: 'Ir para produtos',
   },
 }
 
