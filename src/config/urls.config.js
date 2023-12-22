@@ -16,6 +16,7 @@ export const supplierCategorie = process.env.EXPO_PUBLIC_SUPPLIER_CATEGORIE
 
 // PRODUCTS
 export const supplierProducts = process.env.EXPO_PUBLIC_SELECT_SUPPLIER_PRODUCTS
+export const productsSearchApi = process.env.EXPO_PUBLIC_SEARCH
 
 // ORDERS RECORD
 export const createStorageOrder = process.env.EXPO_PUBLIC_STORAGE_ORDER
