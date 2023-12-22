@@ -1,5 +1,5 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   ScrollView,
   Text,
@@ -24,6 +24,10 @@ function Search() {
   const [productSearch, setProductSearch] = useState([])
 
   const SearchByName = async () => {
+    if (search === '') {
+      setProductSearch([])
+      return
+    }
     const requestBody = {
       search: search,
       supplier_id: selectedSupplier.id,
@@ -80,12 +84,10 @@ function Search() {
       console.error('Error al obtener los productos favoritos:', error)
     }
   }
+
   useEffect(() => {
-    if (search.trim() === '') {
-      setProductSearch([])
-    } else {
-      SearchByName()
-    }
+    SearchByName()
+    console.log('search', search)
   }, [search])
   // CAMBIO DE CANTIDAD DE ARTICULOS
   const handleAmountChange = (productId, newAmount) => {
@@ -124,15 +126,8 @@ function Search() {
     let debounceTimer
     return function (...args) {
       const context = this
-      const [text] = args
-
-      if (text !== undefined && text.trim()) {
-        console.log('se ejecuto debounce')
-        clearTimeout(debounceTimer)
-        debounceTimer = setTimeout(() => func.apply(context, args), delay)
-      } else {
-        setProductSearch([])
-      }
+      if (debounceTimer) clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => func.apply(context, args), delay)
     }
   }
 
@@ -140,12 +135,12 @@ function Search() {
 
   const handleSearchChange = (text) => {
     setSearch(text)
+
     if (!text.trim()) {
       setProductSearch([])
     } else {
       debouncedHandleReset(text)
     }
-    console.log('search', search)
   }
 
   return (
