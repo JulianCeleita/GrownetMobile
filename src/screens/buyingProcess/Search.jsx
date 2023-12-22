@@ -186,6 +186,8 @@ function Search() {
               productData={product}
               onAmountChange={handleAmountChange}
               onUomChange={handleUomChange}
+              SearchByName={SearchByName}
+              search
             />
           ))}
         </ScrollView>
