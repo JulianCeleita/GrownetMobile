@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { ActivityIndicator } from 'react-native-paper'
 import axios from '../../../axiosConfig'
 import ProductCard from '../../components/buyingProcess/ProductCards'
@@ -15,11 +15,7 @@ import ProductSearcher from '../../components/buyingProcess/ProductSearch'
 import ProductsFind from '../../components/buyingProcess/ProductsFind'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
-import {
-  favoritesBySupplier,
-  supplierCategorie,
-  supplierProducts,
-} from '../../config/urls.config'
+import { supplierCategorie, supplierProducts } from '../../config/urls.config'
 import { ProductsStyle } from '../../styles/ProductsStyle'
 import { useTranslation } from 'react-i18next'
 import { Ionicons } from '@expo/vector-icons'
@@ -28,7 +24,7 @@ import { useNavigation } from '@react-navigation/native'
 export default function Products() {
   const navigation = useNavigation()
   const { token } = useTokenStore()
-  const [showFavorites, setShowFavorites] = useState(false)
+
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [products, setProducts] = useState([])
   const [articles, setArticles] = useState(products)
@@ -224,93 +220,12 @@ export default function Products() {
   const resetInputSearcher = () => {
     setResetInput((prevKey) => prevKey + 1)
   }
-  const fetchFavorites = async () => {
-    setLoader(true)
-    setCurrentPage(0)
-    const requestBody = {
-      supplier_id: selectedSupplier.id,
-      accountNumber: selectedRestaurant.accountNumber,
-    }
-    console.log('requestBody', requestBody)
-    try {
-      const response = await axios.post(favoritesBySupplier, requestBody, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      const defaultFavorites = response.data.favorites
-      console.log('defaultFavorites', defaultFavorites)
-      console.log('productsWithTax', productsWithTax)
-
-      const productsWithTax = defaultFavorites
-        .filter((product) => product.prices.some((price) => price.nameUoms))
-        .map((product) => {
-          const pricesWithTax = product.prices.map((price) => {
-            const priceWithTaxCalculation = (
-              price.price +
-              price.price * price.tax
-            ).toFixed(2)
-
-            return {
-              ...price,
-              priceWithTax:
-                isNaN(priceWithTaxCalculation) ||
-                parseFloat(priceWithTaxCalculation) === 0
-                  ? null
-                  : priceWithTaxCalculation,
-            }
-          })
-
-          return {
-            ...product,
-            amount: 0,
-            uomToPay: product.prices[0].nameUoms,
-            idUomToPay: product.prices[0].id,
-            prices: pricesWithTax,
-          }
-        })
-        .filter((product) => {
-          const isValidProduct = product.prices.some(
-            (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
-          )
-
-          return isValidProduct
-        })
-
-      // setArticles((prevProducts) => {
-      //   const productIds = new Set(prevProducts.map((p) => p.id));
-      //   const newProducts = productsWithTax.filter(
-      //     (p) => !productIds.has(p.id)
-      //   );
-      //   return [...prevProducts, ...newProducts];
-      // });
-
-      setArticles(productsWithTax)
-
-      setLoader(false)
-    } catch (error) {
-      console.error('Error al obtener los productos favoritos:', error)
-    }
-  }
   const toggleShowFavorites = async () => {
-    setShowFavorites(!showFavorites)
     setSelectedCategory('All')
     resetInputSearcher()
-    try {
-      await fetchFavorites()
-    } catch (error) {
-      console.error('Error al obtener productos al mostrar favoritos:', error)
-    }
   }
   const toggleShowFavorites2 = async () => {
-    setShowFavorites(!showFavorites)
     resetInputSearcher()
-    try {
-      await fetchProducts(currentPage)
-    } catch (error) {
-      console.error('Error al obtener productos al mostrar favoritos:', error)
-    }
   }
 
   // CAMBIO DE CANTIDAD DE ARTICULOS
@@ -349,7 +264,7 @@ export default function Products() {
 
   const filterCategories = async (category, categoryId) => {
     setSelectedCategory(category)
-    setShowFavorites(false)
+
     resetInputSearcher()
     try {
       await fetchProductsByCategory(categoryId)
@@ -381,15 +296,28 @@ export default function Products() {
   console.log('articles', articles)
   return (
     <View style={styles.container}>
-      {showProductSearch && (
+      {/*showProductSearch && (
         <ProductSearcher
           products={articlesToPay}
           setShowSearchResults={setShowSearchResults}
           resetInput={resetInput}
         />
-      )}
+      )*/}
+
       <SafeAreaView style={ProductsStyle.containerCards}>
         <ScrollView onMomentumScrollEnd={handleScroll}>
+          <View
+            style={{
+              backgroundColor: 'white',
+            }}
+          >
+            <ProductCategories
+              toggleShowFavorites={toggleShowFavorites}
+              toggleShowFavorites2={toggleShowFavorites2}
+              filterCategory={filterCategories}
+              selectedCategory={selectedCategory}
+            />
+          </View>
           {showSearchResults ? (
             <ProductsFind
               onAmountChange={handleAmountChange}
@@ -397,51 +325,25 @@ export default function Products() {
             />
           ) : (
             <>
-              {showFavorites ? (
-                <>
-                  <Text style={styles.StyleText}>
-                    {t('favorites.findFirstPart')}{' '}
-                    {articles.filter((article) => article.active === 1).length}{' '}
-                    {t('favorites.findSecondPart')}{' '}
-                  </Text>
-                  {articles
-                    .filter((article) => article.active === 1)
-                    .map((article) => (
-                      <View key={article.id}>
-                        <ProductCard
-                          key={article.id}
-                          productData={article}
-                          onAmountChange={handleAmountChange}
-                          onUomChange={handleUomChange}
-                          fetchProducts={fetchProducts}
-                          currentPage={currentPage}
-                          fetchFavorites={fetchFavorites}
-                          opacity
-                        />
-                      </View>
-                    ))}
-                </>
-              ) : (
-                <>
-                  {articles
-                    .filter((article) => {
-                      if (selectedCategory === 'All') {
-                        return true
-                      }
-                      return article.nameCategorie === selectedCategory
-                    })
-                    .map((article) => (
-                      <ProductCard
-                        key={article.id}
-                        productData={article}
-                        onAmountChange={handleAmountChange}
-                        onUomChange={handleUomChange}
-                        fetchProducts={fetchProducts}
-                        currentPage={currentPage}
-                      />
-                    ))}
-                </>
-              )}
+              <>
+                {articles
+                  .filter((article) => {
+                    if (selectedCategory === 'All') {
+                      return true
+                    }
+                    return article.nameCategorie === selectedCategory
+                  })
+                  .map((article) => (
+                    <ProductCard
+                      key={article.id}
+                      productData={article}
+                      onAmountChange={handleAmountChange}
+                      onUomChange={handleUomChange}
+                      fetchProducts={fetchProducts}
+                      currentPage={currentPage}
+                    />
+                  ))}
+              </>
             </>
           )}
           {loader && (
@@ -457,14 +359,14 @@ export default function Products() {
           <View style={{ height: 220 }} />
         </ScrollView>
       </SafeAreaView>
-      <View style={ProductsStyle.viewCategories} />
+      {/*<View style={ProductsStyle.viewCategories} />
       <ProductCategories
         showFavorites={showFavorites}
         toggleShowFavorites={toggleShowFavorites}
         toggleShowFavorites2={toggleShowFavorites2}
         filterCategory={filterCategories}
         selectedCategory={selectedCategory}
-      />
+          />*/}
     </View>
   )
 }

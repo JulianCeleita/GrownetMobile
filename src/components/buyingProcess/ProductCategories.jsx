@@ -1,22 +1,19 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
-  View,
   Dimensions,
-  Image,
   SafeAreaView,
-  TouchableOpacity,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
-import { GlobalStyles, ProductsStyles } from '../../styles/Styles'
-import useTokenStore from '../../store/useTokenStore'
-import { allCategories } from '../../config/urls.config'
 import axios from '../../../axiosConfig'
-import { ProductsStyle } from '../../styles/ProductsStyle'
-import { useNavigation } from '@react-navigation/native'
-import { useTranslation } from 'react-i18next'
-import { LinearGradient } from 'expo-linear-gradient'
+import { allCategories } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
+import useTokenStore from '../../store/useTokenStore'
+import { ProductsStyle } from '../../styles/ProductsStyle'
 
 const { width } = Dimensions.get('window')
 
@@ -58,11 +55,15 @@ function ProductsCategories({
       <View style={ProductsStyle.categoriesMenu}>
         {item === 'Favorites' && showFavorites ? (
           <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory2}>{t('categoriesMenu.goBack')}</Text>
+            <Text style={ProductsStyle.buttonCategory2}>
+              {t('categoriesMenu.goBack')}
+            </Text>
           </TouchableOpacity>
         ) : item === 'Favorites' ? (
           <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory}>{t('categoriesMenu.favorites')}</Text>
+            <Text style={ProductsStyle.buttonCategory}>
+              {t('categoriesMenu.favorites')}
+            </Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity
@@ -96,6 +97,7 @@ function ProductsCategories({
                       ? ProductsStyle.buttonCategory2
                       : ProductsStyle.buttonCategory
                   }
+                  //numberOfLines={1}
                 >
                   {categoryApi.name}
                 </Text>
@@ -111,26 +113,21 @@ function ProductsCategories({
   }
   return (
     <SafeAreaView style={ProductsStyle.fixedContainer}>
-      <LinearGradient
-        colors={['rgba(255, 255, 255, 0)', 'white']}
-        start={[0.5, 0.1]}
-        end={[0.5, 0.1]}
-      >
-        <Carousel
-          data={updatedCategories}
-          renderItem={renderItem}
-          sliderWidth={width}
-          itemWidth={width / 3}
-          autoplay={false}
-          loop={true}
-          layout="default"
-          useScrollView={true}
-          ref={isCarousel}
-          scrollEnabled={true}
-          enableSnap={true}
-          inactiveSlideOpacity={1}
-        />
-        <View style={ProductsStyle.containerButton}>
+      <Carousel
+        data={updatedCategories}
+        renderItem={renderItem}
+        sliderWidth={width}
+        itemWidth={width / 2.5}
+        autoplay={false}
+        loop={true}
+        layout="default"
+        useScrollView={true}
+        ref={isCarousel}
+        scrollEnabled={true}
+        enableSnap={true}
+        inactiveSlideOpacity={1}
+      />
+      {/* <View style={ProductsStyle.containerButton}>
           <TouchableOpacity
             style={GlobalStyles.btnPrimary}
             onPress={handlePress}
@@ -139,8 +136,7 @@ function ProductsCategories({
               {t('categoriesMenu.continue')}
             </Text>
           </TouchableOpacity>
-        </View>
-      </LinearGradient>
+  </View>*/}
     </SafeAreaView>
   )
 }

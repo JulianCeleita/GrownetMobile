@@ -1,6 +1,11 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  Octicons,
+  Feather,
+} from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { StatusBar, TouchableOpacity, Platform } from 'react-native'
@@ -10,11 +15,14 @@ import PendingRecord from '../screens/Record/PendingRecord'
 import Records from '../screens/Record/Records'
 import Settings from '../screens/settings/Settings'
 import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful'
-import Suppliers from '../screens/buyingProcess/Suppliers'
 import DisputeRecord from '../screens/Record/DisputeRecord'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { useTranslation } from 'react-i18next'
 import Faq from '../screens/settings/Faq'
+import Products from '../screens/buyingProcess/Products'
+import OrderDetails from '../screens/buyingProcess/OrderDetail'
+import Favorites from '../screens/buyingProcess/Favorites'
+import Search from '../screens/buyingProcess/Search'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -121,12 +129,49 @@ function SettingsStack() {
     </Stack.Navigator>
   )
 }
+function useHeaderLeftLogic2() {
+  const navigation = useNavigation()
+
+  const goBackProducts = () => {
+    navigation.replace('products')
+  }
+  const goBackSuppliers = () => {
+    navigation.navigate('suppliers')
+  }
+
+  return { goBackProducts, goBackSuppliers }
+}
+const HeaderLeft3 = () => {
+  const { goBackSuppliers } = useHeaderLeftLogic2()
+
+  return (
+    <TouchableOpacity
+      style={{
+        marginHorizontal: 28,
+        marginTop: Platform.OS === 'ios' ? 30 : null,
+        marginBottom: Platform.OS === 'ios' ? 0 : null,
+      }}
+      onPress={goBackSuppliers}
+    >
+      <MaterialCommunityIcons
+        name="arrow-left"
+        size={24}
+        color="#04444F"
+        style={{ position: 'relative', width: 20 }}
+      />
+    </TouchableOpacity>
+  )
+}
+const headerRight = () => {
+  const route = useRoute()
+  return <TouchableOpacity onPress={route.onPressHandler} />
+}
 
 function OrderStack() {
   const { t } = useTranslation()
   return (
     <Stack.Navigator
-      initialRouteName="suppliers"
+      initialRouteName="products"
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: '#026CD2',
@@ -136,24 +181,57 @@ function OrderStack() {
       }}
     >
       <Stack.Screen
-        name="suppliers"
-        component={Suppliers}
-        options={{
-          headerShown: true,
-          headerBackTitleVisible: false,
-          title: t('stackNavigator.suppliers'),
+        name="products"
+        component={Products}
+        options={() => ({
+          headerShown: false,
+          title: t('stackNavigator.makeYourOrder'),
           headerStyle: {
-            backgroundColor: '#f2f2f2',
+            backgroundColor: 'white',
             height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
+              Platform.OS === 'android'
+                ? StatusBar.currentHeight + 60
+                : StatusBar.currentHeight + 130,
           },
           headerTintColor: '#04444F',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
+            marginRight: 22,
+          },
+          headerRight: () => headerRight(),
+          headerLeft: () => HeaderLeft3(),
+          headerLeftContainerStyle: {
+            marginHorizontal: 28,
+          },
+          headerTitleContainerStyle: {
+            height: Platform.OS === 'ios' ? 80 : null,
+          },
+        })}
+      />
+      <Stack.Screen
+        name="ordersDetail"
+        component={OrderDetails}
+        options={{
+          headerShown: true,
+          title: t('stackNavigator.orderDetail'),
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'android'
+                ? StatusBar.currentHeight + 50
+                : StatusBar.currentHeight + 120,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
+          headerLeft: () => HeaderLeft2(),
+          headerTitleContainerStyle: {
+            height: Platform.OS === 'ios' ? 70 : null,
           },
         }}
       />
@@ -318,49 +396,104 @@ function ChatStack() {
 
 const tabBarIconProps =
   (name) =>
-  ({ color, size }) => {
-    name === 'settings'
-      ? (name = 'md-settings-outline') // ajustes
-      : name === 'orders'
-      ? (name = 'cart-outline') // orders
-      : name === 'records'
-      ? (name = 'receipt-outline') // historial
-      : name === 'chat'
-      ? (name = 'ios-chatbubble-ellipses-outline')
-      : ''
-
-    return <Ionicons name={name} size={size} color={color} />
+  ({ size, color }) => {
+    return <Ionicons name={name} size={39} color={color} />
   }
 
+const tabBarIconFavorites =
+  (name) =>
+  ({ focused, color }) => {
+    if (focused) {
+      return <MaterialCommunityIcons name={name} size={38} color={color} />
+    } else {
+      return <Feather name={name} size={36} color={color} />
+    }
+  }
+
+const tabBarIconSearch =
+  (name) =>
+  ({ size, color }) => {
+    return <Feather name={name} size={36} color={color} />
+  }
+const tabBarIconHome =
+  (name) =>
+  ({ size, color }) => {
+    return <Octicons name={name} size={35} color={color} />
+  }
+const tabBarIconAcount =
+  (name) =>
+  ({ size, color }) => {
+    return <MaterialCommunityIcons name={name} size={39} color={color} />
+  }
 const TabNavigator = () => {
   const { t } = useTranslation()
+
   return (
     <Tab.Navigator
       initialRouteName="Orders"
       screenOptions={{
         tabBarActiveTintColor: '#04444F',
+        tabBarStyle: {
+          height: 70,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        },
+        tabBarShowLabel: false,
       }}
     >
-      <Tab.Screen
-        name="Settings"
-        component={SettingsStack}
-        options={{
-          title: t('menuPrimary.Settings'),
-          tabBarIcon: tabBarIconProps('settings'),
-          headerShown: false,
-        }}
-      />
       <Tab.Screen
         name="Orders"
         component={OrderStack}
         options={{
-          title: t('menuPrimary.orders'),
-          tabBarIcon: tabBarIconProps('orders'),
+          tabBarIcon: tabBarIconHome('home'),
           headerShown: false,
         }}
       />
-
       <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarIcon: tabBarIconSearch('search'),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="OrdersDetail"
+        component={OrderDetails}
+        options={{
+          title: t('menuPrimary.orders'),
+          tabBarIcon: tabBarIconProps('cart-outline'),
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
+        }}
+      />
+      <Tab.Screen
+        name={t('favorites.title')}
+        component={Favorites}
+        options={{
+          tabBarIcon: tabBarIconFavorites('heart'),
+          headerShown: true,
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
+        }}
+      />
+      {/* <Tab.Screen
         name="Records"
         component={RecordsStack}
         options={{
@@ -375,6 +508,14 @@ const TabNavigator = () => {
         options={{
           title: t('menuPrimary.chat'),
           tabBarIcon: tabBarIconProps('chat'),
+          headerShown: false,
+        }}
+      /> */}
+      <Tab.Screen
+        name="Settings"
+        component={SettingsStack}
+        options={{
+          tabBarIcon: tabBarIconAcount('account-outline'),
           headerShown: false,
         }}
       />

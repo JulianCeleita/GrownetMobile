@@ -25,8 +25,8 @@ const esTranslations = {
     message: 'El código que ingresaste es incorrecto',
     code: 'Intentar de nuevo',
     message2Modal: 'Por favor ingresa el código.',
-    waitFirstPart: "Espera durante ",
-    waitSecondPart: " segundos",
+    waitFirstPart: 'Espera durante ',
+    waitSecondPart: ' segundos',
   },
   restaurants: {
     addRestaurant: '¡Contáctanos para agregar restaurantes!',
@@ -36,7 +36,7 @@ const esTranslations = {
   },
   menuPrimary: {
     Settings: 'Ajustes',
-    orders: 'Órdenes',
+    orders: 'Carrito',
     records: 'Historial',
     chat: 'Chat',
     titleSettings: 'Configuración',
@@ -54,7 +54,7 @@ const esTranslations = {
   productSearcher: {
     placeholder: 'Buscar productos',
   },
-  favorites: {
+  favorites2: {
     findFirstPart: 'Usted tiene ',
     findSecondPart: ' favoritos encontrados:',
   },
@@ -236,6 +236,17 @@ const esTranslations = {
     paragraphNineOne:
       'Si tienes alguna pregunta o inquietud acerca de estos Términos, por favor contáctanos en ',
     paragraphNineLink: 'www.grownetapp.com',
+  },
+  search: {
+    placeholder: 'Busca tus productos aquí',
+    title: '¿Qué estás buscando?',
+    text: 'Encuentra fácilmente lo que necesitas',
+  },
+  favorites: {
+    title: 'Tus favoritos',
+    titleCard: 'Aún no tienes favoritos',
+    text: 'Explora productos y elige tus favoritos seleccionando el icono del corazón',
+    buttonText: 'Ir a productos',
   },
 }
 
