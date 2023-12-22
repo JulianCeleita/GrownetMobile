@@ -26,7 +26,7 @@ const ProductCards = ({
   const { selectedSupplier, selectedRestaurant } = useOrderStore()
   const { token } = useTokenStore()
   const [isFocus, setIsFocus] = useState(false)
-
+  const [selectedQuantity, setSelectedQuantity] = useState(0)
   const [productState, setProductState] = useState({
     isFavorite: active === 1,
     isFavoritePending: false,
@@ -104,8 +104,10 @@ const ProductCards = ({
     },
     [id, onUomChange],
   )
-  const imageUrl =
-    'https://static.vecteezy.com/system/resources/previews/025/064/813/original/broccoli-with-ai-generated-free-png.png'
+  const handleAmountUpdate = (newAmount) => {
+    setSelectedQuantity(newAmount)
+  }
+
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
       <View
@@ -120,7 +122,7 @@ const ProductCards = ({
           onPress={() => setIsModalVisible(true)}
         >
           <Image
-            source={{ uri: imageUrl }}
+            source={{ uri: image }}
             style={ProductsStyle.ImageCardProduct}
             resizeMode="contain"
           />
@@ -149,9 +151,13 @@ const ProductCards = ({
                   style={{ marginTop: 5 }}
                 />
               </TouchableOpacity>
-              <View style={ProductsStyle.quantity}>
-                <Text style={ProductsStyle.textQuantity}>100</Text>
-              </View>
+              {selectedQuantity > 0 && (
+                <View style={ProductsStyle.quantity}>
+                  <Text style={ProductsStyle.textQuantity}>
+                    {selectedQuantity}
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
           {/*<View style={ProductsStyle.containerSelect}>
@@ -193,6 +199,7 @@ const ProductCards = ({
           productData={productData}
           onAmountChange={onAmountChange}
           counter={0}
+          onAmountUpdate={handleAmountUpdate}
         />
       )}
     </View>

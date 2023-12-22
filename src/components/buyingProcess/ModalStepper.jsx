@@ -26,6 +26,7 @@ const ModalStepper = ({
   productData,
   onAmountChange,
   counter,
+  onAmountUpdate,
 }) => {
   const { t } = useTranslation()
   const [selectedValue, setSelectedValue] = useState(null)
@@ -93,33 +94,9 @@ const ModalStepper = ({
                 onAmountChange={onAmountChange}
                 counter={0}
                 style={ModalStepperStyle}
+                onAmountUpdate={onAmountUpdate}
               />
-              {/*<View style={ModalStepperStyle.countOrderD}>
-                <TouchableOpacity>
-                  <Text style={ModalStepperStyle.button}>-</Text>
-                </TouchableOpacity>
-                <TextInput
-                  style={ModalStepperStyle.countSelect}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  //value={0}
-                />
-                <TouchableOpacity>
-                  <Text style={ModalStepperStyle.button2}>+</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={[ModalStyle.buttons, { marginTop: 10 }]}>
-                <TouchableOpacity
-                  style={[GlobalStyles.btnPrimary, ModalStyle.space]}
-                >
-                  <Text style={GlobalStyles.textBtnSecundary}>
-                    Añadir a la orden
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={GlobalStyles.btnOutline}>
-                  <Text style={GlobalStyles.textBtnOutline}>Close</Text>
-                </TouchableOpacity>
-                </View>*/}
+
               <View>
                 <TouchableOpacity style={ModalStepperStyle.btn}>
                   <Text

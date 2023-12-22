@@ -8,13 +8,14 @@ const SelectQuantity = ({
   onAmountChange,
   counter,
   style,
+  onAmountUpdate,
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
-
+  console.log(amount, 'En select')
   useEffect(() => {
     onAmountChange(id, amount)
-
+    onAmountUpdate && onAmountUpdate(amount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
