@@ -8,7 +8,6 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
-        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
         "EXPO_PUBLIC_OTP": "/authenticate/login",
         "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
         "EXPO_PUBLIC_COUNTRIES": "/countries/all",
@@ -35,7 +34,6 @@
       },
       "env": {
         "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
-        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
         "EXPO_PUBLIC_OTP": "/authenticate/login",
         "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
         "EXPO_PUBLIC_COUNTRIES": "/countries/all",
@@ -58,7 +56,6 @@
     "production": {
       "env": {
         "EXPO_PUBLIC_BASE_URL": "https://api.grownetapp.com/grownet/api",
-        "EXPO_PUBLIC_BASE_IMG": "https://api.grownetapp.com/grownet/",
         "EXPO_PUBLIC_OTP": "/authenticate/login",
         "EXPO_PUBLIC_AUTHENTICATE": "/authenticate/validateTelephone",
         "EXPO_PUBLIC_COUNTRIES": "/countries/all",

@@ -133,7 +133,7 @@ export default function Products() {
           const updatedPage = prevPage + 1;
           fetchProducts(updatedPage);
           return updatedPage;
-        });
+        }); 
         console.log("eightyPercentPosition", eightyPercentPosition)
       }
     } else {
