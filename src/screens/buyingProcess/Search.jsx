@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SearchStyle } from '../../styles/SearchStyle'
 import { useTranslation } from 'react-i18next'
+import ModalStepper from '../../components/buyingProcess/ModalStepper'
 
 function Search() {
   const { t, i18n } = useTranslation()
@@ -29,7 +30,7 @@ function Search() {
           </TouchableOpacity>
         </View>
       </View>
-
+      <ModalStepper />
       <View style={SearchStyle.suggestion}>
         <Text style={SearchStyle.tittle}>{t('search.title')} 🔍</Text>
       </View>
