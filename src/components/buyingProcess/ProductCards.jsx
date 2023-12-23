@@ -19,11 +19,9 @@ const ProductCards = ({
   search,
   SearchByName,
   fetchFavorites,
-  fetchProducts,
-  currentPage,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const { id, name, image, prices, uomToPay, active } = productData
+  const { id, name, image, prices, uomToPay, active, amount } = productData
 
   const { selectedSupplier, selectedRestaurant } = useOrderStore()
   const { token } = useTokenStore()
@@ -68,12 +66,11 @@ const ProductCards = ({
         ...prevState,
         isFavoritePending: false,
       }))
-      if (opacity) {
-        await fetchFavorites()
-      } else if (search) {
+      if (search) {
         await SearchByName()
-      } else {
-        await fetchProducts(currentPage)
+      } else if (opacity) {
+        console.log('se ejecuto fetchFavorites')
+        await fetchFavorites()
       }
     } catch (error) {
       setProductState((prevState) => ({
@@ -93,8 +90,6 @@ const ProductCards = ({
     selectedSupplier.id,
     token,
     fetchFavorites,
-    fetchProducts,
-    currentPage,
   ])
 
   const handleUomToPayChange = useCallback(
@@ -155,11 +150,9 @@ const ProductCards = ({
                   style={{ marginTop: 5 }}
                 />
               </TouchableOpacity>
-              {selectedQuantity > 0 && (
+              {amount > 0 && (
                 <View style={ProductsStyle.quantity}>
-                  <Text style={ProductsStyle.textQuantity}>
-                    {selectedQuantity}
-                  </Text>
+                  <Text style={ProductsStyle.textQuantity}>{amount}</Text>
                 </View>
               )}
             </View>

@@ -7,7 +7,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StatusBar, TouchableOpacity, Platform } from 'react-native'
 import Chat from '../screens/Chat'
 import PastRecord from '../screens/Record/PastRecord'
@@ -447,6 +447,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: tabBarIconHome('home'),
           headerShown: false,
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -491,6 +492,7 @@ const TabNavigator = () => {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
           },
+          unmountOnBlur: true,
         }}
       />
       {/* <Tab.Screen

@@ -97,6 +97,17 @@ function Search() {
             (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
           ),
         )
+        .map((product) => {
+          const existingProduct = articlesToPay.find(
+            (prevProduct) => prevProduct.id === product.id,
+          )
+
+          return existingProduct || product
+        })
+        .filter(
+          (product, index, self) =>
+            index === self.findIndex((t) => t.id === product.id),
+        )
 
       setProductSearch(productsWithTax)
     } catch (error) {

@@ -100,13 +100,22 @@ export default function Products() {
           )
 
         setArticles((prevProducts) => {
-          const newProducts = productsWithTax.filter(
-            (p) => !prevProducts.some((prevP) => prevP.id === p.id),
-          )
+          const newProducts = productsWithTax
+            .map((product) => {
+              const existingProduct = articlesToPay.find(
+                (prevProduct) => prevProduct.id === product.id,
+              )
+
+              return existingProduct || product
+            })
+            .filter(
+              (product, index, self) =>
+                index === self.findIndex((t) => t.id === product.id),
+            )
 
           setLoader(false)
 
-          return [...prevProducts, ...newProducts]
+          return newProducts
         })
       } catch (error) {
         console.error('Error al obtener los productos del proveedor:', error)
@@ -201,18 +210,24 @@ export default function Products() {
             (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
           ),
         )
-
       setArticles((prevProducts) => {
-        const newProducts = productsWithTax.filter(
-          (p) => !prevProducts.some((prevP) => prevP.id === p.id),
-        )
+        const newProducts = productsWithTax
+          .map((product) => {
+            const existingProduct = articlesToPay.find(
+              (prevProduct) => prevProduct.id === product.id,
+            )
+
+            return existingProduct || product
+          })
+          .filter(
+            (product, index, self) =>
+              index === self.findIndex((t) => t.id === product.id),
+          )
 
         setLoader(false)
 
-        return [...prevProducts, ...newProducts]
+        return newProducts
       })
-
-      setLoader(false)
     } catch (error) {
       console.error('Error al obtener los productos por categoría:', error)
     }
@@ -315,10 +330,7 @@ export default function Products() {
       ),
     })
   }, [toggleProductSearch])
-  console.log(
-    'articlesToPay en prodcuts:',
-    articlesToPay.map((e) => e.prices),
-  )
+  console.log('articlesToPay en prodcuts:', articlesToPay)
 
   return (
     <View style={styles.container}>
