@@ -478,6 +478,7 @@ const TabNavigator = () => {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
           },
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
