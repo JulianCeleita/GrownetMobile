@@ -18,12 +18,7 @@ const Records = () => {
   const { t } = useTranslation()
   const { token } = useTokenStore()
   const navigation = useNavigation()
-  const {
-    allOrders,
-    setAllOrders,
-    setSelectedPendingOrder,
-    setSelectedClosedOrder,
-  } = useRecordStore()
+  const { allOrders, setAllOrders, setSelectedOrder } = useRecordStore()
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
   const [activeTab, setActiveTab] = useState('settings')
@@ -61,12 +56,10 @@ const Records = () => {
 
   //MANEJADOR DE ORDEN SELECCIONADA
   const handleOrderSelected = (order) => {
-    console.log('orderReference.id_stateorder', order.reference)
+    setSelectedOrder(order.reference)
     if (order.id_stateOrders === 5) {
-      setSelectedClosedOrder(order.reference)
       navigation.navigate('pastRecord')
     } else {
-      setSelectedPendingOrder(order.reference)
       navigation.navigate('pendingRecord')
     }
   }
@@ -129,7 +122,7 @@ const Records = () => {
           ) : (
             <View>
               {/* VISTA SI ESTÁ ORDERS SELECCIONADO */}
-                {/* AVISO DE QUE NO HAY ORDENES */}
+              {/* AVISO DE QUE NO HAY ORDENES */}
               {allOrders.length === 0 ? (
                 <View style={RecordStyle.recordZero}>
                   <Image

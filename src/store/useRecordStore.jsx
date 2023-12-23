@@ -2,13 +2,11 @@ import { create } from 'zustand'
 
 const useRecordStore = create((set) => ({
   allOrders: [],
-  selectedClosedOrder: null,
-  selectedPendingOrder: null,
+  selectedOrder: null,
   detailsToShow: {},
   selectedProduct: null,
   setAllOrders: (allOrders) => set({ allOrders: allOrders }),
-  setSelectedPendingOrder: (selectedPendingOrder) => set({ selectedPendingOrder: selectedPendingOrder }),
-  setSelectedClosedOrder: (selectedClosedOrder) => set({ selectedClosedOrder: selectedClosedOrder }),
+  setSelectedOrder: (selectedOrder) => set({ selectedOrder: selectedOrder }),
   setDetailsToShow: (detailsToShow) => set({ detailsToShow: detailsToShow }),
   setSelectedProduct: (selectedProduct) => set({ selectedProduct: selectedProduct })
 }));

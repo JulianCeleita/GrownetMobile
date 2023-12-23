@@ -33,7 +33,7 @@ function PendingRecord() {
   const { t } = useTranslation()
   const { token } = useTokenStore()
   const {
-    selectedPendingOrder,
+    selectedOrder,
     detailsToShow,
     setDetailsToShow,
     selectedProduct,
@@ -74,7 +74,7 @@ function PendingRecord() {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`${selectedStorageOrder}/${selectedPendingOrder}`, {
+        .get(`${selectedStorageOrder}/${selectedOrder}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -115,7 +115,7 @@ function PendingRecord() {
     const formData = new FormData()
 
     const disputeBody = {
-      order: selectedPendingOrder,
+      order: selectedOrder,
       product_id: detailsToShow.evidences_id,
     }
     for (let key in disputeBody) {
@@ -160,7 +160,7 @@ function PendingRecord() {
 
   const onSendMail = () => {
     axios
-      .get(`${sendEmail}/${selectedPendingOrder}`, {
+      .get(`${sendEmail}/${selectedOrder}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -185,7 +185,7 @@ function PendingRecord() {
 
   const onCloseOrder = () => {
     const bodyCloseOrder = {
-      reference: selectedPendingOrder,
+      reference: selectedOrder,
       state: 5,
     }
     axios
@@ -446,41 +446,44 @@ function PendingRecord() {
                     </View>
                   ))}
               </View>
-              <View>
-                {evidences.length < 4 && (
+              {detailsToShow.id_stateOrders === 6 && (
+                <View>
+                  {evidences.length < 4 && (
+                    <Button
+                      style={DisputeStyle.buttonUpload}
+                      onPress={pickDocument}
+                    >
+                      <Feather name="upload" size={18} color="#04444F" />
+                      <Text style={DisputeStyle.textBtnUpload}>
+                        {' '}
+                        {t('uploadFile.customUpload')}
+                      </Text>
+                    </Button>
+                  )}
+                  {evidences.length > 0 && (
+                    <Button
+                      style={DisputeStyle.buttonUpload}
+                      onPress={onSendEvidences}
+                    >
+                      <Feather name="send" size={18} color="#04444F" />
+                      <Text style={DisputeStyle.textBtnUpload}>
+                        {' '}
+                        {t('uploadFile.submitEvidence')}
+                      </Text>
+                    </Button>
+                  )}
                   <Button
-                    style={DisputeStyle.buttonUpload}
-                    onPress={pickDocument}
-                  >
-                    <Feather name="upload" size={18} color="#04444F" />
-                    <Text style={DisputeStyle.textBtnUpload}>
-                      {' '}
-                      {t('uploadFile.customUpload')}
-                    </Text>
-                  </Button>
-                )}
-                {evidences.length > 0 && (
-                  <Button
-                    style={DisputeStyle.buttonUpload}
-                    onPress={onSendEvidences}
+                    style={DisputeStyle.buttonSendEmail}
+                    onPress={onSendMail}
                   >
                     <Feather name="send" size={18} color="#04444F" />
                     <Text style={DisputeStyle.textBtnUpload}>
                       {' '}
-                      {t('uploadFile.submitEvidence')}
+                      {t('uploadFile.sendEmail')}
                     </Text>
                   </Button>
-                )}
-              </View>
-              {detailsToShow.id_stateOrders === 6 && (
-                 <Button style={DisputeStyle.buttonSendEmail} onPress={onSendMail}>
-                 <Feather name="send" size={18} color="#04444F" />
-                 <Text style={DisputeStyle.textBtnUpload}>
-                   {' '}
-                   {t('uploadFile.sendEmail')}
-                 </Text>
-               </Button>
-              )}             
+                </View>
+              )}
               <Button
                 style={GlobalStyles.btnPrimary}
                 onPress={(e) => onConfirmOrder(e)}
