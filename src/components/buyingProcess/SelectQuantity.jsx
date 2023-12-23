@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { ProductsStyle } from '../../styles/ProductsStyle'
 
 const SelectQuantity = ({
   widthOrder,
@@ -8,20 +7,12 @@ const SelectQuantity = ({
   onAmountChange,
   counter,
   style,
-  onAmountUpdate,
-  itsacart,
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
-  console.log('productData.amount', productData.amount)
-  console.log('Amount', amount, 'En select')
+
   useEffect(() => {
     onAmountChange(id, amount)
-
-    if (itsacart && onAmountUpdate) {
-      onAmountUpdate(amount)
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 

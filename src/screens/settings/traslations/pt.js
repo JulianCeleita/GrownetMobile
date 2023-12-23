@@ -98,6 +98,8 @@ const ptTranslations = {
     delivered: 'Entregue',
     pending: 'Pendente',
     dispute: 'Disputa',
+    settings: 'Configurações',
+    allOrders: 'Pedidos',
   },
   disputeRecord: {
     quantityDelivered: 'Digite a quantidade entregue:',
@@ -148,11 +150,10 @@ const ptTranslations = {
     yourOrders: 'Seus pedidos',
     orderDetails: 'Detalhes do pedido',
     whatWentWrong: 'O que deu errado?',
+    profile: 'Perfil',
   },
   settings: {
     title: 'Configurações',
-    hi: 'Olá',
-    helpText: 'Como podemos te ajudar?',
     restaurants: 'Restaurantes',
     editRestaurants: 'Editar seus restaurantes',
     suppliers: 'Fornecedores',
@@ -164,6 +165,7 @@ const ptTranslations = {
     faq: 'Perguntas frequentes',
     termsAndConditions: 'Termos e Condições',
     logOut: 'Sair',
+    customerService: 'Atendimento ao cliente',
   },
   pastRecord: {
     supplierDetails: 'Detalhes do fornecedor',

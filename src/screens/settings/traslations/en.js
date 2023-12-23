@@ -98,6 +98,8 @@ const enTranslations = {
     delivered: 'Delivered',
     pending: 'Pending',
     dispute: 'Dispute',
+    settings: 'Settings',
+    allOrders: 'Orders',
   },
   disputeRecord: {
     quantityDelivered: 'Enter quantity delivered:',
@@ -148,11 +150,10 @@ const enTranslations = {
     yourOrders: 'Your orders',
     orderDetails: 'Order details',
     whatWentWrong: 'What went wrong?',
+    profile: 'Profile',
   },
   settings: {
     title: 'Settings',
-    hi: 'Hi',
-    helpText: 'How can we help you?',
     restaurants: 'Restaurants',
     editRestaurants: 'Edit your restaurants',
     suppliers: 'Suppliers',
@@ -164,6 +165,7 @@ const enTranslations = {
     faq: 'FAQ',
     termsAndConditions: 'Terms & conditions',
     logOut: 'Log out',
+    customerService: 'Customer service',
   },
   pastRecord: {
     supplierDetails: 'Supplier details',

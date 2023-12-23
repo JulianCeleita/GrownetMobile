@@ -55,13 +55,11 @@ const Settings = () => {
   }
 
   const onPressAdd = () => {
-    navigation.navigate('Chat')
+    navigation.navigate('chat')
   }
 
   return (
     <SafeAreaView style={SettingsStyle.settings}>
-      <Text style={SettingsStyle.tittle}>{t('settings.hi')} 👋</Text>
-      <Text style={SettingsStyle.subtittle}>{t('settings.helpText')}</Text>
       <TouchableOpacity onPress={onPressAdd}>
         <Card style={SettingsStyle.card}>
           <Card.Content style={SettingsStyle.card1}>
@@ -155,6 +153,21 @@ const Settings = () => {
             <Ionicons name="chevron-forward" size={24} color="#04444F" />
           </TouchableOpacity>
         </View>
+        
+        <View
+          style={[SettingsStyle.containerFaqAndTerms, GlobalStyles.boxShadow]}
+        >
+          <TouchableOpacity
+            style={SettingsStyle.FaqAndTerms}
+            onPress={onPressAdd}
+          >
+            <Text style={SettingsStyle.styleTextTitle}>
+              {t('settings.customerService')}
+            </Text>
+            <Ionicons name="chevron-forward" size={24} color="#04444F" />
+          </TouchableOpacity>
+        </View>
+        
 
         <TouchableOpacity
           style={SettingsStyle.btnlogOut}

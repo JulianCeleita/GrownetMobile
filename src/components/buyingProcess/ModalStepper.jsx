@@ -1,4 +1,6 @@
+import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Modal,
   Text,
@@ -9,11 +11,6 @@ import {
 } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import { ModalStepperStyle } from '../../styles/ModalStepperStyle'
-import { AntDesign } from '@expo/vector-icons'
-import { ModalStyle } from '../../styles/LoginStyle'
-import { GlobalStyles } from '../../styles/Styles'
-import SelectQuantity from './SelectQuantity'
-import { useTranslation } from 'react-i18next'
 
 const ModalStepper = ({
   setIsModalVisible,
@@ -25,17 +22,17 @@ const ModalStepper = ({
   handleUomToPayChange,
   productData,
   onAmountChange,
-  counter,
-  onAmountUpdate,
 }) => {
   const { t } = useTranslation()
-  const [selectedValue, setSelectedValue] = useState(null)
+  const { id } = productData
+  const [amount, setAmount] = useState(productData.amount)
+  const [selectedAmount, setSelectedAmount] = useState(productData.amount)
 
-  console.log(selectedValue)
-  const handleDropdownChange = (value, index) => {
-    // Aquí puedes realizar acciones basadas en el cambio de selección
-    setSelectedValue(value)
+  const handleButtonClick = () => {
+    setIsModalVisible(false)
+    onAmountChange(id, amount)
   }
+
   return (
     <Modal
       visible={true}
@@ -89,21 +86,42 @@ const ModalStepper = ({
                   onChange={handleUomToPayChange}
                 />
               </View>
-              <SelectQuantity
-                productData={productData}
-                onAmountChange={onAmountChange}
-                counter={0}
-                style={ModalStepperStyle}
-                onAmountUpdate={onAmountUpdate}
-                itsacart
-              />
+              <View style={ModalStepperStyle.count}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (amount > 0) {
+                      setAmount(amount - 1)
+                    }
+                  }}
+                >
+                  <Text style={ModalStepperStyle.button}>-</Text>
+                </TouchableOpacity>
 
+                <TextInput
+                  style={ModalStepperStyle.countSelect}
+                  keyboardType="numeric"
+                  value={amount.toString()}
+                  onChangeText={(value) => {
+                    const numericValue = parseInt(value, 10)
+
+                    setAmount(isNaN(numericValue) ? '' : numericValue)
+                  }}
+                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setAmount(amount + 1)
+                  }}
+                >
+                  <Text style={ModalStepperStyle.button2}>+</Text>
+                </TouchableOpacity>
+              </View>
               <View>
-                <TouchableOpacity style={ModalStepperStyle.btn}>
-                  <Text
-                    style={ModalStepperStyle.textBtn}
-                    onPress={() => setIsModalVisible(false)}
-                  >
+                <TouchableOpacity
+                  style={ModalStepperStyle.btn}
+                  onPress={handleButtonClick}
+                >
+                  <Text style={ModalStepperStyle.textBtn}>
                     {t('modalStepper.textBtn')}
                   </Text>
                 </TouchableOpacity>
