@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import SelectQuantity from './SelectQuantity'
 import { Dropdown } from 'react-native-element-dropdown'
 import { ProductsStyles } from '../../styles/Styles'
+import { ProductsStyle } from '../../styles/ProductsStyle'
 import useOrderStore from '../../store/useOrderStore'
 import DeleteProduct from './DeleteProduct'
 import { OrderDetailStyle } from '../../styles/OrderDetailStyle'
@@ -188,6 +189,7 @@ export default function ProductDetail({
                     productData={article}
                     onAmountChange={handleAmountChange}
                     counter={counter}
+                    style={ProductsStyle}
                   />
                 </View>
                 <Dropdown

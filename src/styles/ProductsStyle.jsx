@@ -56,6 +56,7 @@ export const ProductsStyle = StyleSheet.create({
   containName: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    width: '75%',
   },
   count: {
     flexDirection: 'row',
@@ -71,8 +72,8 @@ export const ProductsStyle = StyleSheet.create({
   },
   countOrderD: {
     flexDirection: 'row',
-    borderWidth: 1.5,
-    borderColor: '#f2f2f2',
+    //borderWidth: 1.5,
+    //borderColor: '#f2f2f2',
     alignItems: 'center',
     justifyContent: 'space-around',
     marginRight: 5,
@@ -93,6 +94,8 @@ export const ProductsStyle = StyleSheet.create({
     color: '#04444f',
     fontFamily: 'PoppinsMedium',
     marginLeft: 6,
+    //width: 90,
+    textAlign: 'center',
   },
   button2: {
     backgroundColor: 'transparent',
@@ -113,7 +116,7 @@ export const ProductsStyle = StyleSheet.create({
   textName: {
     color: '#04444f',
     fontSize: 15,
-    width: 120,
+    width: 130,
     fontFamily: 'PoppinsMedium',
   },
   textName1: {
@@ -128,15 +131,30 @@ export const ProductsStyle = StyleSheet.create({
     fontSize: 15,
     marginTop: -5,
   },
-
+  quantity: {
+    backgroundColor: '#026CD2',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    marginTop: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textQuantity: {
+    fontSize: 15,
+    fontFamily: 'PoppinsRegular',
+    padding: 5,
+    textAlign: 'center',
+    color: 'white',
+  },
   containerCards: { flex: 1, marginTop: 10 },
   // PRODUCT CATEGORIES
   fixedContainer: {
-    //overflow: 'hidden',
-    //position: 'absolute',
-    //bottom: 0,
-  },
-  textButton: {
+    flex: 1,
+    marginBottom:20,
+    backgroundColor: '#1c73cc',
+    },
+    textButton: {
     fontFamily: 'PoppinsSemi',
     fontSize: 14,
     color: 'white',
@@ -158,35 +176,35 @@ export const ProductsStyle = StyleSheet.create({
     //marginVertical: 4,
   },
   buttonCategory: {
-    backgroundColor: 'white',
-    paddingVertical: 15,
+    backgroundColor: '#1c73cc',
+    paddingVertical: 10,
     paddingHorizontal: 5,
     overflow: Platform.OS === 'ios' ? 'hidden' : null,
-    borderRadius: 50,
+    borderRadius: Platform.OS === 'ios' ? 20 : 20,
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',
     shadowColor: 'black',
     elevation: 12,
     shadowRadius: 10,
-    margin: 1,
+    color: '#ffffff',
+    margin: 4,
     marginVertical: 8,
   },
   buttonCategory2: {
     backgroundColor: '#62C471',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 5,
     overflow: Platform.OS === 'ios' ? 'hidden' : null,
-    borderRadius: 50,
+    borderRadius: Platform.OS === 'ios' ? 20 : 20,
     textAlign: 'center',
     fontFamily: 'PoppinsMedium',
     shadowColor: 'black',
     elevation: 6,
-    shadowRadius: 10,
+    shadowRadius: 20,
     color: '#ffffff',
     margin: 1,
     marginVertical: 8,
   },
-
   activeCategory: {
     backgroundColor: '#62C471',
     color: 'white',

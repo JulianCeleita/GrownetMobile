@@ -9,6 +9,7 @@ import { ProductsStyle } from '../../styles/ProductsStyle'
 import { addFavorites } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
+import ModalStepper from './ModalStepper'
 
 const ProductCards = ({
   productData,
@@ -21,18 +22,18 @@ const ProductCards = ({
   fetchProducts,
   currentPage,
 }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const { id, name, image, prices, uomToPay, active } = productData
 
   const { selectedSupplier, selectedRestaurant } = useOrderStore()
   const { token } = useTokenStore()
   const [isFocus, setIsFocus] = useState(false)
-
+  const [selectedQuantity, setSelectedQuantity] = useState(0)
   const [productState, setProductState] = useState({
     isFavorite: active === 1,
     isFavoritePending: false,
     isBeingUpdated: false,
   })
-
   const handleToggleFavorite = useCallback(async () => {
     if (productState.isFavoritePending) return
 
@@ -107,6 +108,9 @@ const ProductCards = ({
     },
     [id, onUomChange],
   )
+  const handleAmountUpdate = (newAmount) => {
+    setSelectedQuantity(newAmount)
+  }
 
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
@@ -117,16 +121,19 @@ const ProductCards = ({
           opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
         ]}
       >
-        <View style={ProductsStyle.containerImage}>
+        <TouchableOpacity
+          style={ProductsStyle.containerImage}
+          onPress={() => setIsModalVisible(true)}
+        >
           <Image
             source={{ uri: image }}
             style={ProductsStyle.ImageCardProduct}
             resizeMode="contain"
           />
-        </View>
+        </TouchableOpacity>
         <View>
           <View style={ProductsStyle.containName}>
-            <View>
+            <TouchableOpacity onPress={() => setIsModalVisible(true)}>
               <Text style={ProductsStyle.textName}>
                 {name}{' '}
                 {prices.find((price) => price.nameUoms === uomToPay).name}
@@ -138,18 +145,26 @@ const ProductCards = ({
                     .priceWithTax
                 }
               </Text>
-            </View>
-
-            <TouchableOpacity onPress={handleToggleFavorite}>
-              <Icon
-                name={productState.isFavorite ? 'heart' : 'heart-o'}
-                size={24}
-                color="#62C471"
-                style={{ marginTop: 5 }}
-              />
             </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+              <TouchableOpacity onPress={handleToggleFavorite}>
+                <Icon
+                  name={productState.isFavorite ? 'heart' : 'heart-o'}
+                  size={24}
+                  color="#62C471"
+                  style={{ marginTop: 5 }}
+                />
+              </TouchableOpacity>
+              {selectedQuantity > 0 && (
+                <View style={ProductsStyle.quantity}>
+                  <Text style={ProductsStyle.textQuantity}>
+                    {selectedQuantity}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
-          <View style={ProductsStyle.containerSelect}>
+          {/*<View style={ProductsStyle.containerSelect}>
             <SelectQuantity
               productData={productData}
               onAmountChange={onAmountChange}
@@ -172,9 +187,25 @@ const ProductCards = ({
                 onChange={handleUomToPayChange}
               />
             </View>
-          </View>
+          </View>*/}
         </View>
       </View>
+      {isModalVisible && (
+        <ModalStepper
+          setIsModalVisible={setIsModalVisible}
+          name={name}
+          prices={prices}
+          uomToPay={uomToPay}
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          handleUomToPayChange={handleUomToPayChange}
+          //Variables selectQuantity
+          productData={productData}
+          onAmountChange={onAmountChange}
+          counter={0}
+          onAmountUpdate={handleAmountUpdate}
+        />
+      )}
     </View>
   )
 }

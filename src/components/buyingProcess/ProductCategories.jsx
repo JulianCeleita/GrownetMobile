@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
+import { Ionicons } from '@expo/vector-icons'
 import axios from '../../../axiosConfig'
 import { allCategories } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
@@ -47,97 +48,101 @@ function ProductsCategories({
   }, [selectedSupplier, token])
 
   const categoriesList = categories.map((e) => e.name)
-  const updatedCategories = ['All', ...categoriesList, 'Favorites']
+  const updatedCategories = ['All', ...categoriesList]
 
-  const renderItem = ({ item, index }) => {
-    const isCurrentItem = index === isCarousel.current.currentIndex
-    return (
-      <View style={ProductsStyle.categoriesMenu}>
-        {item === 'Favorites' && showFavorites ? (
-          <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory2}>
-              {t('categoriesMenu.goBack')}
-            </Text>
-          </TouchableOpacity>
-        ) : item === 'Favorites' ? (
-          <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
-            <Text style={ProductsStyle.buttonCategory}>
-              {t('categoriesMenu.favorites')}
-            </Text>
-          </TouchableOpacity>
-        ) : null}
+  const renderItem = ({ item }) => {
+    if (item === 'Favorites' && showFavorites) {
+      return (
+        <TouchableOpacity onPress={toggleShowFavorites2} activeOpacity={0.9}>
+          <Text style={ProductsStyle.buttonCategory2}>
+            {t('categoriesMenu.goBack')}
+          </Text>
+        </TouchableOpacity>
+      )
+    } else if (item === 'Favorites') {
+      return (
+        <TouchableOpacity onPress={toggleShowFavorites} activeOpacity={0.9}>
+          <Text style={ProductsStyle.buttonCategory}>
+            {t('categoriesMenu.favorites')}
+          </Text>
+        </TouchableOpacity>
+      )
+    } else if (item === 'All') {
+      return (
         <TouchableOpacity
           key={item}
           onPress={() => filterCategory('All', item)}
           activeOpacity={0.9}
         >
-          {item === 'All' && (
-            <Text
-              style={
-                selectedCategory === 'All' && !showFavorites
-                  ? ProductsStyle.buttonCategory2
-                  : ProductsStyle.buttonCategory
-              }
-            >
-              {t('categoriesMenu.all')}
-            </Text>
-          )}
+          <Text
+            style={
+              selectedCategory === 'All' && !showFavorites
+                ? ProductsStyle.buttonCategory2
+                : ProductsStyle.buttonCategory
+            }
+          >
+            {t('categoriesMenu.all')}
+          </Text>
         </TouchableOpacity>
-        {categories?.map((categoryApi) => (
+      )
+    } else {
+      const categoryApi = categories.find((category) => category.name === item)
+      if (categoryApi) {
+        return (
           <TouchableOpacity
             key={categoryApi.id}
             onPress={() => filterCategory(categoryApi.name, categoryApi.id)}
             activeOpacity={0.9}
           >
-            {item === categoryApi.name && (
-              <>
-                <Text
-                  style={
-                    selectedCategory === categoryApi.name && !showFavorites
-                      ? ProductsStyle.buttonCategory2
-                      : ProductsStyle.buttonCategory
-                  }
-                  //numberOfLines={1}
-                >
-                  {categoryApi.name}
-                </Text>
-              </>
-            )}
-          </TouchableOpacity>
-        ))}
-      </View>
-    )
-  }
-  const handlePress = () => {
-    navigation.navigate('ordersDetail')
-  }
-  return (
-    <SafeAreaView style={ProductsStyle.fixedContainer}>
-      <Carousel
-        data={updatedCategories}
-        renderItem={renderItem}
-        sliderWidth={width}
-        itemWidth={width / 2.5}
-        autoplay={false}
-        loop={true}
-        layout="default"
-        useScrollView={true}
-        ref={isCarousel}
-        scrollEnabled={true}
-        enableSnap={true}
-        inactiveSlideOpacity={1}
-      />
-      {/* <View style={ProductsStyle.containerButton}>
-          <TouchableOpacity
-            style={GlobalStyles.btnPrimary}
-            onPress={handlePress}
-          >
-            <Text style={ProductsStyle.textButton}>
-              {t('categoriesMenu.continue')}
+            <Text
+              style={
+                selectedCategory === categoryApi.name && !showFavorites
+                  ? ProductsStyle.buttonCategory2
+                  : ProductsStyle.buttonCategory
+              }
+            >
+              {categoryApi.name}
             </Text>
           </TouchableOpacity>
-  </View>*/}
+        )
+      }
+    }
+    return null
+  }
+
+  const handleGoBack = () => {
+    navigation.goBack()
+  }
+
+  return (
+    <SafeAreaView style={ProductsStyle.fixedContainer}>
+      {/* Flecha para regresar */}
+      <TouchableOpacity
+        style={[ProductsStyle.backButton, { marginTop: 20, marginLeft: 15 }]}
+        onPress={handleGoBack}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={ProductsStyle.categoriesMenu}>
+        {/* Carousel */}
+        <Carousel
+          data={updatedCategories}
+          renderItem={renderItem}
+          sliderWidth={width}
+          itemWidth={width / 2.5}
+          autoplay={false}
+          loop={true}
+          layout="default"
+          useScrollView={true}
+          ref={isCarousel}
+          scrollEnabled={true}
+          enableSnap={true}
+          inactiveSlideOpacity={1}
+          firstItem={0}
+        />
+      </View>
     </SafeAreaView>
   )
 }
+
 export default ProductsCategories

@@ -37,14 +37,17 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [loader, setLoader] = useState(false)
+  const [continuePagination, setContinuePagination] = useState(true);
 
   const fetchProducts = async (page) => {
-    if (loader === false) {
+    if (loader === false && continuePagination) {
       try {
         setLoader(true)
         const requestBody = {
           id: selectedSupplier.id,
           accountNumber: selectedRestaurant.accountNumber,
+          //To do quitar country
+          //country: 44,
           page: page,
         }
 
@@ -55,6 +58,13 @@ export default function Products() {
         })
         console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
+        console.log('Estos son los productos', defaultProducts)
+        if (defaultProducts.length === 0) {
+          // Si no hay más productos, detener la carga.
+          setContinuePagination(false);
+          setLoader(false);
+          return;
+        }
 
         const productsWithTax = defaultProducts
           .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -62,7 +72,6 @@ export default function Products() {
             const pricesWithTax = product.prices.map((price) => {
               const priceWithTaxCalculation = (
                 price.price +
-                //To do cambiar a price.tax
                 price.price * price.tax
               ).toFixed(2)
               return {
@@ -91,18 +100,15 @@ export default function Products() {
           )
 
         setArticles((prevProducts) => {
-          const productIds = new Set(prevProducts.map((p) => p.id))
-          const newProducts = productsWithTax.filter(
-            (p) => !productIds.has(p.id),
-          )
-          setTimeout(() => {
-            setLoader(false)
-          }, 2000)
+          const newProducts = productsWithTax.filter((p) => !prevProducts.some((prevP) => prevP.id === p.id));
 
+            setLoader(false)
+           console.log('Estos son los productos con tax', productsWithTax)
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
         console.error('Error al obtener los productos del proveedor:', error)
+        setLoader(false)
       }
     }
   }
@@ -110,7 +116,7 @@ export default function Products() {
   useEffect(() => {
     fetchProducts(currentPage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage])
+  }, [continuePagination])
 
   // PAGINACION
 
@@ -122,9 +128,15 @@ export default function Products() {
       const offsetY = contentOffset.y
       const contentHeight = contentSize.height
       const screenHeight = layoutMeasurement.height
+      const seventyPercentPosition = contentHeight * 0.7
 
-      if (offsetY >= contentHeight - screenHeight - 80) {
-        setCurrentPage((prevPage) => prevPage + 1)
+      if (offsetY >= seventyPercentPosition && continuePagination) {
+        setCurrentPage((prevPage) => {
+          const updatedPage = prevPage + 1;
+          fetchProducts(updatedPage);
+          return updatedPage;
+        }); 
+        console.log("eightyPercentPosition", seventyPercentPosition)
       }
     } else {
       return
@@ -214,7 +226,6 @@ export default function Products() {
   const resetInputSearcher = () => {
     setResetInput((prevKey) => prevKey + 1)
   }
-
   const toggleShowFavorites = async () => {
     setSelectedCategory('All')
     resetInputSearcher()
@@ -288,6 +299,7 @@ export default function Products() {
     })
   }, [toggleProductSearch])
 
+  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {/*showProductSearch && (

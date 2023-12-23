@@ -250,6 +250,9 @@ const ptTranslations = {
     text: 'Explore produtos e escolha seus favoritos selecionando o ícone do coração',
     buttonText: 'Ir para produtos',
   },
+  modalStepper: {
+    textBtn: 'Adicionar ao Pedido',
+  },
 }
 
 export default ptTranslations
