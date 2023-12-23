@@ -7,7 +7,8 @@ import ProductDetail from '../../components/buyingProcess/ProductDetail'
 import { ScrollView } from 'react-native-gesture-handler'
 import { OrderDetailStyle } from '../../styles/OrderDetailStyle'
 import { useTranslation } from 'react-i18next'
-import { Ionicons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
+import { FavoritesStyle } from '../../styles/FavoritesStyle'
 
 export default function OrderDetails() {
   const { t } = useTranslation()
@@ -94,11 +95,10 @@ export default function OrderDetails() {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={[OrderDetailStyle.card, GlobalStyles.boxShadow]}>
-            <Ionicons name="nutrition-outline" size={65} color="#62C471" />
-            <Text style={OrderDetailStyle.tittleModal}>
-              {t('orderDetails.titleCard')}
-            </Text>
+          <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
+            <AntDesign name="shoppingcart" size={65} color="#62C471" />
+            <Text style={FavoritesStyle.tittle}>{t('cart.titleCard')}</Text>
+            <Text style={FavoritesStyle.text}>{t('cart.text')}</Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Orders')
@@ -106,7 +106,7 @@ export default function OrderDetails() {
               style={[GlobalStyles.btnPrimary, { width: 200 }]}
             >
               <Text style={GlobalStyles.textBtnSecundary}>
-                {t('orderDetails.buttonText')}
+                {t('cart.buttonText')}
               </Text>
             </TouchableOpacity>
           </View>

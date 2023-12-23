@@ -259,6 +259,11 @@ const esTranslations = {
   modalStepper: {
     textBtn: 'Añadir a la orden',
   },
+  cart: {
+    titleCard: 'Tu carrito esta vacio',
+    text: 'Explora nuestros productos y selecciona los que desees añadir al carrito',
+    buttonText: 'Ir a productos',
+  },
 }
 
 export default esTranslations
