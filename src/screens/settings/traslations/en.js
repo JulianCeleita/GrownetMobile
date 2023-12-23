@@ -101,7 +101,7 @@ const enTranslations = {
     openDispute: 'Open dispute',
     delivered: 'Delivered',
     pending: 'Pending',
-    dispute: 'Dispute',
+    dispute: 'Challenged',
     settings: 'Settings',
     allOrders: 'Orders',
   },

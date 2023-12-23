@@ -5,7 +5,6 @@ export const FavoritesStyle = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   tittleFavorites: {
     fontFamily: 'PoppinsSemi',

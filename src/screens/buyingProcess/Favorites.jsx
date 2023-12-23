@@ -158,44 +158,39 @@ const Favorites = () => {
   }
 
   return (
-    <SafeAreaView style={FavoritesStyle.favorites}>
-      <ScrollView>
-        {favorites?.length === 0 && (
-          <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
-            <Ionicons name="md-heart-circle" size={65} color="#62C471" />
-            <Text style={FavoritesStyle.tittle}>
-              {t('favorites.titleCard')}
+    <View style={FavoritesStyle.favorites}>
+      {favorites?.length === 0 && (
+        <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
+          <Ionicons name="md-heart-circle" size={65} color="#62C471" />
+          <Text style={FavoritesStyle.tittle}>{t('favorites.titleCard')}</Text>
+          <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Orders')
+            }}
+            style={[GlobalStyles.btnPrimary, { width: 200 }]}
+          >
+            <Text style={GlobalStyles.textBtnSecundary}>
+              {t('favorites.buttonText')}
             </Text>
-            <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Orders')
-              }}
-              style={[GlobalStyles.btnPrimary, { width: 200 }]}
-            >
-              <Text style={GlobalStyles.textBtnSecundary}>
-                {t('favorites.buttonText')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {favorites?.map((favorite) => (
-          <View key={favorite.id} style={{ marginTop: 10 }}>
+          </TouchableOpacity>
+        </View>
+      )}
+      {favorites?.length > 0 && (
+        <ScrollView style={{ marginTop: 10 }}>
+          {favorites?.map((favorite) => (
             <ProductCards
               key={favorite.id}
               productData={favorite}
               onAmountChange={handleAmountChange}
               onUomChange={handleUomChange}
-              //   fetchProducts={fetchProducts}
-              //   currentPage={currentPage}
               fetchFavorites={fetchFavorites}
               opacity
             />
-          </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+          ))}
+        </ScrollView>
+      )}
+    </View>
   )
 }
 
