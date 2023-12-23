@@ -32,13 +32,10 @@ import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { Ionicons } from '@expo/vector-icons'
 
-
 import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful'
 
-import Settings from '../screens/settings/Settings';
+import Settings from '../screens/settings/Settings'
 import Chat from '../screens/Chat'
-
-
 
 const Stack = createStackNavigator()
 
@@ -196,11 +193,11 @@ function AuthNavigator() {
             }}
           />
           <Stack.Screen
-            name= "chat"
+            name="chat"
             component={Chat}
-            options={{ 
+            options={{
               headerShown: false,
-             }}
+            }}
           />
           <Stack.Screen
             name="TabNavigator"
@@ -236,7 +233,7 @@ function AuthNavigator() {
             name="orderSuccessful"
             component={OrderSuccessful}
             options={{
-              headerShown: true,
+              headerShown: false,
               title: t('stackNavigator.orderSuccessful'),
               headerStyle: {
                 backgroundColor: 'white',
