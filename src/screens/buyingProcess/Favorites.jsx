@@ -207,13 +207,6 @@ const Favorites = () => {
             />
           </View>
         ))}
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('orderSuccessful')
-          }}
-        >
-          <Text>hola</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   )
