@@ -44,7 +44,7 @@ const SelectQuantity = ({
         onChangeText={(value) => {
           const numericValue = parseInt(value, 10)
 
-          setAmount(numericValue)
+          setAmount(isNaN(numericValue) ? '' : numericValue)
         }}
       />
 
