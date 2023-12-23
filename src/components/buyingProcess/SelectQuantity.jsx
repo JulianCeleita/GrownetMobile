@@ -12,7 +12,8 @@ const SelectQuantity = ({
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
-  console.log(amount, 'En select')
+  console.log('productData.amount', productData.amount)
+  console.log('Amount', amount, 'En select')
   useEffect(() => {
     onAmountChange(id, amount)
     onAmountUpdate && onAmountUpdate(amount)

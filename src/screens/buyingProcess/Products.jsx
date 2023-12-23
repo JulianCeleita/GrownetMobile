@@ -28,7 +28,7 @@ export default function Products() {
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [products, setProducts] = useState([])
   const [articles, setArticles] = useState(products)
-  const { articlesToPay, selectedSupplier, selectedRestaurant, categories } =
+  const { articlesToPay, selectedSupplier, selectedRestaurant } =
     useOrderStore()
   const { t } = useTranslation()
   const [showProductSearch, setShowProductSearch] = useState(false)
@@ -37,7 +37,7 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [loader, setLoader] = useState(false)
-  const [continuePagination, setContinuePagination] = useState(true);
+  const [continuePagination, setContinuePagination] = useState(true)
 
   const fetchProducts = async (page) => {
     if (loader === false && continuePagination) {
@@ -58,12 +58,12 @@ export default function Products() {
         })
         console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
-        console.log('Estos son los productos', defaultProducts)
+
         if (defaultProducts.length === 0) {
           // Si no hay más productos, detener la carga.
-          setContinuePagination(false);
-          setLoader(false);
-          return;
+          setContinuePagination(false)
+          setLoader(false)
+          return
         }
 
         const productsWithTax = defaultProducts
@@ -100,10 +100,12 @@ export default function Products() {
           )
 
         setArticles((prevProducts) => {
-          const newProducts = productsWithTax.filter((p) => !prevProducts.some((prevP) => prevP.id === p.id));
+          const newProducts = productsWithTax.filter(
+            (p) => !prevProducts.some((prevP) => prevP.id === p.id),
+          )
 
-            setLoader(false)
-           console.log('Estos son los productos con tax', productsWithTax)
+          setLoader(false)
+
           return [...prevProducts, ...newProducts]
         })
       } catch (error) {
@@ -132,11 +134,11 @@ export default function Products() {
 
       if (offsetY >= seventyPercentPosition && continuePagination) {
         setCurrentPage((prevPage) => {
-          const updatedPage = prevPage + 1;
-          fetchProducts(updatedPage);
-          return updatedPage;
-        }); 
-        console.log("eightyPercentPosition", seventyPercentPosition)
+          const updatedPage = prevPage + 1
+          fetchProducts(updatedPage)
+          return updatedPage
+        })
+        console.log('eightyPercentPosition', seventyPercentPosition)
       }
     } else {
       return
@@ -200,21 +202,16 @@ export default function Products() {
           ),
         )
 
-      const updatedArticlesToPay = [
-        ...articlesToPay,
-        ...productsWithTax,
-      ].filter(
-        (product, index, self) =>
-          index ===
-          self.findIndex(
-            (p) => p.id === product.id && p.uomToPay === product.uomToPay,
-          ),
-      )
+      setArticles((prevProducts) => {
+        const newProducts = productsWithTax.filter(
+          (p) => !prevProducts.some((prevP) => prevP.id === p.id),
+        )
 
-      useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
+        setLoader(false)
 
-      setArticles(updatedArticlesToPay)
-      setProducts(updatedArticlesToPay)
+        return [...prevProducts, ...newProducts]
+      })
+
       setLoader(false)
     } catch (error) {
       console.error('Error al obtener los productos por categoría:', error)
@@ -241,11 +238,31 @@ export default function Products() {
         article.id === productId ? { ...article, amount: newAmount } : article,
       ),
     )
-    const updatedArticlesToPay = articles.map((article) =>
-      article.id === productId ? { ...article, amount: newAmount } : article,
+
+    const currentArticlesToPay = articlesToPay
+
+    const productExists = currentArticlesToPay.some(
+      (article) => article.id === productId,
     )
 
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
+    const product = articles.find((article) => article.id === productId)
+
+    if (productExists) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: prevState.articlesToPay.map((article) =>
+          article.id === productId && newAmount > 0
+            ? { ...product, amount: newAmount }
+            : article,
+        ),
+      }))
+    } else if (newAmount > 0) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: [
+          ...prevState.articlesToPay,
+          { ...product, amount: newAmount },
+        ],
+      }))
+    }
   }
 
   // CAMBIO DE UOM DE ARTICULOS (EACH, BOX, KG)
@@ -298,8 +315,11 @@ export default function Products() {
       ),
     })
   }, [toggleProductSearch])
+  console.log(
+    'articlesToPay en prodcuts:',
+    articlesToPay.map((e) => e.prices),
+  )
 
-  console.log('articles', articles)
   return (
     <View style={styles.container}>
       {/*showProductSearch && (
