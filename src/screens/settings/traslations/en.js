@@ -69,6 +69,9 @@ const enTranslations = {
     tax: 'Tax',
     currentvalue: 'Current value',
     continue: 'Continue',
+    title: 'Your Products',
+    titleCard: "You don't have products yet",
+    buttonText: 'Go to products',
   },
   deliveryDetail: {
     address: 'Address',

@@ -69,6 +69,9 @@ const ptTranslations = {
     tax: 'Imposto',
     currentvalue: 'Valor atual',
     continue: 'Continuar',
+    title: 'Seus produtos',
+    titleCard: 'Você ainda não tem produtos',
+    buttonText: 'Ir para produtos',
   },
   deliveryDetail: {
     address: 'Endereço',

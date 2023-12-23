@@ -70,6 +70,9 @@ const esTranslations = {
     tax: 'Impuesto',
     currentvalue: 'Valor actual',
     continue: 'Continuar',
+    title: 'Tus productos',
+    titleCard: 'Aún no tienes productos agregados',
+    buttonText: 'Ir a productos',
   },
   deliveryDetail: {
     address: 'Dirección',

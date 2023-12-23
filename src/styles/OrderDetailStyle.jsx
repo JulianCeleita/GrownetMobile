@@ -24,6 +24,26 @@ export const OrderDetailStyle = StyleSheet.create({
     fontFamily: 'PoppinsMedium',
     color: '#04444f',
   },
+  tittleModal: {
+    fontFamily: 'PoppinsSemi',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  textModal: {
+    fontFamily: 'PoppinsRegular',
+    fontSize: 15,
+    color: '#04444F',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  card: {
+    backgroundColor: 'white',
+    padding: 25,
+    margin: 25,
+    marginTop: '30%',
+    borderRadius: 15,
+    alignItems: 'center',
+  },
   currentText: {
     fontSize: 18,
     fontFamily: 'PoppinsSemi',
