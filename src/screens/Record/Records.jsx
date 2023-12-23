@@ -21,7 +21,7 @@ const Records = () => {
   const { allOrders, setAllOrders, setSelectedOrder } = useRecordStore()
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
-  const [activeTab, setActiveTab] = useState('settings')
+  const [activeTab, setActiveTab] = useState('allOrders')
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'allOrders' ? 'settings' : 'allOrders',

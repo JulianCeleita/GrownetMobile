@@ -85,8 +85,9 @@ export const RecordStyle = StyleSheet.create({
     flexDirection: 'row',
     margin: 15,
     borderRadius: 15,
-    marginTop: 0,
+    marginTop: 1,
     backgroundColor: 'white',
+    width: 300,
   },
   btnTab: {
     padding: 8,
@@ -132,7 +133,7 @@ export const RecordStyle = StyleSheet.create({
   recordZero: {
     flex: 1,
     alignItems: 'center',
-    marginTop: '20%',
+    marginTop: '15%',
   },
   textZero: {
     fontFamily: 'PoppinsRegular',

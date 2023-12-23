@@ -17,6 +17,7 @@ const OrderSuccessful = () => {
     selectedRestaurant,
     selectedSupplier,
     articlesToPay,
+    setArticlesToPay,
     orderNumber,
     totalNet,
     totalTaxes,
@@ -274,14 +275,17 @@ const OrderSuccessful = () => {
       await FileSystem.moveAsync({ from: uri, to: newUri })
 
       await shareAsync(newUri)
+      setArticlesToPay([])
     } catch (error) {
       console.error('Error generating PDF', error)
     }
   }
   const rocordsNavigate = () => {
-    navigation.navigate('Records', { screen: 'recordsStack' })
+    setArticlesToPay([])
+    navigation.navigate('Profile')
   }
   const newOrderNavigate = () => {
+    setArticlesToPay([])
     navigation.navigate('Orders', { screen: 'suppliers' })
   }
   return (
@@ -327,7 +331,7 @@ const OrderSuccessful = () => {
             {t('orderSuccessful.newOrder')}
           </Text>
         </TouchableOpacity>
-        </View>
+      </View>
     </View>
   )
 }
