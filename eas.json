@@ -24,7 +24,8 @@
         "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
         "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
         "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
-        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail",
+        "EXPO_PUBLIC_SEARCH":"/products/search"
       }
     },
     "preview": {
@@ -50,7 +51,8 @@
         "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
         "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
         "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
-        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail",
+        "EXPO_PUBLIC_SEARCH":"/products/search"
       }
     },
     "production": {
@@ -72,7 +74,8 @@
         "EXPO_PUBLIC_CLOSE_SELECTED_ORDER": "/orders/state",
         "EXPO_PUBLIC_SUPPLIER_CATEGORIE": "/products/supplierCategorie",
         "EXPO_PUBLIC_FAVORITES_BY_SUPPLIER": "/products/favoritesBySupplier",
-        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail"
+        "EXPO_PUBLIC_SEND_EMAIL": "/disputeOrder/sendEmail",
+        "EXPO_PUBLIC_SEARCH":"/products/search"
       }
     }
   },
