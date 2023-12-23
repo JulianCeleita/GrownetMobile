@@ -1,11 +1,9 @@
 import {
   Feather,
-  FontAwesome,
   MaterialIcons,
   AntDesign,
   Ionicons,
 } from '@expo/vector-icons'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import { useFocusEffect } from '@react-navigation/native'
 import { isSameDay, parseISO } from 'date-fns'
 import React, { useState } from 'react'
@@ -21,6 +19,8 @@ import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import Settings from '../../screens/settings/Settings';
+
 
 const Records = ({ navigation }) => {
   const { t } = useTranslation()
@@ -35,11 +35,10 @@ const Records = ({ navigation }) => {
   } = useRecordStore()
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
-  const [activeTab, setActiveTab] = useState('pendingRecord')
+  const [activeTab, setActiveTab] = useState('pastRecord')
   const switchTab = () => {
-    setShowDatePicker(false)
     setActiveTab((prevTab) =>
-      prevTab === 'pastRecord' ? 'pendingRecord' : 'pastRecord',
+      prevTab === 'pastRecord' ? 'settings' : 'pastRecord',
     )
   }
   useFocusEffect(
@@ -77,33 +76,15 @@ const Records = ({ navigation }) => {
 
   const handlePendingOrderSelect = (orderReference) => {
     setSelectedPendingOrder(orderReference)
-    navigation.navigate('pendingRecord')
+    navigation.navigate('settings')
   }
 
-  // Filtro
-  const [showDatePicker, setShowDatePicker] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [formattedDate, setFormattedDate] = useState('All orders')
-  const showDatepicker = () => {
-    setShowDatePicker(!showDatePicker)
-  }
+
+  
   const closeDatepicker = () => {
     setFormattedDate('All orders')
-  }
-
-  const handleDateChange = (event, selected) => {
-    if (event.type === 'set') {
-      setShowDatePicker(false)
-      if (selected) {
-        setSelectedDate(selected)
-        const formatted = selected.toDateString()
-        setFormattedDate(formatted)
-      } else {
-        setFormattedDate('All Orders')
-      }
-    } else if (event.type === 'dismiss') {
-      setShowDatePicker(false)
-    }
   }
 
   return (
@@ -125,34 +106,6 @@ const Records = ({ navigation }) => {
           </View>
         ) : (
           <>
-            {/* FILTRO POR FECHA */}
-            <View style={RecordStyle.filter}>
-              <Button onPress={showDatepicker}>
-                <Text style={RecordStyle.textFilter}>{formattedDate}</Text>
-              </Button>
-              <View style={RecordStyle.btnCloseFilter}>
-                <TouchableOpacity onPress={showDatepicker}>
-                  <Feather name="search" size={24} color="#969696" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={closeDatepicker}>
-                  <FontAwesome
-                    style={{ marginLeft: 15 }}
-                    name="trash-o"
-                    size={24}
-                    color="#ee6055"
-                  />
-                </TouchableOpacity>
-              </View>
-              {showDatePicker && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={selectedDate}
-                  mode="date"
-                  display="calendar"
-                  onChange={handleDateChange}
-                />
-              )}
-            </View>
             <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
               {/* SWITCH ENTRE PASTORDERS Y PENDINGORDERS */}
               <TouchableOpacity
@@ -170,39 +123,42 @@ const Records = ({ navigation }) => {
               >
                 <Text
                   style={{
+                    marginTop : 5,
                     fontFamily: 'PoppinsRegular',
                     color: activeTab === 'pastRecord' ? 'white' : '#04444f',
                   }}
                 >
-                  {t('record.pastOrders')}
+                  {t('Orders')}
                 </Text>
               </TouchableOpacity>
-
               <TouchableOpacity
-                style={[
-                  {
-                    flex: 1,
-                    backgroundColor:
-                      activeTab === 'pendingRecord' ? '#62c471' : 'white',
-                  },
-                  RecordStyle.btnTab,
-                ]}
-                onPress={switchTab}
-              >
-                <Text
-                  style={{
-                    fontFamily: 'PoppinsRegular',
-                    color: activeTab === 'pendingRecord' ? 'white' : '#04444f',
-                  }}
-                >
-                  {t('record.pendingOrders')}
-                </Text>
-              </TouchableOpacity>
+          style={[
+            {
+              flex: 1,
+              backgroundColor:
+                activeTab === 'settings' ? '#62c471' : 'white',
+              padding: 10,
+              alignItems: 'center',
+            },
+            RecordStyle.btnTab,
+          ]}
+          onPress={() => setActiveTab('settings')}
+        >
+          <Text
+            style={{
+              marginTop:5,
+              fontFamily: 'PoppinsRegular',
+              color:
+                activeTab === 'settings' ? 'white' : '#04444f',
+            }}
+          >
+                {t('Settings')}
+          </Text>
+        </TouchableOpacity>
             </View>
-
             <View>
               {/* VISTA SI ESTÁ PASTRECORD SELECCIONADO */}
-              {activeTab === 'pastRecord' ? (
+              {activeTab === 'pendingRecord' ? (
                 <View>
                   {formattedDate === 'All orders'
                     ? closedOrders.map((order) => (

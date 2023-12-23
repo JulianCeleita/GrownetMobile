@@ -56,7 +56,7 @@ function SettingsStack() {
   const { t } = useTranslation()
   return (
     <Stack.Navigator
-      initialRouteName="Settings"
+      initialRouteName="Records"
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: 'white',
@@ -64,11 +64,11 @@ function SettingsStack() {
       }}
     >
       <Stack.Screen
-        name="Settings"
-        component={Settings}
+        name="Records"
+        component={Records}
         options={{
           headerBackTitleVisible: false,
-          title: t('menuPrimary.titleSettings'),
+          title: 'Profile',
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: 'white',
@@ -512,7 +512,7 @@ const TabNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name="Settings"
+        name="Profile"
         component={SettingsStack}
         options={{
           tabBarIcon: tabBarIconAcount('account-outline'),
