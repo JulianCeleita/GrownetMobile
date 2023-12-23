@@ -28,7 +28,8 @@ export default function OrderDetails() {
   const updateTotalToPay = (newTotal) => {
     articlesToPayStore.setTotalToPay(newTotal)
   }
-
+  console.log('totalToPay', totalToPay)
+  console.log('articlesToPayStore', articlesToPayStore)
   return (
     <SafeAreaView
       style={{
@@ -38,7 +39,61 @@ export default function OrderDetails() {
       }}
     >
       <ScrollView>
-      {articlesToPayStore.length === 0 ? (
+        {articlesToPayStore.articlesToPay.length > 0 ? (
+          <View
+            style={{
+              width: '100%',
+              flex: 1,
+              alignItems: 'center',
+            }}
+          >
+            <View style={OrderDetailStyle.containerDetails}>
+              <ProductDetail
+                updateTotalToPay={updateTotalToPay}
+                updateTotalTaxes={updateTotalTaxes}
+                updateTotalNet={updateTotalNet}
+              />
+              <View>
+                <Text style={OrderDetailStyle.tittle}>
+                  {t('orderDetails.paymentDetails')}
+                </Text>
+                <View style={OrderDetailStyle.productDetail}>
+                  <Text style={OrderDetailStyle.text}>
+                    {t('orderDetails.net')}
+                  </Text>
+                  <Text style={OrderDetailStyle.text}>
+                    £{totalNet.toFixed(2)}
+                  </Text>
+                </View>
+                <View style={OrderDetailStyle.productDetail}>
+                  <Text style={OrderDetailStyle.text}>
+                    {t('orderDetails.tax')}
+                  </Text>
+                  <Text style={OrderDetailStyle.text}>
+                    £{totalTaxes.toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+              <View style={OrderDetailStyle.totalDetail}>
+                <Text style={OrderDetailStyle.currentText}>
+                  {t('orderDetails.currentvalue')}
+                </Text>
+                <Text style={OrderDetailStyle.currentText}>
+                  £{totalToPay.toFixed(2)}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={[GlobalStyles.btnPrimary, OrderDetailStyle.spaceButton]}
+              onPress={() => navigation.navigate('orderInformation')}
+              disabled={totalToPay === 0}
+            >
+              <Text style={GlobalStyles.textBtnSecundary}>
+                {t('orderDetails.continue')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
           <View style={[OrderDetailStyle.card, GlobalStyles.boxShadow]}>
             <Ionicons name="nutrition-outline" size={65} color="#62C471" />
             <Text style={OrderDetailStyle.tittleModal}>
@@ -55,60 +110,6 @@ export default function OrderDetails() {
               </Text>
             </TouchableOpacity>
           </View>
-        ):(
-        <View
-          style={{
-            width: '100%',
-            flex: 1,
-            alignItems: 'center',
-          }}
-        >
-          <View style={OrderDetailStyle.containerDetails}>
-            <ProductDetail
-              updateTotalToPay={updateTotalToPay}
-              updateTotalTaxes={updateTotalTaxes}
-              updateTotalNet={updateTotalNet}
-            />
-            <View>
-              <Text style={OrderDetailStyle.tittle}>
-                {t('orderDetails.paymentDetails')}
-              </Text>
-              <View style={OrderDetailStyle.productDetail}>
-                <Text style={OrderDetailStyle.text}>
-                  {t('orderDetails.net')}
-                </Text>
-                <Text style={OrderDetailStyle.text}>
-                  £{totalNet.toFixed(2)}
-                </Text>
-              </View>
-              <View style={OrderDetailStyle.productDetail}>
-                <Text style={OrderDetailStyle.text}>
-                  {t('orderDetails.tax')}
-                </Text>
-                <Text style={OrderDetailStyle.text}>
-                  £{totalTaxes.toFixed(2)}
-                </Text>
-              </View>
-            </View>
-            <View style={OrderDetailStyle.totalDetail}>
-              <Text style={OrderDetailStyle.currentText}>
-                {t('orderDetails.currentvalue')}
-              </Text>
-              <Text style={OrderDetailStyle.currentText}>
-                £{totalToPay.toFixed(2)}
-              </Text>
-            </View>
-          </View>
-          <TouchableOpacity
-            style={[GlobalStyles.btnPrimary, OrderDetailStyle.spaceButton]}
-            onPress={() => navigation.navigate('orderInformation')}
-            disabled={totalToPay === 0}
-          >
-            <Text style={GlobalStyles.textBtnSecundary}>
-              {t('orderDetails.continue')}
-            </Text>
-          </TouchableOpacity>
-        </View>
         )}
       </ScrollView>
     </SafeAreaView>
