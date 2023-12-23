@@ -89,7 +89,7 @@ export const RecordStyle = StyleSheet.create({
     backgroundColor: 'white',
   },
   btnTab: {
-    padding: 15,
+    padding: 8,
     alignItems: 'center',
     borderRadius: 15,
   },
