@@ -75,6 +75,8 @@ function ProductsCategories({
           activeOpacity={0.9}
         >
           <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
             style={
               selectedCategory === 'All' && !showFavorites
                 ? ProductsStyle.buttonCategory2
@@ -117,19 +119,20 @@ function ProductsCategories({
   return (
     <SafeAreaView style={ProductsStyle.fixedContainer}>
       {/* Flecha para regresar */}
-      <TouchableOpacity
-        style={[ProductsStyle.backButton, { marginTop: 20, marginLeft: 15 }]}
-        onPress={handleGoBack}
-      >
-        <Ionicons name="arrow-back" size={24} color="black" />
-      </TouchableOpacity>
       <View style={ProductsStyle.categoriesMenu}>
+        <TouchableOpacity
+          style={[ProductsStyle.backButton, { marginLeft: 10 }]}
+          onPress={handleGoBack}
+        >
+          <Ionicons name="arrow-back" size={24} color="white" />
+        </TouchableOpacity>
         {/* Carousel */}
         <Carousel
           data={updatedCategories}
           renderItem={renderItem}
           sliderWidth={width}
-          itemWidth={width / 2.5}
+          //itemWidth={width / 2.5}
+          itemWidth={145}
           autoplay={false}
           loop={true}
           layout="default"
