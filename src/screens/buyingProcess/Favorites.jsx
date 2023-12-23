@@ -89,6 +89,17 @@ const Favorites = () => {
           console.log('isValidProduct', isValidProduct)
           return isValidProduct
         })
+        .map((product) => {
+          const existingProduct = articlesToPay.find(
+            (prevProduct) => prevProduct.id === product.id,
+          )
+
+          return existingProduct || product
+        })
+        .filter(
+          (product, index, self) =>
+            index === self.findIndex((t) => t.id === product.id),
+        )
 
       setFavorites(productsWithTax)
     } catch (error) {
