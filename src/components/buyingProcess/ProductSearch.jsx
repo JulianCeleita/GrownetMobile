@@ -4,24 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { TextInput, TouchableOpacity, View } from 'react-native'
 import useProductStore from '../../store/useProductStore'
 import { ProductsStyle } from '../../styles/ProductsStyle'
-function ProductSearcher({ products, setShowSearchResults, resetInput }) {
+function ProductSearcher() {
   const { t } = useTranslation()
   const [input, setInput] = useState('')
   const setFilteredProducts = useProductStore(
     (state) => state.setFilteredProducts,
   )
 
-  useEffect(() => {
-    handleReset()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetInput])
-
-  useEffect(() => {
-    if (input !== '') {
-      filterProducts(input)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products])
 
   const handleInputChange = (query) => {
     setInput(query)
@@ -32,11 +21,6 @@ function ProductSearcher({ products, setShowSearchResults, resetInput }) {
     } else {
       filterProducts(query)
     }
-  }
-  const handleReset = () => {
-    setShowSearchResults(false)
-    setInput('')
-    setFilteredProducts([])
   }
 
   const filterProducts = (query) => {
@@ -56,7 +40,7 @@ function ProductSearcher({ products, setShowSearchResults, resetInput }) {
         placeholder={t('productSearcher.placeholder')}
         placeholderTextColor="#969696"
       />
-      <TouchableOpacity style={ProductsStyle.iconSearch} onPress={handleReset}>
+      <TouchableOpacity style={ProductsStyle.iconSearch}>
         <Feather name="search" size={24} color="#969696" />
       </TouchableOpacity>
     </View>
