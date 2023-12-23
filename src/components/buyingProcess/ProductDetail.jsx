@@ -45,7 +45,7 @@ export default function ProductDetail({
 
   // ACTUALIZAR UOMTOPAY DE ARTICULOS
   const handleUomChange = (productId, newUomToPay) => {
-    const updatedArticlesToPay = articles.map((article) => {
+    const updatedArticlesToPay = articlesToPay.map((article) => {
       if (article.id === productId) {
         const selectedPrice = article.prices.find(
           (price) => price.nameUoms === newUomToPay,
@@ -59,8 +59,7 @@ export default function ProductDetail({
       }
       return article
     })
-    setArticles(updatedArticlesToPay)
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
+    setArticlesToPay(updatedArticlesToPay)
   }
 
   // CALCULAR EL NETO
