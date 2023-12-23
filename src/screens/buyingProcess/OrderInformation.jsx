@@ -36,7 +36,7 @@ const OrderInformation = () => {
   } = useOrderStore()
   const [data, setData] = useState([])
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const { token } = useTokenStore()
   const navigation = useNavigation()
   const tomorrow = new Date()

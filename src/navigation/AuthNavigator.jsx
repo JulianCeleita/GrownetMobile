@@ -31,8 +31,8 @@ import OrderDetail from '../screens/buyingProcess/OrderDetail'
 import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { Ionicons } from '@expo/vector-icons'
-import Settings from '../screens/settings/Settings';
-
+import Settings from '../screens/settings/Settings'
+import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful'
 
 const Stack = createStackNavigator()
 
@@ -216,6 +216,27 @@ function AuthNavigator() {
               headerLeft: () => HeaderLeft(),
               headerTitleContainerStyle: {
                 height: Platform.OS === 'ios' ? 70 : null,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="orderSuccessful"
+            component={OrderSuccessful}
+            options={{
+              headerShown: true,
+              title: t('stackNavigator.orderSuccessful'),
+              headerStyle: {
+                backgroundColor: 'white',
+                height:
+                  Platform.OS === 'ios'
+                    ? StatusBar.currentHeight + 110
+                    : StatusBar.currentHeight + 60,
+              },
+              headerTintColor: '#04444F',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'PoppinsSemi',
+                fontSize: 22,
               },
             }}
           />
