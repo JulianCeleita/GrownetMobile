@@ -26,7 +26,6 @@ const ProductCards = ({
   const { selectedSupplier, selectedRestaurant } = useOrderStore()
   const { token } = useTokenStore()
   const [isFocus, setIsFocus] = useState(false)
-  const [selectedQuantity, setSelectedQuantity] = useState(0)
   const [productState, setProductState] = useState({
     isFavorite: active === 1,
     isFavoritePending: false,
@@ -103,9 +102,6 @@ const ProductCards = ({
     },
     [id, onUomChange],
   )
-  const handleAmountUpdate = (newAmount) => {
-    setSelectedQuantity(newAmount)
-  }
 
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
@@ -196,7 +192,6 @@ const ProductCards = ({
           productData={productData}
           onAmountChange={onAmountChange}
           counter={0}
-          onAmountUpdate={handleAmountUpdate}
         />
       )}
     </View>
