@@ -95,6 +95,7 @@ const ModalStepper = ({
                 counter={0}
                 style={ModalStepperStyle}
                 onAmountUpdate={onAmountUpdate}
+                itsacart
               />
 
               <View>

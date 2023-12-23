@@ -9,6 +9,7 @@ const SelectQuantity = ({
   counter,
   style,
   onAmountUpdate,
+  itsacart,
 }) => {
   const { id } = productData
   const [amount, setAmount] = useState(productData.amount)
@@ -16,7 +17,11 @@ const SelectQuantity = ({
   console.log('Amount', amount, 'En select')
   useEffect(() => {
     onAmountChange(id, amount)
-    onAmountUpdate && onAmountUpdate(amount)
+
+    if (itsacart && onAmountUpdate) {
+      onAmountUpdate(amount)
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
@@ -38,11 +43,8 @@ const SelectQuantity = ({
         value={amount.toString()}
         onChangeText={(value) => {
           const numericValue = parseInt(value, 10)
-          if (isNaN(numericValue)) {
-            setAmount('')
-          } else {
-            setAmount(numericValue)
-          }
+
+          setAmount(numericValue)
         }}
       />
 
