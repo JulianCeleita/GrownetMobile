@@ -30,10 +30,8 @@ export default function DeleteProduct({
       ),
     )
 
-    const updatedArticlesToPay = articlesToPay.map((articl) =>
-      articl.id === productId
-        ? { ...articl, amount: 0, totalItemToPay: 0 }
-        : articl,
+    const updatedArticlesToPay = articlesToPay.filter(
+      (articl) => articl.id !== productId,
     )
 
     setArticlesToPay(updatedArticlesToPay)
