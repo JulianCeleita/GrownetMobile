@@ -17,6 +17,7 @@ export default function ProductDetail({
   const { articlesToPay, setArticlesToPay } = useOrderStore()
   // ACTUALIZAR CANTIDAD DE ARTICULOS
   const [articles, setArticles] = useState(articlesToPay)
+  console.log('articlesToPaydesdecarrito', articlesToPay)
   useEffect(() => {
     setArticles(articlesToPay)
   }, [articles, articlesToPay])

@@ -18,8 +18,9 @@ import { productsSearchApi } from '../../config/urls.config'
 function Search() {
   const { t } = useTranslation()
   const { token } = useTokenStore()
-  const { articlesToPay, selectedSupplier, selectedRestaurant, categories } =
+  const { articlesToPay, selectedSupplier, selectedRestaurant } =
     useOrderStore()
+  console.log('articlesToPasearry', articlesToPay)
   const [search, setSearch] = useState('')
   const [productSearch, setProductSearch] = useState([])
 
@@ -63,7 +64,7 @@ function Search() {
       })
 
       const defaultProducts = response.data.products
-      console.log('defaultProducts:', defaultProducts)
+
       const productsWithTax = defaultProducts
         .filter((product) => product.prices.some((price) => price.nameUoms))
         .map((product) => {
@@ -104,6 +105,7 @@ function Search() {
   }
 
   // CAMBIO DE CANTIDAD DE ARTICULOS
+
   const handleAmountChange = (productId, newAmount) => {
     setProductSearch((prevArticles) =>
       prevArticles.map((article) =>
@@ -111,13 +113,13 @@ function Search() {
       ),
     )
 
-    const currentArticlesToPay = useOrderStore.getState().articlesToPay
+    const currentArticlesToPay = articlesToPay
 
-    const isProductInArticlesToPay = currentArticlesToPay.some(
+    const productExists = currentArticlesToPay.some(
       (article) => article.id === productId,
     )
 
-    if (isProductInArticlesToPay) {
+    if (productExists) {
       useOrderStore.setState((prevState) => ({
         articlesToPay: prevState.articlesToPay.map((article) =>
           article.id === productId
@@ -151,41 +153,8 @@ function Search() {
       }
       return article
     })
-
-    const currentArticlesToPay = useOrderStore.getState().articlesToPay
-
-    const isProductInArticlesToPay = currentArticlesToPay.some(
-      (article) => article.id === productId,
-    )
-
-    if (isProductInArticlesToPay) {
-      useOrderStore.setState((prevState) => ({
-        articlesToPay: prevState.articlesToPay.map((article) =>
-          article.id === productId
-            ? {
-                ...article,
-                uomToPay: newUomToPay,
-                idUomToPay: selectedPrice.id,
-                priceWithTax: selectedPrice.priceWithTax,
-              }
-            : article,
-        ),
-      }))
-    } else {
-      useOrderStore.setState((prevState) => ({
-        articlesToPay: [
-          ...prevState.articlesToPay,
-          {
-            id: productId,
-            uomToPay: newUomToPay,
-            idUomToPay: selectedPrice.id,
-            priceWithTax: selectedPrice.priceWithTax,
-          },
-        ],
-      }))
-    }
-
     setProductSearch(updatedArticlesToPay)
+    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
   const handleSearchChange = (text) => {
