@@ -1,13 +1,13 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import useOrderStore from '../../store/useOrderStore'
-import { GlobalStyles } from '../../styles/Styles'
-import ProductDetail from '../../components/buyingProcess/ProductDetail'
-import { ScrollView } from 'react-native-gesture-handler'
-import { OrderDetailStyle } from '../../styles/OrderDetailStyle'
-import { useTranslation } from 'react-i18next'
 import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import ProductDetail from '../../components/buyingProcess/ProductDetail'
+import useOrderStore from '../../store/useOrderStore'
+import { OrderDetailStyle } from '../../styles/OrderDetailStyle'
+import { GlobalStyles } from '../../styles/Styles'
 
 export default function OrderDetails() {
   const { t } = useTranslation()
@@ -28,8 +28,6 @@ export default function OrderDetails() {
   const updateTotalToPay = (newTotal) => {
     articlesToPayStore.setTotalToPay(newTotal)
   }
-  console.log('totalToPay', totalToPay)
-  console.log('articlesToPayStore', articlesToPayStore)
   return (
     <SafeAreaView
       style={{

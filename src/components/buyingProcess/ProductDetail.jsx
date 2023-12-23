@@ -18,7 +18,7 @@ export default function ProductDetail({
   const { articlesToPay, setArticlesToPay } = useOrderStore()
   // ACTUALIZAR CANTIDAD DE ARTICULOS
   const [articles, setArticles] = useState(articlesToPay)
-  console.log('articlesToPaydesdecarrito', articlesToPay)
+
   useEffect(() => {
     setArticles(articlesToPay)
   }, [articlesToPay])
@@ -149,8 +149,6 @@ export default function ProductDetail({
     updateTotalNet(newTotalNet)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles])
-
-  console.log('articlesdesde carrito', articles)
 
   return (
     <View>

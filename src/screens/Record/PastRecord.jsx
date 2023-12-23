@@ -27,7 +27,7 @@ function PastRecord() {
         setDetailsToShow(response.data.order)
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOrder])

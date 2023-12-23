@@ -46,7 +46,7 @@ const Records = () => {
           )
           setAllOrders(allOrders)
         } catch (error) {
-          console.log('Error al llamar las ordenes', error)
+          console.error('Error al llamar las ordenes', error)
         }
       }
       fetchData()

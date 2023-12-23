@@ -70,7 +70,7 @@ const LoginPage = () => {
         setShowModal(true)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   const closeModal = () => {

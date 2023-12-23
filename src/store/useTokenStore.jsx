@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { persist } from 'zustand/middleware'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 const useTokenStore = create(
   persist(
@@ -19,7 +19,6 @@ const useTokenStore = create(
 
           if (storedToken) {
             set({ token: JSON.parse(storedToken) })
-            console.log('Token recuperado:', JSON.parse(storedToken))
           } else {
             console.error('no se encontro el token')
           }

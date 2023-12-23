@@ -1,41 +1,37 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react'
-import { navigate } from './RootNavigation'
-import useTokenStore from '../store/useTokenStore'
+import {
+  Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  useFonts,
+} from '@expo-google-fonts/poppins'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  Platform,
+  StatusBar,
+  TouchableOpacity
+} from 'react-native'
 import Home from '../screens/Home'
 import Login from '../screens/Login/LoginPage'
 import OTP from '../screens/Login/OtpPage'
-import Restauranst from '../screens/buyingProcess/Restaurants'
-import {
-  StatusBar,
-  TouchableOpacity,
-  Platform,
-  View,
-  StyleSheet,
-} from 'react-native'
-import {
-  useFonts,
-  Poppins_700Bold,
-  Poppins_400Regular,
-  Poppins_600SemiBold,
-  Poppins_500Medium,
-  Poppins_300Light_Italic,
-} from '@expo-google-fonts/poppins'
-import { createStackNavigator } from '@react-navigation/stack'
-import TabNavigator from './TabNavigator'
-import { useTranslation } from 'react-i18next'
-import Suppliers from '../screens/buyingProcess/Suppliers'
-import { useNavigation } from '@react-navigation/native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import OrderDetail from '../screens/buyingProcess/OrderDetail'
-import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
-import { Ionicons } from '@expo/vector-icons'
+import OrderInformation from '../screens/buyingProcess/OrderInformation'
+import Restauranst from '../screens/buyingProcess/Restaurants'
+import Suppliers from '../screens/buyingProcess/Suppliers'
+import useTokenStore from '../store/useTokenStore'
+import { navigate } from './RootNavigation'
+import TabNavigator from './TabNavigator'
 
 import OrderSuccessful from '../screens/buyingProcess/OrderSuccessful'
 
-import Settings from '../screens/settings/Settings'
 import Chat from '../screens/Chat'
+import Settings from '../screens/settings/Settings'
 
 const Stack = createStackNavigator()
 
@@ -124,7 +120,6 @@ function AuthNavigator() {
     if (token) {
       setIsLoading(false)
     } else {
-      console.log('No se encontró un token. Redirigiendo a login.')
       navigate('home')
       setIsLoading(false)
     }
