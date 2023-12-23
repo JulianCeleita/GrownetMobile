@@ -280,13 +280,13 @@ const OrderSuccessful = () => {
       console.error('Error generating PDF', error)
     }
   }
-  const rocordsNavigate = () => {
+  const recordsNavigate = () => {
     setArticlesToPay([])
     navigation.navigate('Profile')
   }
   const newOrderNavigate = () => {
     setArticlesToPay([])
-    navigation.navigate('Orders', { screen: 'suppliers' })
+    navigation.navigate('TabNavigator', {screen:'Favorites'})
   }
   return (
     <View style={OrderSuccessfulStyle.container}>
@@ -306,7 +306,7 @@ const OrderSuccessful = () => {
       <View style={OrderSuccessfulStyle.containerButtons}>
         <TouchableOpacity
           style={[GlobalStyles.btnPrimary, OrderSuccessfulStyle.spaceBttn]}
-          onPress={rocordsNavigate}
+          onPress={recordsNavigate}
         >
           <Text style={GlobalStyles.textBtnSecundary}>
             {' '}
