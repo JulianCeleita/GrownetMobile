@@ -26,6 +26,7 @@ const Favorites = () => {
 
   const { articlesToPay, selectedSupplier, selectedRestaurant, categories } =
     useOrderStore()
+  console.log('articlesToPay', articlesToPay)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +54,6 @@ const Favorites = () => {
       })
 
       const defaultFavorites = response.data.favorites
-      console.log('defaultFavorites', defaultFavorites)
 
       const productsWithTax = defaultFavorites
         .filter((product) => product.prices.some((price) => price.nameUoms))
@@ -89,7 +89,7 @@ const Favorites = () => {
           console.log('isValidProduct', isValidProduct)
           return isValidProduct
         })
-      console.log('productsWithTax', productsWithTax)
+
       setFavorites(productsWithTax)
     } catch (error) {
       console.error('Error al obtener los productos favoritos:', error)
@@ -102,12 +102,33 @@ const Favorites = () => {
         article.id === productId ? { ...article, amount: newAmount } : article,
       ),
     )
-    const updatedArticlesToPay = favorites?.map((article) =>
-      article.id === productId ? { ...article, amount: newAmount } : article,
+
+    const currentArticlesToPay = articlesToPay
+
+    const productExists = currentArticlesToPay.some(
+      (article) => article.id === productId,
     )
 
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
+    const product = favorites.find((article) => article.id === productId)
+
+    if (productExists) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: prevState.articlesToPay.map((article) =>
+          article.id === productId && newAmount > 0
+            ? { ...product, amount: newAmount }
+            : article,
+        ),
+      }))
+    } else if (newAmount > 0) {
+      useOrderStore.setState((prevState) => ({
+        articlesToPay: [
+          ...prevState.articlesToPay,
+          { ...product, amount: newAmount },
+        ],
+      }))
+    }
   }
+
   // CAMBIO DE UOM DE ARTICULOS (EACH, BOX, KG)
   const handleUomChange = (productId, newUomToPay) => {
     const updatedArticlesToPay = favorites?.map((article) => {

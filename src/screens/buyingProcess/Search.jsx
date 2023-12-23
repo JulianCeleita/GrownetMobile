@@ -105,7 +105,6 @@ function Search() {
   }
 
   // CAMBIO DE CANTIDAD DE ARTICULOS
-
   const handleAmountChange = (productId, newAmount) => {
     setProductSearch((prevArticles) =>
       prevArticles.map((article) =>
@@ -119,19 +118,21 @@ function Search() {
       (article) => article.id === productId,
     )
 
+    const product = productSearch.find((article) => article.id === productId)
+
     if (productExists) {
       useOrderStore.setState((prevState) => ({
         articlesToPay: prevState.articlesToPay.map((article) =>
-          article.id === productId
-            ? { ...article, amount: newAmount }
+          article.id === productId && newAmount > 0
+            ? { ...product, amount: newAmount }
             : article,
         ),
       }))
-    } else {
+    } else if (newAmount > 0) {
       useOrderStore.setState((prevState) => ({
         articlesToPay: [
           ...prevState.articlesToPay,
-          { id: productId, amount: newAmount },
+          { ...product, amount: newAmount },
         ],
       }))
     }

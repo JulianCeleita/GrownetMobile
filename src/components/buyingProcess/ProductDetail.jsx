@@ -21,7 +21,7 @@ export default function ProductDetail({
   console.log('articlesToPaydesdecarrito', articlesToPay)
   useEffect(() => {
     setArticles(articlesToPay)
-  }, [articles, articlesToPay])
+  }, [articlesToPay])
 
   const handleAmountChange = (productId, newAmount) => {
     setArticles((prevArticles) =>
@@ -151,75 +151,66 @@ export default function ProductDetail({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles])
 
+  console.log('articlesdesde carrito', articles)
+
   return (
     <View>
-      {articles
-        .filter((article) => {
-          return (
-            article.amount > 0 || isNaN(article.amount) || article.amount === ''
-          )
-        })
-        .map((article) => (
-          <View key={article.id}>
-            <View style={OrderDetailStyle.cardProduct}>
-              <Text style={OrderDetailStyle.textProductView}>
-                {article.name}
+      {articles.map((article) => (
+        <View key={article.id}>
+          <View style={OrderDetailStyle.cardProduct}>
+            <Text style={OrderDetailStyle.textProductView}>{article.name}</Text>
+            <View style={OrderDetailStyle.cardTotal}>
+              <Text style={OrderDetailStyle.textSecondProductView}>
+                {' '}
+                £ {calculateItemToPay(article, article.amount)}
               </Text>
-              <View style={OrderDetailStyle.cardTotal}>
-                <Text style={OrderDetailStyle.textSecondProductView}>
-                  {' '}
-                  £ {calculateItemToPay(article, article.amount)}
-                </Text>
-                <DeleteProduct
-                  articles={articles}
-                  setArticles={setArticles}
-                  article={article}
-                  articlesToPay={articlesToPay}
-                  setArticlesToPay={setArticlesToPay}
-                  calculateTotalToPay={calculateTotalToPay}
-                  updateTotalToPay={updateTotalToPay}
-                />
-              </View>
+              <DeleteProduct
+                articles={articles}
+                setArticles={setArticles}
+                article={article}
+                articlesToPay={articlesToPay}
+                setArticlesToPay={setArticlesToPay}
+                calculateTotalToPay={calculateTotalToPay}
+                updateTotalToPay={updateTotalToPay}
+              />
             </View>
-            {
-              <View style={OrderDetailStyle.cardProduct}>
-                <View style={ProductsStyles.containSelect}>
-                  <SelectQuantity
-                    widthOrder
-                    productData={article}
-                    onAmountChange={handleAmountChange}
-                    counter={counter}
-                    style={ProductsStyle}
-                  />
-                </View>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocus && { borderColor: '#04444f' },
-                  ]}
-                  containerStyle={{
-                    borderRadius: 20,
-                    color: '#04444f',
-                  }}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  data={article.prices}
-                  maxHeight={200}
-                  labelField="nameUoms"
-                  valueField="nameUoms"
-                  placeholder={!isFocus ? 'Unit' : '...'}
-                  value={article.uomToPay}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={(event) => {
-                    const { nameUoms } = event
-                    handleUomChange(article.id, nameUoms)
-                  }}
+          </View>
+          {
+            <View style={OrderDetailStyle.cardProduct}>
+              <View style={ProductsStyles.containSelect}>
+                <SelectQuantity
+                  widthOrder
+                  productData={article}
+                  onAmountChange={handleAmountChange}
+                  counter={counter}
+                  style={ProductsStyle}
                 />
               </View>
-            }
-          </View>
-        ))}
+              <Dropdown
+                style={[styles.dropdown, isFocus && { borderColor: '#04444f' }]}
+                containerStyle={{
+                  borderRadius: 20,
+                  color: '#04444f',
+                }}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                data={article.prices}
+                maxHeight={200}
+                labelField="nameUoms"
+                valueField="nameUoms"
+                placeholder={!isFocus ? 'Unit' : '...'}
+                value={article.uomToPay}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(event) => {
+                  const { nameUoms } = event
+                  handleUomChange(article.id, nameUoms)
+                }}
+              />
+            </View>
+          }
+        </View>
+      ))}
     </View>
   )
 }
