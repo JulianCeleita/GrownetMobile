@@ -150,6 +150,7 @@ const ptTranslations = {
     yourOrders: 'Seus pedidos',
     orderDetails: 'Detalhes do pedido',
     whatWentWrong: 'O que deu errado?',
+    profile: 'Perfil',
   },
   settings: {
     title: 'Configurações',
@@ -164,6 +165,7 @@ const ptTranslations = {
     faq: 'Perguntas frequentes',
     termsAndConditions: 'Termos e Condições',
     logOut: 'Sair',
+    customerService: 'Atendimento ao cliente',
   },
   pastRecord: {
     supplierDetails: 'Detalhes do fornecedor',

@@ -150,6 +150,7 @@ const enTranslations = {
     yourOrders: 'Your orders',
     orderDetails: 'Order details',
     whatWentWrong: 'What went wrong?',
+    profile: 'Profile',
   },
   settings: {
     title: 'Settings',
@@ -164,6 +165,7 @@ const enTranslations = {
     faq: 'FAQ',
     termsAndConditions: 'Terms & conditions',
     logOut: 'Log out',
+    customerService: 'Customer service',
   },
   pastRecord: {
     supplierDetails: 'Supplier details',

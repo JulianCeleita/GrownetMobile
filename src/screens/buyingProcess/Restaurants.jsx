@@ -53,7 +53,7 @@ const Restaurants = () => {
   }, [setRestaurants, setSelectedRestaurant, token, navigation])
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' })
+    navigation.navigate('chat')
   }
 
   const onPressSuppliers = (restaurant) => {

@@ -68,7 +68,7 @@ function SettingsStack() {
         component={Records}
         options={{
           headerBackTitleVisible: false,
-          title: 'Profile',
+          title: t('stackRecord.profile'),
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: 'white',
@@ -185,6 +185,27 @@ function SettingsStack() {
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="chat"
+        component={Chat}
+        options={{
+          title: 'Chat',
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+            color: '#04444f',
           },
         }}
       />
@@ -316,78 +337,6 @@ function OrderStack() {
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
-          },
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function RecordsStack() {
-  const { t } = useTranslation()
-  return (
-    <Stack.Navigator
-      initialRouteName="recordsStack"
-      screenOptions={{
-        headerMode: 'screen',
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#026CD2' },
-      }}
-    >
-      <Stack.Screen
-        name="recordsStack"
-        component={Records}
-        options={{
-          title: t('stackRecord.yourOrders'),
-          headerStyle: {
-            backgroundColor: 'white',
-            height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
-          },
-          headerTintColor: '#04444F',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'PoppinsSemi',
-            fontSize: 22,
-          },
-          headerLeft: null,
-        }}
-      />
-      
-    </Stack.Navigator>
-  )
-}
-
-function ChatStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="chat"
-      screenOptions={{
-        headerMode: 'screen',
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#026CD2' },
-      }}
-    >
-      <Stack.Screen
-        name="chat"
-        component={Chat}
-        options={{
-          title: 'Chat',
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: 'white',
-            height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
-          },
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'PoppinsSemi',
-            fontSize: 22,
-            color: '#04444f',
           },
         }}
       />

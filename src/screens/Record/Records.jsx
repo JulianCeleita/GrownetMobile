@@ -46,9 +46,10 @@ const Records = () => {
             },
           })
           const allOrders = response.data.orders
-          allOrders.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+          allOrders.sort(
+            (a, b) => new Date(b.created_date) - new Date(a.created_date),
+          )
           setAllOrders(allOrders)
-          console.log('all order', allOrders)
         } catch (error) {
           console.log('Error al llamar las ordenes', error)
         }

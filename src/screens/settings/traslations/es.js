@@ -151,6 +151,7 @@ const esTranslations = {
     yourOrders: 'Tus pedidos',
     orderDetails: 'Detalles del pedido',
     whatWentWrong: '¿Qué salió mal?',
+    profile: 'Perfil',
   },
   settings: {
     title: 'Configuración',
@@ -165,6 +166,7 @@ const esTranslations = {
     faq: 'Preguntas frecuentes',
     termsAndConditions: 'Términos y condiciones',
     logOut: 'Cerrar sesión',
+    customerService: 'Atención al cliente',
   },
   pastRecord: {
     supplierDetails: 'Detalles del proveedor',

@@ -32,6 +32,7 @@ import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { Ionicons } from '@expo/vector-icons'
 import Settings from '../screens/settings/Settings';
+import Chat from '../screens/Chat'
 
 
 const Stack = createStackNavigator()
@@ -185,9 +186,16 @@ function AuthNavigator() {
             name="Settings"
             component={Settings}
             options={{
-              headerShown: true, // Personaliza tus opciones de encabezado según sea necesario
-              title: 'Settings', // Título de la pantalla de configuración
+              headerShown: true,
+              title: 'Settings',
             }}
+          />
+          <Stack.Screen
+            name= "chat"
+            component={Chat}
+            options={{ 
+              headerShown: false,
+             }}
           />
           <Stack.Screen
             name="TabNavigator"

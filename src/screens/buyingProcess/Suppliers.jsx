@@ -17,9 +17,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
-const Suppliers = () => {
+const Suppliers = ({navigation}) => {
   const { t } = useTranslation()
-  const navigation = useNavigation()
   const { token } = useTokenStore()
   const {
     suppliers,
@@ -65,7 +64,7 @@ const Suppliers = () => {
   }
 
   const onPressAdd = () => {
-    navigation.navigate('TabNavigator', { screen: 'Chat' })
+    navigation.navigate('chat')
   }
   const iosStyles = Platform.OS === 'ios' ? { flex: 1, marginTop: 15 } : {}
   return (

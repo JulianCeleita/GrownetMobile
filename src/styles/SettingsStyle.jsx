@@ -40,9 +40,8 @@ export const SettingsStyle = StyleSheet.create({
   card: {
     backgroundColor: '#04444F',
     width: 300,
-    height: 120,
+    height: 80,
     marginTop: 10,
-    padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
   },
@@ -61,7 +60,6 @@ export const SettingsStyle = StyleSheet.create({
   },
   txtCard2: {
     color: 'white',
-    marginVertical: 10,
     fontFamily: 'PoppinsRegular',
   },
   settingButton: {
