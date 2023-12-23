@@ -432,7 +432,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name={t('favorites.title')}
+        name="Favorites"
         component={Favorites}
         options={{
           tabBarIcon: tabBarIconFavorites('heart'),

@@ -162,17 +162,7 @@ const Favorites = () => {
 
   return (
     <SafeAreaView style={FavoritesStyle.favorites}>
-      <ScrollView>
-        {favorites?.length > 0 && (
-          <View>
-            <Text style={styles.StyleText}>
-              {t('favorites2.findFirstPart')}{' '}
-              {favorites?.filter((favorite) => favorite.active === 1).length}{' '}
-              {t('favorites2.findSecondPart')}{' '}
-            </Text>
-          </View>
-        )}
-
+      <ScrollView>        
         {favorites?.length === 0 && (
           <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
             <View style={styles.container}>
