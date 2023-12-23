@@ -296,8 +296,8 @@ export default function Products() {
       }
       return article
     })
+
     setArticles(updatedArticlesToPay)
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
   const filterCategories = async (category, categoryId) => {

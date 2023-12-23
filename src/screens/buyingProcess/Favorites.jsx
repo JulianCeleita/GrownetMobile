@@ -157,7 +157,6 @@ const Favorites = () => {
       return article
     })
     setFavorites(updatedArticlesToPay)
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
   return (

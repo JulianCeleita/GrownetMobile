@@ -166,7 +166,6 @@ function Search() {
       return article
     })
     setProductSearch(updatedArticlesToPay)
-    useOrderStore.setState({ articlesToPay: updatedArticlesToPay })
   }
 
   const handleSearchChange = (text) => {
