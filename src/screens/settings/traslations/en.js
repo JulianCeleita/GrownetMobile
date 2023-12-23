@@ -41,6 +41,7 @@ const enTranslations = {
     titleSettings: 'Settings',
     faq: 'FAQ',
     termsAndConditions: 'Terms & conditions',
+    favorites: 'Favorites',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Choose your restaurant',

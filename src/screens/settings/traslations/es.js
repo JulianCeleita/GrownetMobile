@@ -42,6 +42,7 @@ const esTranslations = {
     titleSettings: 'Configuración',
     faq: 'Preguntas frecuentes',
     termsAndConditions: 'Términos y condiciones',
+    favorites: 'Favoritos',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Elige tu restaurante',

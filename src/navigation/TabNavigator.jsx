@@ -435,6 +435,7 @@ const TabNavigator = () => {
         name="Favorites"
         component={Favorites}
         options={{
+          title: t('menuPrimary.favorites'),
           tabBarIcon: tabBarIconFavorites('heart'),
           headerShown: true,
           headerTintColor: '#04444F',

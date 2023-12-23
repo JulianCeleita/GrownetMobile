@@ -41,6 +41,7 @@ const ptTranslations = {
     titleSettings: 'Configurações',
     faq: 'Perguntas frequentes',
     termsAndConditions: 'Termos e Condições',
+    favorites: 'Favoritos',
   },
   stackNavigator: {
     chooseYourRestaurant: 'Escolha seu restaurante',
