@@ -1,44 +1,35 @@
-import {
-  Feather,
-  MaterialIcons,
-  AntDesign,
-  Ionicons,
-} from '@expo/vector-icons'
-import { useFocusEffect } from '@react-navigation/native'
-import { isSameDay, parseISO } from 'date-fns'
+import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
 import { allStorageOrders } from '../../config/urls.config'
+import Settings from '../../screens/settings/Settings'
 import useOrderStore from '../../store/useOrderStore'
 import useRecordStore from '../../store/useRecordStore'
 import useTokenStore from '../../store/useTokenStore'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import Settings from '../../screens/settings/Settings';
 
-
-const Records = ({ navigation }) => {
+const Records = () => {
   const { t } = useTranslation()
   const { token } = useTokenStore()
+  const navigation = useNavigation()
   const {
-    pendingOrders,
-    closedOrders,
-    setPendingOrders,
-    setClosedOrders,
+    allOrders,
+    setAllOrders,
     setSelectedPendingOrder,
     setSelectedClosedOrder,
   } = useRecordStore()
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
-  const [activeTab, setActiveTab] = useState('pastRecord')
+  const [activeTab, setActiveTab] = useState('settings')
   const switchTab = () => {
     setActiveTab((prevTab) =>
-      prevTab === 'pastRecord' ? 'settings' : 'pastRecord',
+      prevTab === 'allOrders' ? 'settings' : 'allOrders',
     )
   }
   useFocusEffect(
@@ -54,13 +45,10 @@ const Records = ({ navigation }) => {
               Authorization: `Bearer ${token}`,
             },
           })
-
-          const closedOrders = response.data.orders.filter(
-            (order) => order.id_stateOrders === 5,
-          )
-          const pendingOrders = response.data.orders
-          setClosedOrders(closedOrders)
-          setPendingOrders(pendingOrders)
+          const allOrders = response.data.orders
+          allOrders.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+          setAllOrders(allOrders)
+          console.log('all order', allOrders)
         } catch (error) {
           console.log('Error al llamar las ordenes', error)
         }
@@ -69,29 +57,24 @@ const Records = ({ navigation }) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiOrders]),
   )
-  const handleClosedOrderSelect = (orderReference) => {
-    setSelectedPendingOrder(orderReference)
-    navigation.navigate('pastRecord')
-  }
 
-  const handlePendingOrderSelect = (orderReference) => {
-    setSelectedPendingOrder(orderReference)
-    navigation.navigate('settings')
-  }
-
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [formattedDate, setFormattedDate] = useState('All orders')
-
-  
-  const closeDatepicker = () => {
-    setFormattedDate('All orders')
+  //MANEJADOR DE ORDEN SELECCIONADA
+  const handleOrderSelected = (order) => {
+    console.log('orderReference.id_stateorder', order.reference)
+    if (order.id_stateOrders === 5) {
+      setSelectedClosedOrder(order.reference)
+      navigation.navigate('pastRecord')
+    } else {
+      setSelectedPendingOrder(order.reference)
+      navigation.navigate('pendingRecord')
+    }
   }
 
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
         {/* AVISO DE QUE NO HAY ORDENES */}
-        {pendingOrders.length === 0 && closedOrders.length === 0 ? (
+        {allOrders.length === 0 ? (
           <View style={RecordStyle.recordZero}>
             <Image source={require('../../../assets/img/img-succesful.png')} />
             <Text style={RecordStyle.textZero}>{t('record.noOrders')}</Text>
@@ -107,13 +90,13 @@ const Records = ({ navigation }) => {
         ) : (
           <>
             <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
-              {/* SWITCH ENTRE PASTORDERS Y PENDINGORDERS */}
+              {/* SWITCH ENTRE SETTINGS Y ORDERS */}
               <TouchableOpacity
                 style={[
                   {
                     flex: 1,
                     backgroundColor:
-                      activeTab === 'pastRecord' ? '#62c471' : 'white',
+                      activeTab === 'allOrders' ? '#62c471' : 'white',
                     padding: 10,
                     alignItems: 'center',
                   },
@@ -123,332 +106,110 @@ const Records = ({ navigation }) => {
               >
                 <Text
                   style={{
-                    marginTop : 5,
+                    marginTop: 5,
                     fontFamily: 'PoppinsRegular',
-                    color: activeTab === 'pastRecord' ? 'white' : '#04444f',
+                    color: activeTab === 'allOrders' ? 'white' : '#04444f',
                   }}
                 >
-                  {t('Orders')}
+                  {t('record.allOrders')}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-          style={[
-            {
-              flex: 1,
-              backgroundColor:
-                activeTab === 'settings' ? '#62c471' : 'white',
-              padding: 10,
-              alignItems: 'center',
-            },
-            RecordStyle.btnTab,
-          ]}
-          onPress={() => setActiveTab('settings')}
-        >
-          <Text
-            style={{
-              marginTop:5,
-              fontFamily: 'PoppinsRegular',
-              color:
-                activeTab === 'settings' ? 'white' : '#04444f',
-            }}
-          >
-                {t('Settings')}
-          </Text>
-        </TouchableOpacity>
+                style={[
+                  {
+                    flex: 1,
+                    backgroundColor:
+                      activeTab === 'settings' ? '#62c471' : 'white',
+                    padding: 10,
+                    alignItems: 'center',
+                  },
+                  RecordStyle.btnTab,
+                ]}
+                onPress={() => setActiveTab('settings')}
+              >
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontFamily: 'PoppinsRegular',
+                    color: activeTab === 'settings' ? 'white' : '#04444f',
+                  }}
+                >
+                  {t('record.settings')}
+                </Text>
+              </TouchableOpacity>
             </View>
             <View>
-              {/* VISTA SI ESTÁ PASTRECORD SELECCIONADO */}
-              {activeTab === 'pendingRecord' ? (
-                <View>
-                  {formattedDate === 'All orders'
-                    ? closedOrders.map((order) => (
-                        <View
-                          style={[
-                            RecordStyle.cardRecord,
-                            GlobalStyles.boxShadow,
-                          ]}
-                          key={order.reference}
-                        >
-                          <View
-                            style={RecordStyle.textCard}
-                            key={order.reference}
-                          >
-                            <Text style={RecordStyle.tittle}>
-                              {' '}
-                              {t('record.order')}
-                            </Text>
-                            <Text style={RecordStyle.text}>
-                              {order.reference}
-                            </Text>
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.amount')}
-                            </Text>
-                            <Text style={RecordStyle.text}>£{order.total}</Text>
-                          </View>
-                          <View style={RecordStyle.textCard}>
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.date')}
-                            </Text>
-                            <Text style={RecordStyle.text}>
-                              {order.date_delivery}
-                            </Text>
-                            <Button
-                              title="View details"
-                              style={RecordStyle.btnPrimary}
-                              onPress={() =>
-                                handleClosedOrderSelect(order.reference)
-                              }
-                            >
-                              <Text style={GlobalStyles.textBtnSecundary}>
-                                {t('record.viewDetails')}
-                              </Text>
-                            </Button>
-                          </View>
-                        </View>
-                      ))
-                    : closedOrders
-                        .filter((order) => {
-                          const orderDate = new Date(order.date_delivery)
-                          const selectedDateUTC = new Date(
-                            selectedDate.toUTCString(),
-                          )
-
-                          return (
-                            orderDate.getUTCDate() ===
-                              selectedDateUTC.getUTCDate() &&
-                            orderDate.getUTCMonth() ===
-                              selectedDateUTC.getUTCMonth() &&
-                            orderDate.getUTCFullYear() ===
-                              selectedDateUTC.getUTCFullYear()
-                          )
-                        })
-                        .map((order) => (
-                          <View
-                            style={[
-                              RecordStyle.cardRecord,
-                              GlobalStyles.boxShadow,
-                            ]}
-                            key={order.reference}
-                          >
-                            <View
-                              style={RecordStyle.textCard}
-                              key={order.reference}
-                            >
-                              <Text style={RecordStyle.tittle}>
-                                {' '}
-                                {t('record.order')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                {order.reference}
-                              </Text>
-                              <Text style={RecordStyle.tittle}>
-                                {t('record.amount')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                £{order.total}
-                              </Text>
-                            </View>
-                            <View style={RecordStyle.textCard}>
-                              <Text style={RecordStyle.tittle}>
-                                {t('record.date')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                {order.date_delivery}
-                              </Text>
-                              <Button
-                                title="View details"
-                                style={RecordStyle.btnPrimary}
-                                onPress={() =>
-                                  handleClosedOrderSelect(order.reference)
-                                }
-                              >
-                                <Text style={GlobalStyles.textBtnSecundary}>
-                                  {t('record.viewDetails')}
-                                </Text>
-                              </Button>
-                            </View>
-                          </View>
-                        ))}
-                  {selectedDate &&
-                    formattedDate !== 'All orders' &&
-                    !closedOrders.some((order) => {
-                      const orderDate = parseISO(order.date_delivery)
-                      return isSameDay(orderDate, selectedDate)
-                    }) && (
-                      <View style={RecordStyle.dateZero}>
-                        <MaterialIcons
-                          name="error-outline"
-                          size={100}
-                          color="#026CD2"
-                        />
-                        <Text style={RecordStyle.textDateZero}>
-                          {t('record.noOrdersDate')}
-                        </Text>
-                        <Text style={RecordStyle.textDateFilter}>
-                          {formattedDate}
-                        </Text>
-                      </View>
-                    )}
-                </View>
+              {/* VISTA SI ESTÁ SETTINGS SELECCIONADO */}
+              {activeTab === 'settings' ? (
+                <Settings />
               ) : (
                 <View>
-                  {/* VISTA SI ESTÁ PENDINGRECORD SELECCIONADO */}
-                  {formattedDate === 'All orders' ? (
-                    <View>
-                      {pendingOrders.map((order) => (
-                        <TouchableOpacity
-                          style={[
-                            RecordStyle.cardRecord,
-                            GlobalStyles.boxShadow,
-                          ]}
+                  {/* VISTA SI ESTÁ ORDERS SELECCIONADO */}
+                  <View>
+                    {allOrders.map((order) => (
+                      <TouchableOpacity
+                        style={[RecordStyle.cardRecord, GlobalStyles.boxShadow]}
+                        key={order.reference}
+                        onPress={() => handleOrderSelected(order)}
+                      >
+                        <View
+                          style={RecordStyle.textCard}
                           key={order.reference}
-                          onPress={() =>
-                            handlePendingOrderSelect(order.reference)
-                          }
                         >
-                          <View
-                            style={RecordStyle.textCard}
-                            key={order.reference}
-                          >
-                            {order.id_stateOrders !== 5 && order.id_stateOrders !== 6 &&
+                          {order.id_stateOrders !== 5 &&
+                            order.id_stateOrders !== 6 && (
                               <Text style={RecordStyle.btnPending}>
                                 {t('record.pending')}
-                              </Text>                            
-                            }
-                            {order.id_stateOrders === 5 &&
-                              <Text style={RecordStyle.btnDelivered}>
-                                {t('record.delivered')}
                               </Text>
-                            }
-                            {order.id_stateOrders === 6 &&
-                              <Text style={RecordStyle.btnDispute}>
-                                {t('record.dispute')}
-                              </Text>
-                            }
-
-                            
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.order')}
+                            )}
+                          {order.id_stateOrders === 5 && (
+                            <Text style={RecordStyle.btnDelivered}>
+                              {t('record.delivered')}
                             </Text>
-                            <Text style={RecordStyle.text}>
-                              {order.reference}
+                          )}
+                          {order.id_stateOrders === 6 && (
+                            <Text style={RecordStyle.btnDispute}>
+                              {t('record.dispute')}
                             </Text>
-                          </View>
-                          <View style={RecordStyle.textCard}>
-                            <Text style={RecordStyle.btnSpace}></Text>
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.date')}
-                            </Text>
-                            <Text style={RecordStyle.text}>
-                            {new Date(order.date_delivery).toLocaleDateString('en-GB', {
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: '2-digit',
-                            })}
-                            </Text>
-                          </View>
-                          <View style={RecordStyle.textCard}>
-                            <Ionicons
-                              name="chevron-forward"
-                              size={24}
-                              color="#62C471"
-                              style={{ margin: 4 }}
-                            />
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.amount')}
-                            </Text>
-                            <Text style={RecordStyle.text}>£{order.total}</Text>
-                          </View>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  ) : (
-                    <View>
-                      {pendingOrders
-                        .filter((order) => {
-                          const orderDate = new Date(order.date_delivery)
-                          const selectedDateUTC = new Date(
-                            selectedDate.toUTCString(),
-                          )
-
-                          return (
-                            orderDate.getUTCDate() ===
-                              selectedDateUTC.getUTCDate() &&
-                            orderDate.getUTCMonth() ===
-                              selectedDateUTC.getUTCMonth() &&
-                            orderDate.getUTCFullYear() ===
-                              selectedDateUTC.getUTCFullYear()
-                          )
-                        })
-                        .map((order) => (
-                          <View
-                            style={[
-                              RecordStyle.cardRecord,
-                              GlobalStyles.boxShadow,
-                            ]}
-                            key={order.reference}
-                          >
-                            <View
-                              style={RecordStyle.textCard}
-                              key={order.reference}
-                            >
-                              <Text style={RecordStyle.tittle}>
-                                {' '}
-                                {t('record.order')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                {order.reference}
-                              </Text>
-                              <Text style={RecordStyle.tittle}>
-                                {t('record.amount')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                £{order.total}
-                              </Text>
-                            </View>
-                            <View style={RecordStyle.textCard}>
-                              <Text style={RecordStyle.tittle}>
-                                {t('record.date')}
-                              </Text>
-                              <Text style={RecordStyle.text}>
-                                {order.date_delivery}
-                              </Text>
-                              <Button
-                                title="View details"
-                                style={RecordStyle.btnPrimary}
-                                onPress={() =>
-                                  handlePendingOrderSelect(order.reference)
-                                }
-                              >
-                                <Text style={GlobalStyles.textBtnSecundary}>
-                                  {t('record.viewDetails')}
-                                </Text>
-                              </Button>
-                            </View>
-                          </View>
-                        ))}
-                    </View>
-                  )}
-                  {selectedDate &&
-                    formattedDate !== 'All orders' &&
-                    !pendingOrders.some((order) => {
-                      const orderDate = parseISO(order.date_delivery)
-                      return isSameDay(orderDate, selectedDate)
-                    }) && (
-                      <View style={RecordStyle.dateZero}>
-                        <MaterialIcons
-                          name="error-outline"
-                          size={100}
-                          color="#026CD2"
-                        />
-                        <Text style={RecordStyle.textDateZero}>
-                          {t('record.noOrdersDate')}
-                        </Text>
-                        <Text style={RecordStyle.textDateFilter}>
-                          {formattedDate}
-                        </Text>
-                      </View>
-                    )}
+                          )}
+                          <Text style={RecordStyle.tittle}>
+                            {t('record.order')}
+                          </Text>
+                          <Text style={RecordStyle.text}>
+                            {order.reference}
+                          </Text>
+                        </View>
+                        <View style={RecordStyle.textCard}>
+                          <Text style={RecordStyle.btnSpace}></Text>
+                          <Text style={RecordStyle.tittle}>
+                            {t('record.date')}
+                          </Text>
+                          <Text style={RecordStyle.text}>
+                            {new Date(order.date_delivery).toLocaleDateString(
+                              'en-GB',
+                              {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: '2-digit',
+                              },
+                            )}
+                          </Text>
+                        </View>
+                        <View style={RecordStyle.textCard}>
+                          <Ionicons
+                            name="chevron-forward"
+                            size={24}
+                            color="#62C471"
+                            style={{ margin: 4 }}
+                          />
+                          <Text style={RecordStyle.tittle}>
+                            {t('record.amount')}
+                          </Text>
+                          <Text style={RecordStyle.text}>£{order.total}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
                 </View>
               )}
             </View>

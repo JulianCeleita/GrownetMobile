@@ -98,6 +98,8 @@ const ptTranslations = {
     delivered: 'Entregue',
     pending: 'Pendente',
     dispute: 'Disputa',
+    settings: 'Configurações',
+    allOrders: 'Pedidos',
   },
   disputeRecord: {
     quantityDelivered: 'Digite a quantidade entregue:',
@@ -151,8 +153,6 @@ const ptTranslations = {
   },
   settings: {
     title: 'Configurações',
-    hi: 'Olá',
-    helpText: 'Como podemos te ajudar?',
     restaurants: 'Restaurantes',
     editRestaurants: 'Editar seus restaurantes',
     suppliers: 'Fornecedores',

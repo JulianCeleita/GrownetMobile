@@ -98,6 +98,8 @@ const enTranslations = {
     delivered: 'Delivered',
     pending: 'Pending',
     dispute: 'Dispute',
+    settings: 'Settings',
+    allOrders: 'Orders',
   },
   disputeRecord: {
     quantityDelivered: 'Enter quantity delivered:',
@@ -151,8 +153,6 @@ const enTranslations = {
   },
   settings: {
     title: 'Settings',
-    hi: 'Hi',
-    helpText: 'How can we help you?',
     restaurants: 'Restaurants',
     editRestaurants: 'Edit your restaurants',
     suppliers: 'Suppliers',

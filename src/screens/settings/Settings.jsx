@@ -60,8 +60,6 @@ const Settings = () => {
 
   return (
     <SafeAreaView style={SettingsStyle.settings}>
-      <Text style={SettingsStyle.tittle}>{t('settings.hi')} 👋</Text>
-      <Text style={SettingsStyle.subtittle}>{t('settings.helpText')}</Text>
       <TouchableOpacity onPress={onPressAdd}>
         <Card style={SettingsStyle.card}>
           <Card.Content style={SettingsStyle.card1}>

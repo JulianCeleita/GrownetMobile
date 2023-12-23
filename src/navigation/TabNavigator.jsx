@@ -85,6 +85,68 @@ function SettingsStack() {
         }}
       />
       <Stack.Screen
+        name="pastRecord"
+        component={PastRecord}
+        options={{
+          title: t('stackRecord.orderDetails'),
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="pendingRecord"
+        component={PendingRecord}
+        options={{
+          headerBackTitleVisible: false,
+          title: t('stackRecord.orderDetails'),
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="disputeRecord"
+        component={DisputeRecord}
+        options={{
+          title: t('stackRecord.whatWentWrong'),
+          headerStyle: {
+            backgroundColor: 'white',
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
+          },
+          headerTintColor: '#04444F',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'PoppinsSemi',
+            fontSize: 22,
+            color: '#026cd2',
+          },
+        }}
+      />
+      <Stack.Screen
         name="Faq"
         component={Faq}
         options={{
@@ -293,68 +355,7 @@ function RecordsStack() {
           headerLeft: null,
         }}
       />
-      <Stack.Screen
-        name="pastRecord"
-        component={PastRecord}
-        options={{
-          title: t('stackRecord.orderDetails'),
-          headerStyle: {
-            backgroundColor: 'white',
-            height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
-          },
-          headerTintColor: '#04444F',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'PoppinsSemi',
-            fontSize: 22,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="pendingRecord"
-        component={PendingRecord}
-        options={{
-          headerBackTitleVisible: false,
-          title: t('stackRecord.orderDetails'),
-          headerStyle: {
-            backgroundColor: 'white',
-            height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
-          },
-          headerTintColor: '#04444F',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'PoppinsSemi',
-            fontSize: 22,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="disputeRecord"
-        component={DisputeRecord}
-        options={{
-          title: t('stackRecord.whatWentWrong'),
-          headerStyle: {
-            backgroundColor: 'white',
-            height:
-              Platform.OS === 'ios'
-                ? StatusBar.currentHeight + 110
-                : StatusBar.currentHeight + 60,
-          },
-          headerTintColor: '#04444F',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'PoppinsSemi',
-            fontSize: 22,
-            color: '#026cd2',
-          },
-        }}
-      />
+      
     </Stack.Navigator>
   )
 }
