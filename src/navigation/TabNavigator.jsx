@@ -501,8 +501,8 @@ const TabNavigator = () => {
           tabBarIcon: tabBarIconProps('records'),
           headerShown: false,
         }}
-      />
-      <Tab.Screen
+      /> */}
+      {/* <Tab.Screen
         name="Chat"
         component={ChatStack}
         options={{

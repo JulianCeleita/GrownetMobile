@@ -3,6 +3,7 @@ import {
   FontAwesome,
   MaterialIcons,
   AntDesign,
+  Ionicons,
 } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useFocusEffect } from '@react-navigation/native'
@@ -58,9 +59,7 @@ const Records = ({ navigation }) => {
           const closedOrders = response.data.orders.filter(
             (order) => order.id_stateOrders === 5,
           )
-          const pendingOrders = response.data.orders.filter(
-            (order) => order.id_stateOrders !== 5,
-          )
+          const pendingOrders = response.data.orders
           setClosedOrders(closedOrders)
           setPendingOrders(pendingOrders)
         } catch (error) {
@@ -341,61 +340,70 @@ const Records = ({ navigation }) => {
                   {formattedDate === 'All orders' ? (
                     <View>
                       {pendingOrders.map((order) => (
-                        <View
+                        <TouchableOpacity
                           style={[
                             RecordStyle.cardRecord,
                             GlobalStyles.boxShadow,
                           ]}
                           key={order.reference}
+                          onPress={() =>
+                            handlePendingOrderSelect(order.reference)
+                          }
                         >
                           <View
                             style={RecordStyle.textCard}
                             key={order.reference}
                           >
+                            {order.id_stateOrders !== 5 && order.id_stateOrders !== 6 &&
+                              <Text style={RecordStyle.btnPending}>
+                                {t('record.pending')}
+                              </Text>                            
+                            }
+                            {order.id_stateOrders === 5 &&
+                              <Text style={RecordStyle.btnDelivered}>
+                                {t('record.delivered')}
+                              </Text>
+                            }
+                            {order.id_stateOrders === 6 &&
+                              <Text style={RecordStyle.btnDispute}>
+                                {t('record.dispute')}
+                              </Text>
+                            }
+
+                            
                             <Text style={RecordStyle.tittle}>
-                              {' '}
                               {t('record.order')}
                             </Text>
                             <Text style={RecordStyle.text}>
                               {order.reference}
                             </Text>
+                          </View>
+                          <View style={RecordStyle.textCard}>
+                            <Text style={RecordStyle.btnSpace}></Text>
+                            <Text style={RecordStyle.tittle}>
+                              {t('record.date')}
+                            </Text>
+                            <Text style={RecordStyle.text}>
+                            {new Date(order.date_delivery).toLocaleDateString('en-GB', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: '2-digit',
+                            })}
+                            </Text>
+                          </View>
+                          <View style={RecordStyle.textCard}>
+                            <Ionicons
+                              name="chevron-forward"
+                              size={24}
+                              color="#62C471"
+                              style={{ margin: 4 }}
+                            />
                             <Text style={RecordStyle.tittle}>
                               {t('record.amount')}
                             </Text>
                             <Text style={RecordStyle.text}>£{order.total}</Text>
                           </View>
-                          <View style={RecordStyle.textCard}>
-                            <Text style={RecordStyle.tittle}>
-                              {t('record.date')}
-                            </Text>
-                            <Text style={RecordStyle.text}>
-                              {order.date_delivery}
-                            </Text>
-                            <Button
-                              title="View details"
-                              style={RecordStyle.btnPrimary}
-                              onPress={() =>
-                                handlePendingOrderSelect(order.reference)
-                              }
-                            >
-                              <Text style={GlobalStyles.textBtnSecundary}>
-                                {t('record.viewDetails')}
-                              </Text>
-                            </Button>
-                            {order.id_stateOrders === 6 && (
-                              <View style={RecordStyle.openDispute}>
-                                <AntDesign
-                                  name="warning"
-                                  size={20}
-                                  color="#ee6055"
-                                />
-                                <Text style={RecordStyle.textDispute}>
-                                  {t('record.openDispute')}
-                                </Text>
-                              </View>
-                            )}
-                          </View>
-                        </View>
+                        </TouchableOpacity>
                       ))}
                     </View>
                   ) : (

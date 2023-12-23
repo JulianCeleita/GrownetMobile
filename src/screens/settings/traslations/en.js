@@ -95,6 +95,9 @@ const enTranslations = {
     bttnNoOrders: 'Order now',
     noOrdersDate: 'No orders on this date',
     openDispute: 'Open dispute',
+    delivered: 'Delivered',
+    pending: 'Pending',
+    dispute: 'Dispute',
   },
   disputeRecord: {
     quantityDelivered: 'Enter quantity delivered:',

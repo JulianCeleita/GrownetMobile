@@ -96,6 +96,9 @@ const esTranslations = {
     bttnNoOrders: 'Ordena ya',
     noOrdersDate: 'No tienes órdenes en esta fecha',
     openDispute: 'Disputa abierta',
+    delivered: 'Entregado',
+    pending: 'Pendiente',
+    dispute: 'Disputa',
   },
   disputeRecord: {
     quantityDelivered: 'Ingrese la cantidad entregada:',
