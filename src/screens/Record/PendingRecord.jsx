@@ -4,19 +4,20 @@ import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, TouchableOpacity, View, Image } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   ModalConfirmOrder,
   ModalErrorDispute,
+  ModalOpenDispute,
   ModalSendEmail,
 } from '../../components/ModalAlert'
 import {
   closeSelectedOrder,
-  selectedStorageOrder,
   createDisputeOrder,
+  selectedStorageOrder,
   sendEmail,
 } from '../../config/urls.config'
 import useRecordStore from '../../store/useRecordStore'
@@ -25,8 +26,6 @@ import { PastStyle } from '../../styles/PastRecordStyle'
 import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { set } from 'date-fns'
-import { ModalOpenDispute } from '../../components/ModalAlert'
 
 function PendingRecord() {
   const navigation = useNavigation()
@@ -83,7 +82,7 @@ function PendingRecord() {
           setDetailsToShow(response.data.order)
         })
         .catch((error) => {
-          console.log(error)
+          console.error(error)
         })
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
@@ -99,12 +98,8 @@ function PendingRecord() {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
       })
-      console.log('Result from DocumentPicker:', result)
-
       if (!result.canceled) {
         setEvidences((prevEvidences) => [...prevEvidences, ...result.assets])
-      } else {
-        console.log('Document picking canceled')
       }
     } catch (error) {
       console.error('Error al seleccionar el archivo', error)
@@ -169,7 +164,7 @@ function PendingRecord() {
         setShowSendEmail(true)
       })
       .catch((error) => {
-        console.log('Error al enviar el correo', error)
+        console.error('Error al enviar el correo', error)
       })
   }
 
@@ -199,7 +194,7 @@ function PendingRecord() {
         setShowConfirmOder(true)
       })
       .catch((error) => {
-        console.log('Error al cerrar la orden', error)
+        console.error('Error al cerrar la orden', error)
       })
   }
   const closeModal = () => {
@@ -422,7 +417,7 @@ function PendingRecord() {
                           borderRadius: 10,
                         }}
                         onError={(e) => {
-                          console.log('Error al cargar la imagen', e)
+                          console.error('Error al cargar la imagen', e)
                         }}
                       />
                       <TouchableOpacity

@@ -68,7 +68,6 @@ const ProductCards = ({
       if (search) {
         await SearchByName()
       } else if (opacity) {
-        console.log('se ejecuto fetchFavorites')
         await fetchFavorites()
       }
     } catch (error) {

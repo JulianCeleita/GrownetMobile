@@ -1,5 +1,6 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ScrollView,
   Text,
@@ -7,20 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { SearchStyle } from '../../styles/SearchStyle'
-import { useTranslation } from 'react-i18next'
-import useTokenStore from '../../store/useTokenStore'
-import useOrderStore from '../../store/useOrderStore'
 import axios from '../../../axiosConfig'
 import ProductCards from '../../components/buyingProcess/ProductCards'
 import { productsSearchApi } from '../../config/urls.config'
+import useOrderStore from '../../store/useOrderStore'
+import useTokenStore from '../../store/useTokenStore'
+import { SearchStyle } from '../../styles/SearchStyle'
 
 function Search() {
   const { t } = useTranslation()
   const { token } = useTokenStore()
   const { articlesToPay, selectedSupplier, selectedRestaurant } =
     useOrderStore()
-  console.log('articlesToPasearry', articlesToPay)
   const [search, setSearch] = useState('')
   const [productSearch, setProductSearch] = useState([])
 
@@ -52,8 +51,6 @@ function Search() {
       supplier_id: selectedSupplier.id,
       accountName: selectedRestaurant.accountNumber,
     }
-
-    console.log('requestBody:', requestBody)
 
     try {
       const response = await axios.post(productsSearchApi, requestBody, {

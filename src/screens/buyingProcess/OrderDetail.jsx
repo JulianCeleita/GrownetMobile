@@ -29,8 +29,6 @@ export default function OrderDetails() {
   const updateTotalToPay = (newTotal) => {
     articlesToPayStore.setTotalToPay(newTotal)
   }
-  console.log('totalToPay', totalToPay)
-  console.log('articlesToPayStore', articlesToPayStore)
   return (
     <SafeAreaView
       style={{

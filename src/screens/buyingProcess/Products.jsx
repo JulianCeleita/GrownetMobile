@@ -1,25 +1,23 @@
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ScrollView,
   StyleSheet,
-  View,
-  Text,
   TouchableOpacity,
+  View
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { ActivityIndicator } from 'react-native-paper'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
 import ProductCard from '../../components/buyingProcess/ProductCards'
 import ProductCategories from '../../components/buyingProcess/ProductCategories'
-import ProductSearcher from '../../components/buyingProcess/ProductSearch'
 import ProductsFind from '../../components/buyingProcess/ProductsFind'
+import { supplierCategorie, supplierProducts } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
-import { supplierCategorie, supplierProducts } from '../../config/urls.config'
 import { ProductsStyle } from '../../styles/ProductsStyle'
-import { useTranslation } from 'react-i18next'
-import { Ionicons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 
 export default function Products() {
   const navigation = useNavigation()
@@ -56,7 +54,6 @@ export default function Products() {
             Authorization: `Bearer ${token}`,
           },
         })
-        console.log('SE HIZO UNA PETICIÓN CON LA PAGINA:', page)
         const defaultProducts = response.data.products
 
         if (defaultProducts.length === 0) {
@@ -147,7 +144,6 @@ export default function Products() {
           fetchProducts(updatedPage)
           return updatedPage
         })
-        console.log('eightyPercentPosition', seventyPercentPosition)
       }
     } else {
       return
@@ -232,9 +228,6 @@ export default function Products() {
       console.error('Error al obtener los productos por categoría:', error)
     }
   }
-
-  // TODO AGREGAR LA LOGICA DE LOS FAVORITOS DESDE LA PWA
-
   const resetInputSearcher = () => {
     setResetInput((prevKey) => prevKey + 1)
   }
@@ -330,7 +323,6 @@ export default function Products() {
       ),
     })
   }, [toggleProductSearch])
-  console.log('articlesToPay en prodcuts:', articlesToPay)
 
   return (
     <View style={styles.container}>

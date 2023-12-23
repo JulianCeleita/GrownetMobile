@@ -62,7 +62,7 @@ const Otp = () => {
         console.log('Respuesta con CODIGO TWILIO:', response.data)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

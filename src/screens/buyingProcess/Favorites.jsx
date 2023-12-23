@@ -1,22 +1,22 @@
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  ScrollView,
   TouchableOpacity,
+  View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import axios from '../../../axiosConfig'
+import ProductCards from '../../components/buyingProcess/ProductCards'
 import { favoritesBySupplier } from '../../config/urls.config'
 import useOrderStore from '../../store/useOrderStore'
-import ProductCards from '../../components/buyingProcess/ProductCards'
-import { useTranslation } from 'react-i18next'
-import axios from '../../../axiosConfig'
 import useTokenStore from '../../store/useTokenStore'
 import { FavoritesStyle } from '../../styles/FavoritesStyle'
 import { GlobalStyles } from '../../styles/Styles'
-import { Ionicons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState()
@@ -26,7 +26,6 @@ const Favorites = () => {
 
   const { articlesToPay, selectedSupplier, selectedRestaurant, categories } =
     useOrderStore()
-  console.log('articlesToPay', articlesToPay)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,7 +85,6 @@ const Favorites = () => {
           const isValidProduct = product.prices.some(
             (price) => price.priceWithTax && parseFloat(price.priceWithTax) > 0,
           )
-          console.log('isValidProduct', isValidProduct)
           return isValidProduct
         })
         .map((product) => {
@@ -161,7 +159,7 @@ const Favorites = () => {
 
   return (
     <SafeAreaView style={FavoritesStyle.favorites}>
-      <ScrollView>        
+      <ScrollView>
         {favorites?.length === 0 && (
           <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
             <Ionicons name="md-heart-circle" size={65} color="#62C471" />

@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Keyboard,
+  Platform,
+  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  SafeAreaView,
-  Platform,
 } from 'react-native'
 import axios from '../../../axiosConfig'
 import { createStorageOrder } from '../../config/urls.config'
@@ -86,13 +86,9 @@ const OrderInformation = () => {
       })
       const newOrderNumber = response.data.reference
       setOrderNumber(newOrderNumber)
-      console.log(
-        'Respuesta exitosa al crear la orden',
-        response.data.reference,
-      )
       return newOrderNumber
     } catch (error) {
-      console.log('Error al crear la orden', error)
+      console.error('Error al crear la orden', error)
     }
   }
 
@@ -100,17 +96,14 @@ const OrderInformation = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setLoading(true)
-    console.log('Enviando formulario')
     try {
       const newOrderNumber = await getOrderNumber()
       if (newOrderNumber) {
         navigation.navigate('orderSuccessful')
         setSpecialRequirements('')
-      } else {
-        console.log('No se obtuvo número de orden')
       }
     } catch (error) {
-      console.log('Error enviando el correo', error)
+      console.error('Error enviando el correo', error)
     }
   }
 
