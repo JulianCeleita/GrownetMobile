@@ -5,6 +5,7 @@ export const SettingsStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     height: '100%',
+    width: 350,
   },
   tittle: {
     fontSize: 22,

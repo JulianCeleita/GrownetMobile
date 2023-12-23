@@ -13,12 +13,12 @@ import { useTranslation } from 'react-i18next'
 function PastRecord() {
   const { t } = useTranslation()
   const { token } = useTokenStore()
-  const { selectedPendingOrder } = useRecordStore()
+  const { selectedOrder } = useRecordStore()
   const [detailsToShow, setDetailsToShow] = useState({})
 
   useEffect(() => {
     axios
-      .get(`${selectedStorageOrder}/${selectedPendingOrder}`, {
+      .get(`${selectedStorageOrder}/${selectedOrder}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,7 +30,7 @@ function PastRecord() {
         console.log(error)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [selectedOrder])
 
   return (
     <SafeAreaView style={PastStyle.past}>
