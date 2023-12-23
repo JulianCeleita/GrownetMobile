@@ -80,7 +80,7 @@ function SettingsStack() {
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
-            color: '#026CD2',
+            color: '#04444F',
           },
         }}
       />
@@ -153,7 +153,7 @@ function SettingsStack() {
           headerShown: true,
           title: t('menuPrimary.faq'),
           headerStyle: {
-            backgroundColor: '#f2f2f2',
+            backgroundColor: 'white',
             height:
               Platform.OS === 'ios'
                 ? StatusBar.currentHeight + 110
@@ -174,7 +174,7 @@ function SettingsStack() {
           headerShown: true,
           title: t('menuPrimary.termsAndConditions'),
           headerStyle: {
-            backgroundColor: '#f2f2f2',
+            backgroundColor: 'white',
             height:
               Platform.OS === 'ios'
                 ? StatusBar.currentHeight + 110
@@ -441,6 +441,7 @@ const TabNavigator = () => {
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
+            marginVertical: 10,
           },
           unmountOnBlur: true,
         }}

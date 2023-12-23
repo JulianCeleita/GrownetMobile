@@ -279,7 +279,7 @@ const OrderSuccessful = () => {
     }
   }
   const rocordsNavigate = () => {
-    navigation.navigate('Records', { screen: 'recordsStack' })
+    navigation.navigate('Profile')
   }
   const newOrderNavigate = () => {
     navigation.navigate('Orders', { screen: 'suppliers' })
@@ -327,7 +327,7 @@ const OrderSuccessful = () => {
             {t('orderSuccessful.newOrder')}
           </Text>
         </TouchableOpacity>
-        </View>
+      </View>
     </View>
   )
 }

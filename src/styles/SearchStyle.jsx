@@ -58,7 +58,7 @@ export const SearchStyle = StyleSheet.create({
   image: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '70%',
+    height: '75%',
   },
   text: {
     fontFamily: 'PoppinsRegular',

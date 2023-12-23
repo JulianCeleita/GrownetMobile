@@ -15,7 +15,7 @@ export const FavoritesStyle = StyleSheet.create({
     backgroundColor: 'white',
     padding: 25,
     margin: 25,
-    marginTop: 0,
+    marginTop: '30%',
     borderRadius: 15,
     alignItems: 'center',
   },

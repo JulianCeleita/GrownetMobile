@@ -175,21 +175,21 @@ const Favorites = () => {
 
         {favorites?.length === 0 && (
           <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
-            <View style={styles.container}>
-              <Ionicons name="md-heart-circle" size={65} color="#62C471" />
-              <Text style={FavoritesStyle.tittle}>
-                {t('favorites.titleCard')}
+            <Ionicons name="md-heart-circle" size={65} color="#62C471" />
+            <Text style={FavoritesStyle.tittle}>
+              {t('favorites.titleCard')}
+            </Text>
+            <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Orders')
+              }}
+              style={[GlobalStyles.btnPrimary, { width: 200 }]}
+            >
+              <Text style={GlobalStyles.textBtnSecundary}>
+                {t('favorites.buttonText')}
               </Text>
-              <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('products')}
-                style={[GlobalStyles.btnPrimary, { width: 200 }]}
-              >
-                <Text style={GlobalStyles.textBtnSecundary}>
-                  {t('favorites.buttonText')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           </View>
         )}
 

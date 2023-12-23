@@ -156,6 +156,9 @@ export const ProductsStyle = StyleSheet.create({
     paddingTop: 0,
     marginTop: 0,
     paddingVertical: 5,
+    paddingBottom: 10,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   textButton: {
     fontFamily: 'PoppinsSemi',

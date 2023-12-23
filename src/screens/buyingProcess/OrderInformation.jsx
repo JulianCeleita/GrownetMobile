@@ -36,7 +36,7 @@ const OrderInformation = () => {
   } = useOrderStore()
   const [data, setData] = useState([])
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const { token } = useTokenStore()
   const navigation = useNavigation()
   const tomorrow = new Date()
@@ -48,7 +48,13 @@ const OrderInformation = () => {
     setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  const resetArticlesToPay = () => {
+    const resetArticles = articlesToPay.map((article) => ({
+      ...article,
+      amount: 0,
+    }))
+    useOrderStore.setState({ articlesToPay: resetArticles })
+  }
   const handleChangeDate = async (event, newDate) => {
     if (event.type === 'set') {
       setDeliveryData(newDate)
@@ -104,6 +110,7 @@ const OrderInformation = () => {
     try {
       const newOrderNumber = await getOrderNumber()
       if (newOrderNumber) {
+        resetArticlesToPay()
         navigation.navigate('orderSuccessful')
         setSpecialRequirements('')
       } else {

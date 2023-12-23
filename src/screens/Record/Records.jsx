@@ -26,7 +26,7 @@ const Records = () => {
   } = useRecordStore()
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
-  const [activeTab, setActiveTab] = useState('settings')
+  const [activeTab, setActiveTab] = useState('allOrders')
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'allOrders' ? 'settings' : 'allOrders',
@@ -129,7 +129,7 @@ const Records = () => {
           ) : (
             <View>
               {/* VISTA SI ESTÁ ORDERS SELECCIONADO */}
-                {/* AVISO DE QUE NO HAY ORDENES */}
+              {/* AVISO DE QUE NO HAY ORDENES */}
               {allOrders.length === 0 ? (
                 <View style={RecordStyle.recordZero}>
                   <Image
