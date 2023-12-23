@@ -261,6 +261,11 @@ const ptTranslations = {
   modalStepper: {
     textBtn: 'Adicionar ao Pedido',
   },
+  cart: {
+    titleCard: 'Seu carrinho está vazio',
+    text: 'Explore nossos produtos e selecione aqueles que deseja adicionar ao carrinho',
+    buttonText: 'Ir para os produtos',
+  },
 }
 
 export default ptTranslations

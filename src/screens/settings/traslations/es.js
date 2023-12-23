@@ -260,7 +260,7 @@ const esTranslations = {
     textBtn: 'Añadir a la orden',
   },
   cart: {
-    titleCard: 'Tu carrito esta vacio',
+    titleCard: 'Tu carrito está vacío',
     text: 'Explora nuestros productos y selecciona los que desees añadir al carrito',
     buttonText: 'Ir a productos',
   },
