@@ -31,6 +31,8 @@ import OrderDetail from '../screens/buyingProcess/OrderDetail'
 import OrderInformation from '../screens/buyingProcess/OrderInformation'
 import TermsAndConditions from '../screens/TermsAndConditions'
 import { Ionicons } from '@expo/vector-icons'
+import Settings from '../screens/settings/Settings';
+
 
 const Stack = createStackNavigator()
 
@@ -177,6 +179,14 @@ function AuthNavigator() {
                 fontFamily: 'PoppinsSemi',
                 fontSize: 22,
               },
+            }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              headerShown: true, // Personaliza tus opciones de encabezado según sea necesario
+              title: 'Settings', // Título de la pantalla de configuración
             }}
           />
           <Stack.Screen
