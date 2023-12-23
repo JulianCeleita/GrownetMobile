@@ -19,7 +19,7 @@ function DisputeRecord() {
   const { token } = useTokenStore()
   const [motive, setMotive] = useState('1')
   const [quantityDispute, setQuantityDispute] = useState('')
-  const { selectedPendingOrder, selectedProduct } = useRecordStore()
+  const { selectedOrder, selectedProduct } = useRecordStore()
   const [solutionSelected, setSolutionSelected] = useState('1')
   const [showOpenDispute, setShowOpenDispute] = useState(false)
   const navigation = useNavigation()
@@ -49,7 +49,7 @@ function DisputeRecord() {
     }
     const formData = new FormData()
     const disputeBody = {
-      order: selectedPendingOrder,
+      order: selectedOrder,
       motive: motive,
       id_solutionsDisputes: solutionSelected,
       product_id: selectedProduct.id,
