@@ -121,7 +121,7 @@ function ProductsCategories({
       {/* Flecha para regresar */}
       <View style={ProductsStyle.categoriesMenu}>
         <TouchableOpacity
-          style={[ProductsStyle.backButton, { marginLeft: 10 }]}
+          style={[ProductsStyle.backButton, { marginLeft: 10, marginBottom: Platform.OS === 'ios' ? 24 : null, }]}
           onPress={handleGoBack}
         >
           <Ionicons name="arrow-back" size={24} color="white" />

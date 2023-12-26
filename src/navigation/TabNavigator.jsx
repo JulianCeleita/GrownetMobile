@@ -231,7 +231,7 @@ const HeaderLeft3 = () => {
     <TouchableOpacity
       style={{
         marginHorizontal: 28,
-        marginTop: Platform.OS === 'ios' ? 30 : null,
+        marginTop: Platform.OS === 'ios' ? 50 : null,
         marginBottom: Platform.OS === 'ios' ? 0 : null,
       }}
       onPress={goBackSuppliers}
@@ -289,7 +289,7 @@ function OrderStack() {
             marginHorizontal: 28,
           },
           headerTitleContainerStyle: {
-            height: Platform.OS === 'ios' ? 80 : null,
+            height: Platform.OS === 'ios' ? 50 : null,
           },
         })}
       />
@@ -384,7 +384,7 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: '#04444F',
         tabBarStyle: {
-          height: 70,
+          height: Platform.OS === 'ios' ? 85 : 70,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         },
@@ -443,7 +443,11 @@ const TabNavigator = () => {
           headerTitleStyle: {
             fontFamily: 'PoppinsSemi',
             fontSize: 22,
-            marginVertical: 10,
+            marginTop: 65,
+            height:
+              Platform.OS === 'ios'
+                ? StatusBar.currentHeight + 110
+                : StatusBar.currentHeight + 60,
           },
           unmountOnBlur: true,
         }}
