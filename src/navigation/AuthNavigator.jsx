@@ -12,11 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Platform,
-  StatusBar,
-  TouchableOpacity
-} from 'react-native'
+import { Platform, StatusBar, TouchableOpacity } from 'react-native'
 import Home from '../screens/Home'
 import Login from '../screens/Login/LoginPage'
 import OTP from '../screens/Login/OtpPage'

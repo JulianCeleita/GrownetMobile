@@ -39,7 +39,8 @@ const Restaurants = () => {
             setRestaurants(response.data.customersChef)
             if (response.data.customersChef.length === 1) {
               setSelectedRestaurant(response.data.customersChef[0])
-              navigation.navigate('TabNavigator', { screen: 'Orders' })
+
+              navigation.navigate('suppliers')
             }
           })
       } catch (error) {
