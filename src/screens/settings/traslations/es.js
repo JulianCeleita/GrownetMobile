@@ -263,7 +263,7 @@ const esTranslations = {
   cart: {
     titleCard: 'Tu carrito está vacío',
     text: 'Explora nuestros productos y selecciona los que desees añadir al carrito',
-    buttonText: 'Ir a productos',
+    buttonText: 'Lista de productos',
   },
 }
 

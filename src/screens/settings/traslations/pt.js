@@ -265,7 +265,7 @@ const ptTranslations = {
   cart: {
     titleCard: 'Seu carrinho está vazio',
     text: 'Explore nossos produtos e selecione aqueles que deseja adicionar ao carrinho',
-    buttonText: 'Ir para os produtos',
+    buttonText: 'Lista de produtos',
   },
 }
 

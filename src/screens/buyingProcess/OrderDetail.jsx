@@ -99,7 +99,7 @@ export default function OrderDetails() {
             <Text style={FavoritesStyle.text}>{t('cart.text')}</Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Orders')
+                navigation.navigate('TabNavigator', { screen: 'Favorites' })
               }}
               style={[GlobalStyles.btnPrimary, { width: 200 }]}
             >

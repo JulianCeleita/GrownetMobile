@@ -262,7 +262,7 @@ const enTranslations = {
   cart: {
     titleCard: 'Your cart is empty',
     text: 'Explore our products and select the ones you wish to add to the cart',
-    buttonText: 'Go to products',
+    buttonText: 'Shopping list',
   },
 }
 
