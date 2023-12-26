@@ -6,9 +6,10 @@ export const ProductsStyle = StyleSheet.create({
     position: 'relative',
   },
   viewCategories: {
-    //position: 'absolute',
-    //bottom: 10,
-    //zIndex: 1,
+    position: 'absolute',
+    //bottom: 20,
+    zIndex: 1,
+    backgroundColor: 'red',
   },
   // MAKE YOUR ORDER
 
@@ -151,11 +152,9 @@ export const ProductsStyle = StyleSheet.create({
   containerCards: { flex: 1 },
   // PRODUCT CATEGORIES
   fixedContainer: {
-    flex: 1,
-    marginBottom: 20,
     backgroundColor: '#026CD2',
     paddingTop: 0,
-    marginTop: 0,
+    margin: 0,
     paddingVertical: 5,
     paddingBottom: 10,
     borderBottomLeftRadius: 15,
