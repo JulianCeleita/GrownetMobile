@@ -18,6 +18,7 @@ import useOrderStore from '../../store/useOrderStore'
 import useTokenStore from '../../store/useTokenStore'
 import { OrderInformationStyle } from '../../styles/OrderInformationStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const OrderInformation = () => {
   const { t } = useTranslation()
@@ -108,73 +109,75 @@ const OrderInformation = () => {
   }
 
   return (
-    <SafeAreaView
-      style={{
-        flex: Platform.OS === 'ios' ? 1 : null,
-        marginTop: Platform.OS === 'ios' ? 0 : null,
-        ...OrderInformationStyle.OrderInformation,
-      }}
-    >
-      <View>
-        <Text style={OrderInformationStyle.PrimaryTex}>
-          {t('deliveryDetail.address')}
-        </Text>
-        <View style={OrderInformationStyle.containerInputs}>
-          <TextInput
-            style={OrderInformationStyle.input}
-            value={selectedRestaurant.address}
-            editable={false}
-          />
-        </View>
-        <Text style={OrderInformationStyle.PrimaryTex}>
-          {t('deliveryDetail.deliver')}
-        </Text>
-        <View style={OrderInformationStyle.containerInputs}>
-          <TextInput
-            value={deliveryData.toLocaleDateString()}
-            onFocus={() => {
-              Keyboard.dismiss()
-              setShowDatePicker(true)
-            }}
-            style={OrderInformationStyle.input2}
-          />
-          {showDatePicker && (
-            <DatePickerAndroid
-              value={deliveryData}
-              mode={'date'}
-              display="default"
-              onChange={handleChangeDate}
-              minimumDate={tomorrow}
+    <KeyboardAwareScrollView>
+      <SafeAreaView
+        style={{
+          flex: Platform.OS === 'ios' ? 1 : null,
+          marginTop: Platform.OS === 'ios' ? 0 : null,
+          ...OrderInformationStyle.OrderInformation,
+        }}
+      >
+        <View>
+          <Text style={OrderInformationStyle.PrimaryTex}>
+            {t('deliveryDetail.address')}
+          </Text>
+          <View style={OrderInformationStyle.containerInputs}>
+            <TextInput
+              style={OrderInformationStyle.input}
+              value={selectedRestaurant.address}
+              editable={false}
             />
-          )}
+          </View>
+          <Text style={OrderInformationStyle.PrimaryTex}>
+            {t('deliveryDetail.deliver')}
+          </Text>
+          <View style={OrderInformationStyle.containerInputs}>
+            <TextInput
+              value={deliveryData.toLocaleDateString()}
+              onFocus={() => {
+                Keyboard.dismiss()
+                setShowDatePicker(true)
+              }}
+              style={OrderInformationStyle.input2}
+            />
+            {showDatePicker && (
+              <DatePickerAndroid
+                value={deliveryData}
+                mode={'date'}
+                display="default"
+                onChange={handleChangeDate}
+                minimumDate={tomorrow}
+              />
+            )}
+          </View>
+          <Text style={OrderInformationStyle.PrimaryTex}>
+            {t('deliveryDetail.specialRequirements')}
+          </Text>
+          <View style={OrderInformationStyle.containerInputs}>
+            <TextInput
+              value={specialRequirements}
+              onChangeText={(text) => setSpecialRequirements(text)}
+              style={OrderInformationStyle.inputRequirements}
+              multiline={true}
+              numberOfLines={8}
+              textAlignVertical="top"
+            />
+          </View>
+          <View style={OrderInformationStyle.containerButton}>
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={GlobalStyles.btnPrimary}
+              disabled={loading}
+            >
+              <Text style={GlobalStyles.textBtnSecundary}>
+                {' '}
+                {t('deliveryDetail.continue')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={OrderInformationStyle.PrimaryTex}>
-          {t('deliveryDetail.specialRequirements')}
-        </Text>
-        <View style={OrderInformationStyle.containerInputs}>
-          <TextInput
-            value={specialRequirements}
-            onChangeText={(text) => setSpecialRequirements(text)}
-            style={OrderInformationStyle.inputRequirements}
-            multiline={true}
-            numberOfLines={8}
-            textAlignVertical="top"
-          />
-        </View>
-        <View style={OrderInformationStyle.containerButton}>
-          <TouchableOpacity
-            onPress={handleSubmit}
-            style={GlobalStyles.btnPrimary}
-            disabled={loading}
-          >
-            <Text style={GlobalStyles.textBtnSecundary}>
-              {' '}
-              {t('deliveryDetail.continue')}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 
