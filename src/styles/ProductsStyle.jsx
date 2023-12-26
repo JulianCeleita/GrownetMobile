@@ -43,6 +43,7 @@ export const ProductsStyle = StyleSheet.create({
     height: 'auto',
     width: '85%',
     padding: 15,
+    alignItems: 'center',
   },
   containerImage: {
     width: '35%',
@@ -50,8 +51,8 @@ export const ProductsStyle = StyleSheet.create({
   },
   ImageCardProduct: {
     flex: 1,
-    width: '90%',
-    height: '90%',
+    width: 70,
+    height: 70,
   },
   containName: {
     flexDirection: 'row',
