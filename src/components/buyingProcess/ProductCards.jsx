@@ -104,24 +104,24 @@ const ProductCards = ({
 
   return (
     <View style={{ alignItems: 'center', width: '100%' }}>
-      <View
-        style={[
-          ProductsStyle.container,
-          GlobalStyles.boxShadow,
-          opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
-          Platform.OS === 'ios' && fetchFavorites ? { width: '75%' } : null,
-        ]}
+    <View
+      style={[
+        ProductsStyle.container,
+        GlobalStyles.boxShadow,
+        opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
+        { maxWidth: '100%' }, 
+      ]}
+    >
+      <TouchableOpacity
+        style={ProductsStyle.containerImage}
+        onPress={() => setIsModalVisible(true)}
       >
-        <TouchableOpacity
-          style={ProductsStyle.containerImage}
-          onPress={() => setIsModalVisible(true)}
-        >
-          <Image
-            source={{ uri: image }}
-            style={ProductsStyle.ImageCardProduct}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        <Image
+          source={{ uri: image }}
+          style={ProductsStyle.ImageCardProduct}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
         <View>
           <View style={ProductsStyle.containName}>
             <TouchableOpacity onPress={() => setIsModalVisible(true)}>

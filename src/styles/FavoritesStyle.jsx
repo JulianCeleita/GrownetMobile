@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native'
 export const FavoritesStyle = StyleSheet.create({
   favorites: {
     backgroundColor: 'white',
-    height: '100%',
+    height: 'auto',
+    width: 'auto',
     alignItems: 'center',
   },
   tittleFavorites: {

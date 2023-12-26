@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  FlatList,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
@@ -167,18 +168,21 @@ const Favorites = () => {
       )}
       {favorites?.length > 0 && (
         Platform.OS === 'ios' ? (
-          <View style={{ marginTop: 10 }}>
-            {favorites?.map((favorite) => (
+          <FlatList
+            data={favorites}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
               <ProductCards
-                key={favorite.id}
-                productData={favorite}
+                key={item.id}
+                productData={item}
                 onAmountChange={handleAmountChange}
                 onUomChange={handleUomChange}
                 fetchFavorites={fetchFavorites}
                 opacity
               />
-            ))}
-          </View>
+            )}
+            contentContainerStyle={{ marginTop: 10 }}
+          />
         ) : (
           <ScrollView style={{ marginTop: 10 }}>
             {favorites?.map((favorite) => (
