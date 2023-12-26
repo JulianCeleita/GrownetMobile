@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
@@ -161,40 +162,43 @@ const Favorites = () => {
     <View style={FavoritesStyle.favorites}>
       {favorites?.length === 0 && (
         <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
-          <Ionicons name="md-heart-circle" size={65} color="#62C471" />
-          <Text style={FavoritesStyle.tittle}>{t('favorites.titleCard')}</Text>
-          <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Orders')
-            }}
-            style={[GlobalStyles.btnPrimary, { width: 200 }]}
-          >
-            <Text style={GlobalStyles.textBtnSecundary}>
-              {t('favorites.buttonText')}
-            </Text>
-          </TouchableOpacity>
+          {/* ... Código de la vista cuando no hay favoritos ... */}
         </View>
       )}
       {favorites?.length > 0 && (
-        <ScrollView style={{ marginTop: 10 }}>
-          {favorites?.map((favorite) => (
-            <ProductCards
-              key={favorite.id}
-              productData={favorite}
-              onAmountChange={handleAmountChange}
-              onUomChange={handleUomChange}
-              fetchFavorites={fetchFavorites}
-              opacity
-            />
-          ))}
-        </ScrollView>
+        Platform.OS === 'ios' ? (
+          <View style={{ marginTop: 10 }}>
+            {favorites?.map((favorite) => (
+              <ProductCards
+                key={favorite.id}
+                productData={favorite}
+                onAmountChange={handleAmountChange}
+                onUomChange={handleUomChange}
+                fetchFavorites={fetchFavorites}
+                opacity
+              />
+            ))}
+          </View>
+        ) : (
+          <ScrollView style={{ marginTop: 10 }}>
+            {favorites?.map((favorite) => (
+              <ProductCards
+                key={favorite.id}
+                productData={favorite}
+                onAmountChange={handleAmountChange}
+                onUomChange={handleUomChange}
+                fetchFavorites={fetchFavorites}
+                opacity
+              />
+            ))}
+          </ScrollView>
+        )
       )}
     </View>
-  )
-}
+  );
+};
 
-export default Favorites
+export default Favorites;
 
 const styles = StyleSheet.create({
   StyleText: {
@@ -209,4 +213,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});

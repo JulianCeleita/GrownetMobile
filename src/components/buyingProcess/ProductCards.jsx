@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { GlobalStyles } from '../../styles/Styles'
 import { Dropdown } from 'react-native-element-dropdown'
@@ -109,6 +109,7 @@ const ProductCards = ({
           ProductsStyle.container,
           GlobalStyles.boxShadow,
           opacity && productState.isBeingUpdated ? { opacity: 0.5 } : null,
+          Platform.OS === 'ios' && fetchFavorites ? { width: '75%' } : null,
         ]}
       >
         <TouchableOpacity
