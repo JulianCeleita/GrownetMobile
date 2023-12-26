@@ -2,12 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
@@ -326,28 +321,14 @@ export default function Products() {
 
   return (
     <View style={styles.container}>
-      {/*showProductSearch && (
-        <ProductSearcher
-          products={articlesToPay}
-          setShowSearchResults={setShowSearchResults}
-          resetInput={resetInput}
-        />
-      )*/}
-
+      <ProductCategories
+        toggleShowFavorites={toggleShowFavorites}
+        toggleShowFavorites2={toggleShowFavorites2}
+        filterCategory={filterCategories}
+        selectedCategory={selectedCategory}
+      />
       <SafeAreaView style={ProductsStyle.containerCards}>
         <ScrollView onMomentumScrollEnd={handleScroll}>
-          <View
-            style={{
-              backgroundColor: 'white',
-            }}
-          >
-            <ProductCategories
-              toggleShowFavorites={toggleShowFavorites}
-              toggleShowFavorites2={toggleShowFavorites2}
-              filterCategory={filterCategories}
-              selectedCategory={selectedCategory}
-            />
-          </View>
           {showSearchResults ? (
             <ProductsFind
               onAmountChange={handleAmountChange}
