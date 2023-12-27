@@ -151,7 +151,6 @@ export default function Products() {
   }
 
   // TRAER PRODUCTOS POR CATEGORIA
-
   const fetchProductsByCategory = async (categoryId) => {
     setLoader(true)
     if (categoryId === 'All') {
