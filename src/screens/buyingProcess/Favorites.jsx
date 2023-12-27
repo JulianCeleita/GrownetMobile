@@ -163,11 +163,21 @@ const Favorites = () => {
     <View style={FavoritesStyle.favorites}>
       {favorites?.length === 0 && (
         <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
-          {/* ... Código de la vista cuando no hay favoritos ... */}
+          <Ionicons name="md-heart-circle" size={65} color="62C471" />
+          <Text style={FavoritesStyle.tittle}>{t('favorites.titleCard')}</Text>
+          <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
+          <TouchableOpacity
+            onPress={navigation.navigate('Orders')}
+            style={[GlobalStyles.btnPrimary, { width: 200 }]}
+          >
+            <Text style={GlobalStyles.textBtnSecundary}>
+              {t('favorites.buttonText')}
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
-      {favorites?.length > 0 && (
-        Platform.OS === 'ios' ? (
+      {favorites?.length > 0 &&
+        (Platform.OS === 'ios' ? (
           <FlatList
             data={favorites}
             keyExtractor={(item) => item.id.toString()}
@@ -196,13 +206,12 @@ const Favorites = () => {
               />
             ))}
           </ScrollView>
-        )
-      )}
+        ))}
     </View>
-  );
-};
+  )
+}
 
-export default Favorites;
+export default Favorites
 
 const styles = StyleSheet.create({
   StyleText: {
@@ -217,4 +226,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+})
