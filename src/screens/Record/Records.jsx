@@ -22,6 +22,7 @@ const Records = () => {
   const { selectedRestaurant } = useOrderStore()
   const apiOrders = allStorageOrders + selectedRestaurant.accountNumber
   const [activeTab, setActiveTab] = useState('allOrders')
+  const [isLoading, setIsLoading] = useState(false)
   const switchTab = () => {
     setActiveTab((prevTab) =>
       prevTab === 'allOrders' ? 'settings' : 'allOrders',
@@ -30,6 +31,7 @@ const Records = () => {
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
+        setIsLoading(true)
         if (selectedRestaurant === null) {
           navigation.navigate('restaurants')
           return
@@ -45,6 +47,7 @@ const Records = () => {
             (a, b) => new Date(b.created_date) - new Date(a.created_date),
           )
           setAllOrders(allOrders)
+          setIsLoading(false)
         } catch (error) {
           console.error('Error al llamar las ordenes', error)
         }
@@ -123,7 +126,7 @@ const Records = () => {
             <View>
               {/* VISTA SI ESTÁ ORDERS SELECCIONADO */}
               {/* AVISO DE QUE NO HAY ORDENES */}
-              {allOrders.length === 0 ? (
+              {allOrders.length === 0 && !isLoading ? (
                 <View style={RecordStyle.recordZero}>
                   <Image
                     source={require('../../../assets/img/img-succesful.png')}
