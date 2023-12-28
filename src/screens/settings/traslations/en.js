@@ -249,6 +249,8 @@ const enTranslations = {
     placeholder: 'Search your products here',
     title: 'What are you looking for?',
     text: 'Easily find what you need',
+    noAvailable: 'No available products found',
+    loading: 'Loading'
   },
   favorites: {
     title: 'Your Favorites',

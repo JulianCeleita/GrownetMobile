@@ -252,6 +252,8 @@ const ptTranslations = {
     placeholder: 'Pesquise seus produtos aqui',
     title: 'O que você está procurando?',
     text: 'Encontre facilmente o que você precisa',
+    noAvailable: 'Nenhum produto disponível encontrado',
+    loading: 'Carregando'
   },
   favorites: {
     title: 'Seus favoritos',

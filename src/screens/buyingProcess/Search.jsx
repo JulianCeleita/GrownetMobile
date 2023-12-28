@@ -2,6 +2,7 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  ActivityIndicator,
   ScrollView,
   Text,
   TextInput,
@@ -22,7 +23,7 @@ function Search() {
     useOrderStore()
   const [search, setSearch] = useState('')
   const [productSearch, setProductSearch] = useState([])
-
+  const [searching, setSearching] = useState(false)
   const [debouncedSearch, setDebouncedSearch] = useState(search)
 
   useEffect(() => {
@@ -42,6 +43,7 @@ function Search() {
   }, [debouncedSearch])
 
   const SearchByName = async () => {
+    setSearching(true)
     if (search === '') {
       setProductSearch([])
       return
@@ -51,7 +53,7 @@ function Search() {
       supplier_id: selectedSupplier.id,
       accountName: selectedRestaurant.accountNumber,
     }
-
+    setSearching(true)
     try {
       const response = await axios.post(productsSearchApi, requestBody, {
         headers: {
@@ -75,7 +77,7 @@ function Search() {
               ...price,
               priceWithTax:
                 isNaN(priceWithTaxCalculation) ||
-                parseFloat(priceWithTaxCalculation) === 0
+                  parseFloat(priceWithTaxCalculation) === 0
                   ? null
                   : priceWithTaxCalculation,
             }
@@ -107,6 +109,7 @@ function Search() {
         )
 
       setProductSearch(productsWithTax)
+      setSearching(false)
     } catch (error) {
       console.error('Error al obtener los productos favoritos:', error)
     }
@@ -192,7 +195,39 @@ function Search() {
           </TouchableOpacity>
         </View>
       </View>
-      {productSearch.length === 0 && (
+
+      {
+        searching && (
+          <View>
+            <View style={SearchStyle.suggestion}>
+              <Text style={SearchStyle.tittle}>{t('search.title')} 🔍</Text>
+            </View>
+            <View style={SearchStyle.image}>
+              <ActivityIndicator size={200} color="#D9D9D9" />
+              <Text style={SearchStyle.text}>{t('search.loading')}</Text>
+            </View>
+          </View>
+        )
+      }
+
+      {!searching && productSearch.length === 0 && search !== '' && (
+        <View>
+          <View style={SearchStyle.suggestion}>
+            <Text style={SearchStyle.tittle}>{t('search.title')} 🔍</Text>
+          </View>
+          <View style={SearchStyle.image}>
+            <MaterialCommunityIcons
+              name="alert-circle-outline"
+              size={200}
+              color="#D9D9D9"
+            />
+            <Text style={SearchStyle.text}>{t('search.noAvailable')}</Text>
+          </View>
+        </View>
+      )}
+
+
+      {!searching && productSearch.length === 0 && (
         <View>
           <View style={SearchStyle.suggestion}>
             <Text style={SearchStyle.tittle}>{t('search.title')} 🔍</Text>
@@ -208,7 +243,8 @@ function Search() {
         </View>
       )}
 
-      {productSearch.length > 0 && (
+
+      {!searching && productSearch.length > 0 && (
         <ScrollView style={{ marginTop: 10 }}>
           {productSearch.map((product) => (
             <ProductCards
