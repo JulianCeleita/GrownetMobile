@@ -15,7 +15,7 @@ const Settings = () => {
   const { t, i18n } = useTranslation()
   const navigation = useNavigation()
   const { setToken } = useTokenStore()
-  const { selectedRestaurant } = useOrderStore()
+  const { selectedRestaurant, setArticlesToPay } = useOrderStore()
 
   const [isListOpen, setListOpen] = useState(false)
   const logoutButtonPosition = useRef(new Animated.Value(0)).current
@@ -43,6 +43,7 @@ const Settings = () => {
   const handleLogout = async () => {
     try {
       setToken(null)
+      setArticlesToPay([])
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
     }
@@ -153,7 +154,7 @@ const Settings = () => {
             <Ionicons name="chevron-forward" size={24} color="#04444F" />
           </TouchableOpacity>
         </View>
-        
+
         <View
           style={[SettingsStyle.containerFaqAndTerms, GlobalStyles.boxShadow]}
         >
@@ -167,7 +168,6 @@ const Settings = () => {
             <Ionicons name="chevron-forward" size={24} color="#04444F" />
           </TouchableOpacity>
         </View>
-        
 
         <TouchableOpacity
           style={SettingsStyle.btnlogOut}
