@@ -250,6 +250,8 @@ const esTranslations = {
     placeholder: 'Busca tus productos aquí',
     title: '¿Qué estás buscando?',
     text: 'Encuentra fácilmente lo que necesitas',
+    noAvailable: 'No se encontraron productos disponibles',
+    loading: 'Cargando'
   },
   favorites: {
     title: 'Tus favoritos',
