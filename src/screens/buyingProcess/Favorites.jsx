@@ -163,11 +163,13 @@ const Favorites = () => {
     <View style={FavoritesStyle.favorites}>
       {favorites?.length === 0 && (
         <View style={[FavoritesStyle.card, GlobalStyles.boxShadow]}>
-          <Ionicons name="md-heart-circle" size={65} color="62C471" />
+          <Ionicons name="md-heart-circle" size={65} color="#62C471" />
           <Text style={FavoritesStyle.tittle}>{t('favorites.titleCard')}</Text>
           <Text style={FavoritesStyle.text}>{t('favorites.text')}</Text>
           <TouchableOpacity
-            onPress={navigation.navigate('Orders')}
+            onPress={() => {
+              navigation.navigate('Orders')
+            }}
             style={[GlobalStyles.btnPrimary, { width: 200 }]}
           >
             <Text style={GlobalStyles.textBtnSecundary}>
