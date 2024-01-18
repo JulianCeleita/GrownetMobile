@@ -6,6 +6,7 @@ export const RecordStyle = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     height: '100%',
+    paddingTop: 10
   },
   cardRecord: {
     backgroundColor: 'white',
