@@ -31,11 +31,12 @@ export default function OrderDetails() {
   }
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-        marginTop: Platform.OS === 'ios' ? 40 : null,
-        ...(Platform.OS === 'android' ? OrderDetailStyle.details : {}),
-      }}
+      style={[
+        OrderDetailStyle.details,
+        {
+          paddingTop: Platform.OS === 'ios' ? 40 : null,
+        },
+      ]}
     >
       <ScrollView>
         {articlesToPayStore.articlesToPay.length > 0 ? (
