@@ -179,7 +179,7 @@ const Records = () => {
                           {t('record.date')}
                         </Text>
                         <Text style={RecordStyle.text}>
-                          {new Date(order.date_delivery).toLocaleDateString(
+                          {new Date(order.date_delivery + 'T00:00:00').toLocaleDateString(
                             'en-GB',
                             {
                               day: '2-digit',
