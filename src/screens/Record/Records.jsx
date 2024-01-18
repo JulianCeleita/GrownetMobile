@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from '../../../axiosConfig'
 import { allStorageOrders } from '../../config/urls.config'
 import Settings from '../../screens/settings/Settings'
@@ -68,7 +67,7 @@ const Records = () => {
   }
 
   return (
-    <SafeAreaView style={RecordStyle.record}>
+    <View style={RecordStyle.record}>
       <ScrollView>
         <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
           {/* SWITCH ENTRE SETTINGS Y ORDERS */}
@@ -209,7 +208,7 @@ const Records = () => {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
