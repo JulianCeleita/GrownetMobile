@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
-import { StatusBar, TouchableOpacity, Platform } from 'react-native'
+import { StatusBar, TouchableOpacity, Platform, View, Text } from 'react-native'
 import Chat from '../screens/Chat'
 import PastRecord from '../screens/Record/PastRecord'
 import PendingRecord from '../screens/Record/PendingRecord'
@@ -23,6 +23,8 @@ import Products from '../screens/buyingProcess/Products'
 import OrderDetails from '../screens/buyingProcess/OrderDetail'
 import Favorites from '../screens/buyingProcess/Favorites'
 import Search from '../screens/buyingProcess/Search'
+import useOrderStore from '../store/useOrderStore'
+import { OrderDetailStyle } from '../styles/OrderDetailStyle'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -375,8 +377,20 @@ const tabBarIconAcount =
   ({ size, color }) => {
     return <MaterialCommunityIcons name={name} size={39} color={color} />
   }
+const CustomIconWithBadge = ({ name, count, ...props }) => {
+  const IconComponent = tabBarIconProps(name)
+  return (
+    <View style={{ position: 'relative' }}>
+      <IconComponent {...props} />
+      <View style={OrderDetailStyle.badgeContainer}>
+        <Text style={OrderDetailStyle.badgeCount}>{count}</Text>
+      </View>
+    </View>
+  )
+}
 const TabNavigator = () => {
   const { t } = useTranslation()
+  const articlesToPayStore = useOrderStore()
 
   return (
     <Tab.Navigator
@@ -413,7 +427,13 @@ const TabNavigator = () => {
         component={OrderDetails}
         options={{
           title: t('menuPrimary.orders'),
-          tabBarIcon: tabBarIconProps('cart-outline'),
+          tabBarIcon: (props) => (
+            <CustomIconWithBadge
+              name="cart-outline"
+              count={articlesToPayStore.articlesToPay.length}
+              {...props}
+            />
+          ),
           headerShown: true,
           headerStyle: {
             backgroundColor: 'white',
