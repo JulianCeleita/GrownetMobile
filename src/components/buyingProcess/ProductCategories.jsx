@@ -73,15 +73,20 @@ function ProductsCategories({
           key={item}
           onPress={() => filterCategory('All', item)}
           activeOpacity={0.9}
+          style={
+            selectedCategory === 'All' && !showFavorites
+              ? ProductsStyle.buttonCategory2
+              : ProductsStyle.buttonCategory
+          }
         >
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={
-              selectedCategory === 'All' && !showFavorites
-                ? ProductsStyle.buttonCategory2
-                : ProductsStyle.buttonCategory
-            }
+            style={{
+              textAlign: 'center',
+              fontFamily: 'PoppinsMedium',
+              color: 'white'
+            }}
           >
             {t('categoriesMenu.all')}
           </Text>
@@ -121,7 +126,7 @@ function ProductsCategories({
       {/* Flecha para regresar */}
       <View style={ProductsStyle.categoriesMenu}>
         <TouchableOpacity
-          style={[ProductsStyle.backButton, { marginLeft: 10, marginBottom: Platform.OS === 'ios' ? 24 : null, }]}
+          style={[ProductsStyle.backButton, { marginLeft: 10, marginBottom: Platform.OS === 'ios' ? 3 : null, }]}
           onPress={handleGoBack}
         >
           <Ionicons name="arrow-back" size={24} color="white" />
