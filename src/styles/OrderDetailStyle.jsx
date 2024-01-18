@@ -105,4 +105,18 @@ export const OrderDetailStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   ContinueText: { color: '#ffff', fontWeight: 'bold' },
+  badgeContainer: {
+    position: 'absolute',
+    top: -8,
+    right: -10,
+    width: 20,
+    height: 20,
+    backgroundColor: '#EE6055',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeCount: {
+    color: 'white',
+  },
 })
