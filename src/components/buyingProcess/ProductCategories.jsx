@@ -100,13 +100,18 @@ function ProductsCategories({
             key={categoryApi.id}
             onPress={() => filterCategory(categoryApi.name, categoryApi.id)}
             activeOpacity={0.9}
+            style={
+              selectedCategory === categoryApi.name && !showFavorites
+                ? ProductsStyle.buttonCategory2
+                : ProductsStyle.buttonCategory
+            }
           >
             <Text
-              style={
-                selectedCategory === categoryApi.name && !showFavorites
-                  ? ProductsStyle.buttonCategory2
-                  : ProductsStyle.buttonCategory
-              }
+              style={{
+                textAlign: 'center',
+                fontFamily: 'PoppinsMedium',
+                color: 'white',
+              }}
             >
               {categoryApi.name}
             </Text>
