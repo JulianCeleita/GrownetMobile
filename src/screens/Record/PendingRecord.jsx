@@ -61,6 +61,7 @@ function PendingRecord() {
       navigation.navigate('disputeRecord')
     }, 200)
   }
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setProductColors({})
@@ -156,7 +157,6 @@ function PendingRecord() {
   }
 
   // ENVIAR CORREO DE DISPUTA
-
   const onSendMail = () => {
     axios
       .get(`${sendEmail}/${selectedOrder}`, {
@@ -201,6 +201,7 @@ function PendingRecord() {
         console.error('Error al cerrar la orden', error)
       })
   }
+
   const closeModal = () => {
     if (showConfirmOrder === true) {
       setShowConfirmOder(false)
@@ -212,15 +213,18 @@ function PendingRecord() {
       setShowDispute(false)
     }
   }
+
   const handleOutsidePress = () => {
     closeModal()
   }
+
   const handlePress = (productId) => {
     setCheckProduct((prevState) => ({
       ...prevState,
       [productId]: !prevState[productId],
     }))
   }
+
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
@@ -366,7 +370,7 @@ function PendingRecord() {
                       <Text
                         style={[
                           PendingStyle.p,
-                          { color: productColors[product.id] || textColor },
+                          { color: '#a4a4a4' },
                         ]}
                       >
                         {product.quantity} {product.uom}
@@ -374,8 +378,12 @@ function PendingRecord() {
                     </View>
                     <View style={PendingStyle.disputeRight}>
                       <TouchableOpacity
+                        onPress={() => {
+                          handleSelectProduct(product)
+                          disputePress(product.id)
+                        }}
                         style={{
-                          backgroundColor: '#FF5252',
+                          backgroundColor: '#ee6055',
                           borderRadius: 5,
                           ...GlobalStyles.boxShadow
                         }}
@@ -383,6 +391,7 @@ function PendingRecord() {
                         <MaterialIcons name="close" size={30} color="white" />
                       </TouchableOpacity>
                       <TouchableOpacity
+                        onPress={() => handlePress(product.id)}
                         style={{
                           backgroundColor: '#62c471',
                           borderRadius: 5,

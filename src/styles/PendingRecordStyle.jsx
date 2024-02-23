@@ -40,6 +40,7 @@ export const PendingStyle = StyleSheet.create({
     width: '50%',
     alignItems: 'flex-end',
     flexDirection: 'row',
+    marginLeft: 20,
     justifyContent: 'space-evenly',
     gap: -20,
   },
