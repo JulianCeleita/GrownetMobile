@@ -27,6 +27,8 @@ import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import ModalDispute from '../../components/ModalDispute'
+import { MaterialIcons } from '@expo/vector-icons'
+
 
 function PendingRecord() {
   const navigation = useNavigation()
@@ -335,9 +337,8 @@ function PendingRecord() {
                 {t('pendingRecord.checkYourProducts')}
               </Text>
               {detailsToShow.products?.map((product) => (
-                <TouchableOpacity
+                <View
                   key={product.id}
-                  onPress={() => handlePress(product.id)}
                   style={{
                     backgroundColor: checkProduct[product.id]
                       ? '#04444f'
@@ -367,30 +368,32 @@ function PendingRecord() {
                           PendingStyle.p,
                           { color: productColors[product.id] || textColor },
                         ]}
-                        onPress={() => {
-                          handleSelectProduct(product)
-                          disputePress(product.id)
-                        }}
-                      >
-                        {t('pendingRecord.openDispute')}
-                      </Text>
-                    </View>
-                    <View style={PendingStyle.disputeRight}>
-                      <Text
-                        style={[
-                          PendingStyle.p,
-                          {
-                            color: checkProduct[product.id]
-                              ? 'white'
-                              : '#868686',
-                          },
-                        ]}
                       >
                         {product.quantity} {product.uom}
                       </Text>
                     </View>
+                    <View style={PendingStyle.disputeRight}>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#FF5252',
+                          borderRadius: 5,
+                          ...GlobalStyles.boxShadow
+                        }}
+                      >
+                        <MaterialIcons name="close" size={30} color="white" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#62c471',
+                          borderRadius: 5,
+                          ...GlobalStyles.boxShadow
+                        }}
+                      >
+                        <MaterialIcons name="check" size={30} color="white" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </TouchableOpacity>
+                </View>
               ))}
               <View>
                 {evidences.length > 0 &&

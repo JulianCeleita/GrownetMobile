@@ -38,9 +38,10 @@ export const PendingStyle = StyleSheet.create({
   },
   disputeRight: {
     width: '50%',
-    paddingRight: 20,
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    gap: -20,
   },
 })
 export const DisputeStyle = StyleSheet.create({
