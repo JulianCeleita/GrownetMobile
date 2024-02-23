@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colors } from './Styles'
+import { colors } from '../styles/Styles'
 
 export const PendingStyle = StyleSheet.create({
   receptionCard: {
