@@ -1,5 +1,15 @@
 import { StyleSheet } from 'react-native'
-
+export const colors = {
+  bluePrimary: '#026CD2',
+  darkBlue: '#04444F',
+  green: '#62C471',
+  lightGreen: '#85FE9D',
+  danger: '#EE6055',
+  lightBlue: '#F3F9FF',
+  gray: '#969696',
+  orange: '#FF8A00',
+  lightGray: '#A7A7A7',
+}
 export const GlobalStyles = StyleSheet.create({
   boxShadow: {
     shadowColor: '#3B3B3B',

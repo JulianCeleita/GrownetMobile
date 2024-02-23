@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors } from './Styles'
 
 export const PendingStyle = StyleSheet.create({
   receptionCard: {
@@ -59,6 +60,10 @@ export const DisputeStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    width: '100%',
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    borderRadius: 15,
   },
   title: {
     fontFamily: 'PoppinsMedium',
@@ -103,7 +108,8 @@ export const DisputeStyle = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     marginBottom: 10,
-    width: 300,
+    width: '80%',
+    fontFamily: 'PoppinsRegular',
   },
   radioButton: {
     width: 20,
@@ -114,7 +120,9 @@ export const DisputeStyle = StyleSheet.create({
     borderRadius: 15,
   },
   buttonUpload: {
-    marginVertical: 25,
+    width: '100%',
+    padding: 8,
+    backgroundColor: 'white',
   },
   buttonSendEmail: {
     marginBottom: 25,
@@ -127,5 +135,48 @@ export const DisputeStyle = StyleSheet.create({
   },
   space: {
     marginTop: 20,
+  },
+  //Nuevos estilos
+  viewDispute: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  textWrong: {
+    fontFamily: 'PoppinsMedium',
+    fontSize: 15,
+    color: colors.darkBlue,
+    marginRight: 10,
+    textAlign: 'left',
+  },
+  dropdown: {
+    width: 170,
+    borderWidth: 1.5,
+    borderColor: '#f2f2f2',
+    borderRadius: 51,
+    paddingHorizontal: 10,
+  },
+  text: {
+    fontFamily: 'PoppinsRegular',
+    color: colors.darkBlue,
+    fontSize: 15,
+    marginTop: 5,
+  },
+  inputNumber: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 12,
+    padding: 10,
+    marginBottom: 10,
+    width: '15%',
+    fontFamily: 'PoppinsRegular',
+    marginLeft: 5,
+  },
+  result: {
+    fontFamily: 'PoppinsRegular',
+    color: colors.darkBlue,
+    fontSize: 15,
+    marginTop: 5,
+    width: '30%',
   },
 })

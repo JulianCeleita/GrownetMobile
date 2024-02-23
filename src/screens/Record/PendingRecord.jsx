@@ -26,6 +26,7 @@ import { PastStyle } from '../../styles/PastRecordStyle'
 import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
+import ModalDispute from '../../components/ModalDispute'
 
 function PendingRecord() {
   const navigation = useNavigation()
@@ -47,6 +48,7 @@ function PendingRecord() {
   const [checkProduct, setCheckProduct] = useState({})
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
+  const [showDispute, setShowDispute] = useState(false)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -205,6 +207,7 @@ function PendingRecord() {
       setShowErrorDispute(false)
       setShowOpenDispute(false)
       setShowSendEmail(false)
+      setShowDispute(false)
     }
   }
   const handleOutsidePress = () => {
@@ -451,7 +454,7 @@ function PendingRecord() {
                       <Feather name="upload" size={18} color="#04444F" />
                       <Text style={DisputeStyle.textBtnUpload}>
                         {' '}
-                        {t('uploadFile.customUpload')}
+                        {t('File.customUpload')}
                       </Text>
                     </Button>
                   )}
@@ -542,6 +545,7 @@ function PendingRecord() {
           message={t('disputeRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
         />
+        <ModalDispute showModal={showDispute} closeModal={closeModal} />
       </ScrollView>
     </SafeAreaView>
   )
