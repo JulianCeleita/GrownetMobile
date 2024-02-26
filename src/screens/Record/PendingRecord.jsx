@@ -48,7 +48,7 @@ function PendingRecord() {
   const [checkProduct, setCheckProduct] = useState({})
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
-  const [showDispute, setShowDispute] = useState(false)
+  const [showDispute, setShowDispute] = useState(true)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
@@ -370,6 +370,12 @@ function PendingRecord() {
                         onPress={() => {
                           handleSelectProduct(product)
                           disputePress(product.id)
+                          console.log(
+                            'hola: ',
+                            handleSelectProduct,
+                            'y ',
+                            disputePress,
+                          )
                         }}
                       >
                         {t('pendingRecord.openDispute')}

@@ -157,10 +157,11 @@ export const ModalStepperStyle = StyleSheet.create({
     paddingHorizontal: 10,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#04444f',
     fontFamily: 'PoppinsMedium',
     paddingHorizontal: 10,
+    marginVertical: 5,
   },
   label: {
     position: 'absolute',

@@ -151,17 +151,20 @@ export const DisputeStyle = StyleSheet.create({
     textAlign: 'left',
   },
   dropdown: {
-    width: 170,
+    width: 160,
+    //height: 50,
     borderWidth: 1.5,
     borderColor: '#f2f2f2',
     borderRadius: 51,
     paddingHorizontal: 10,
+    fontSize: 5,
   },
   text: {
     fontFamily: 'PoppinsRegular',
     color: colors.darkBlue,
     fontSize: 15,
     marginTop: 5,
+    width: 'auto',
   },
   inputNumber: {
     backgroundColor: '#f2f2f2',
@@ -171,6 +174,7 @@ export const DisputeStyle = StyleSheet.create({
     width: '15%',
     fontFamily: 'PoppinsRegular',
     marginLeft: 5,
+    flex: 1,
   },
   result: {
     fontFamily: 'PoppinsRegular',
@@ -178,5 +182,14 @@ export const DisputeStyle = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
     width: '30%',
+  },
+  placeholderStyle: {
+    color: '#04444f',
+    fontFamily: 'PoppinsMedium',
+    paddingHorizontal: 5,
+    fontSize: 15,
+  },
+  selectText: {
+    fontSize: 5,
   },
 })
