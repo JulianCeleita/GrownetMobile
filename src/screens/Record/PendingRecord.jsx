@@ -27,6 +27,7 @@ import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
 import { GlobalStyles } from '../../styles/Styles'
 import ModalDispute from '../../components/ModalDispute'
+import { MaterialIcons } from '@expo/vector-icons'
 
 function PendingRecord() {
   const navigation = useNavigation()
@@ -59,6 +60,7 @@ function PendingRecord() {
       navigation.navigate('disputeRecord')
     }, 200)
   }
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setProductColors({})
@@ -154,7 +156,6 @@ function PendingRecord() {
   }
 
   // ENVIAR CORREO DE DISPUTA
-
   const onSendMail = () => {
     axios
       .get(`${sendEmail}/${selectedOrder}`, {
@@ -199,6 +200,7 @@ function PendingRecord() {
         console.error('Error al cerrar la orden', error)
       })
   }
+
   const closeModal = () => {
     if (showConfirmOrder === true) {
       setShowConfirmOder(false)
@@ -210,15 +212,18 @@ function PendingRecord() {
       setShowDispute(false)
     }
   }
+
   const handleOutsidePress = () => {
     closeModal()
   }
+
   const handlePress = (productId) => {
     setCheckProduct((prevState) => ({
       ...prevState,
       [productId]: !prevState[productId],
     }))
   }
+
   return (
     <SafeAreaView style={RecordStyle.record}>
       <ScrollView>
@@ -335,9 +340,8 @@ function PendingRecord() {
                 {t('pendingRecord.checkYourProducts')}
               </Text>
               {detailsToShow.products?.map((product) => (
-                <TouchableOpacity
+                <View
                   key={product.id}
-                  onPress={() => handlePress(product.id)}
                   style={{
                     backgroundColor: checkProduct[product.id]
                       ? '#04444f'
@@ -362,41 +366,37 @@ function PendingRecord() {
                       >
                         {product.name}
                       </Text>
-                      <Text
-                        style={[
-                          PendingStyle.p,
-                          { color: productColors[product.id] || textColor },
-                        ]}
-                        onPress={() => {
-                          handleSelectProduct(product)
-                          disputePress(product.id)
-                          console.log(
-                            'hola: ',
-                            handleSelectProduct,
-                            'y ',
-                            disputePress,
-                          )
-                        }}
-                      >
-                        {t('pendingRecord.openDispute')}
-                      </Text>
-                    </View>
-                    <View style={PendingStyle.disputeRight}>
-                      <Text
-                        style={[
-                          PendingStyle.p,
-                          {
-                            color: checkProduct[product.id]
-                              ? 'white'
-                              : '#868686',
-                          },
-                        ]}
-                      >
+                      <Text style={[PendingStyle.p, { color: '#a4a4a4' }]}>
                         {product.quantity} {product.uom}
                       </Text>
                     </View>
+                    <View style={PendingStyle.disputeRight}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          handleSelectProduct(product)
+                          disputePress(product.id)
+                        }}
+                        style={{
+                          backgroundColor: '#ee6055',
+                          borderRadius: 5,
+                          ...GlobalStyles.boxShadow,
+                        }}
+                      >
+                        <MaterialIcons name="close" size={30} color="white" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => handlePress(product.id)}
+                        style={{
+                          backgroundColor: '#62c471',
+                          borderRadius: 5,
+                          ...GlobalStyles.boxShadow,
+                        }}
+                      >
+                        <MaterialIcons name="check" size={30} color="white" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </TouchableOpacity>
+                </View>
               ))}
               <View>
                 {evidences.length > 0 &&

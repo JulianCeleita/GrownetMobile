@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colors } from './Styles'
+import { colors } from '../styles/Styles'
 
 export const PendingStyle = StyleSheet.create({
   receptionCard: {
@@ -38,9 +38,11 @@ export const PendingStyle = StyleSheet.create({
   },
   disputeRight: {
     width: '50%',
-    paddingRight: 20,
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginLeft: 20,
+    justifyContent: 'space-evenly',
+    gap: -20,
   },
 })
 export const DisputeStyle = StyleSheet.create({
