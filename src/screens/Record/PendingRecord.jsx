@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { Feather, AntDesign } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
@@ -49,16 +49,16 @@ function PendingRecord() {
   const [checkProduct, setCheckProduct] = useState({})
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
-  const [showDispute, setShowDispute] = useState(true)
+  const [showDispute, setShowDispute] = useState(false)
 
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
       ...prevColors,
       [productId]: '#ee6055',
     }))
-    setTimeout(() => {
+    /*setTimeout(() => {
       navigation.navigate('disputeRecord')
-    }, 200)
+    }, 200)*/
   }
 
   useEffect(() => {
@@ -375,6 +375,7 @@ function PendingRecord() {
                         onPress={() => {
                           handleSelectProduct(product)
                           disputePress(product.id)
+                          setShowDispute(true)
                         }}
                         style={{
                           backgroundColor: '#ee6055',
@@ -382,7 +383,7 @@ function PendingRecord() {
                           ...GlobalStyles.boxShadow,
                         }}
                       >
-                        <MaterialIcons name="close" size={30} color="white" />
+                        <AntDesign name="close" size={30} color="white" />
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => handlePress(product.id)}
@@ -551,7 +552,9 @@ function PendingRecord() {
           message={t('disputeRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
         />
-        <ModalDispute showModal={showDispute} closeModal={closeModal} />
+        {selectedProduct != null && (
+          <ModalDispute showModal={showDispute} closeModal={closeModal} />
+        )}
       </ScrollView>
     </SafeAreaView>
   )

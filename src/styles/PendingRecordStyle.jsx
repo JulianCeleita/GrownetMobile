@@ -124,7 +124,6 @@ export const DisputeStyle = StyleSheet.create({
   buttonUpload: {
     width: '100%',
     padding: 8,
-    backgroundColor: 'white',
   },
   buttonSendEmail: {
     marginBottom: 25,
@@ -154,7 +153,7 @@ export const DisputeStyle = StyleSheet.create({
   },
   dropdown: {
     width: 160,
-    //height: 50,
+    height: 50,
     borderWidth: 1.5,
     borderColor: '#f2f2f2',
     borderRadius: 51,
@@ -193,5 +192,12 @@ export const DisputeStyle = StyleSheet.create({
   },
   selectText: {
     fontSize: 5,
+  },
+  uploadPhoto: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#f2f2f2',
+    padding: 8,
+    borderRadius: 8,
   },
 })
