@@ -335,7 +335,7 @@ function PendingRecord() {
               )}
             </View>
           ) : (
-            <View style={[PendingStyle.receptionCard, GlobalStyles.boxShadow]}>
+            <View style={{ alignItems: 'center' }}>
               <Text style={PendingStyle.title}>
                 {t('pendingRecord.checkYourProducts')}
               </Text>
@@ -343,13 +343,8 @@ function PendingRecord() {
                 <View
                   key={product.id}
                   style={{
-                    backgroundColor: checkProduct[product.id]
-                      ? '#04444f'
-                      : 'transparent',
-                    marginHorizontal: 10,
-                    marginBottom: 5,
-                    paddingTop: 15,
-                    borderRadius: 10,
+                    ...PendingStyle.receptionCard,
+                    ...GlobalStyles.boxShadow,
                   }}
                 >
                   <View style={PendingStyle.cardProduct} key={product.id}>
