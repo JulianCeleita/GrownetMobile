@@ -17,22 +17,34 @@ import { ModalStepperStyle } from '../styles/ModalStepperStyle'
 import { Dropdown } from 'react-native-element-dropdown'
 import { Button, Checkbox } from 'react-native-paper'
 import useRecordStore from '../store/useRecordStore'
+import { createDisputeOrder } from '../config/urls.config'
+import axios from 'axios'
+import useTokenStore from '../store/useTokenStore'
+import { ModalOpenDispute } from './ModalAlert'
+import { useNavigation } from '@react-navigation/native'
 
-export default function ModalDispute({ showModal, closeModal }) {
+export default function ModalDispute({ showModal, setShowModal, closeModal }) {
   const { t } = useTranslation()
+  const navigation = useNavigation()
+  const { token } = useTokenStore()
   const [selectedValue, setSelectedValue] = useState('')
   const [solutionSelected, setSolutionSelected] = useState('1')
   const { selectedOrder, selectedProduct } = useRecordStore()
   const [evidences, setEvidences] = useState([])
   const [quantityDispute, setQuantityDispute] = useState('')
-
+  const [details, setDetails] = useState('')
+  const [showOpenDispute, setShowOpenDispute] = useState(false)
   const data = [
-    { label: 'Incomplete', value: 'Incomplete' },
-    { label: 'Incorrect', value: 'Incorrect' },
-    { label: 'Defective', value: 'Defective' },
+    { label: 'Incomplete', value: 'Incomplete', motive: '1' },
+    { label: 'Incorrect', value: 'Incorrect', motive: '2' },
+    { label: 'Defective', value: 'Defective', motive: '3' },
   ]
   const onToggleCheckbox = (value) => {
     setSolutionSelected(value)
+  }
+  const closeModalSubmit = () => {
+    setShowOpenDispute(false)
+    navigation.goBack()
   }
 
   const handleQuantityChange = (inputValue) => {
@@ -41,7 +53,9 @@ export default function ModalDispute({ showModal, closeModal }) {
       setQuantityDispute(inputValue)
     }
   }
-
+  const handleDetailsChange = (text) => {
+    setDetails(text)
+  }
   // SUBIR EVIDENCIA
   const pickDocument = async () => {
     try {
@@ -54,6 +68,43 @@ export default function ModalDispute({ showModal, closeModal }) {
     } catch (error) {
       console.error('Error al seleccionar el archivo', error)
     }
+  }
+  console.log('value: ', selectedValue.motive)
+  // ENVIAR LA DISPUTA
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!quantityDispute) {
+      alert('Please fill in the quantity')
+      return
+    }
+    const formData = new FormData()
+    const disputeBody = {
+      order: selectedOrder,
+      motive: selectedValue.motive,
+      id_solutionsDisputes: solutionSelected,
+      product_id: selectedProduct.id,
+      description: details,
+      quantity: quantityDispute,
+    }
+    for (let key in disputeBody) {
+      if (disputeBody.hasOwnProperty(key)) {
+        formData.append(key, disputeBody[key])
+      }
+    }
+    axios
+      .post(createDisputeOrder, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        setShowOpenDispute(true)
+        setShowModal(false)
+      })
+      .catch((error) => {
+        console.error('Error al crear la disputa:', error)
+      })
   }
   return (
     <Modal
@@ -109,8 +160,8 @@ export default function ModalDispute({ showModal, closeModal }) {
                     <TextInput
                       style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
                       placeholder="#"
-                      //value={quantityDispute}
-                      //onChangeText={handleQuantityChange}
+                      value={quantityDispute}
+                      onChangeText={handleQuantityChange}
                       keyboardType="numeric"
                       required
                     />
@@ -120,9 +171,8 @@ export default function ModalDispute({ showModal, closeModal }) {
                     <TextInput
                       style={DisputeStyle.input}
                       placeholder="Leave your comments"
-                      //value={quantityDispute}
-                      //onChangeText={handleQuantityChange}
-                      keyboardType="text"
+                      value={details}
+                      onChangeText={handleDetailsChange}
                       required
                     />
                   </View>
@@ -186,8 +236,8 @@ export default function ModalDispute({ showModal, closeModal }) {
                     <TextInput
                       style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
                       placeholder="#"
-                      //value={quantityDispute}
-                      //onChangeText={handleQuantityChange}
+                      value={quantityDispute}
+                      onChangeText={handleQuantityChange}
                       keyboardType="numeric"
                       required
                     />
@@ -197,9 +247,8 @@ export default function ModalDispute({ showModal, closeModal }) {
                     <TextInput
                       style={DisputeStyle.input}
                       placeholder="Leave your comments"
-                      //value={quantityDispute}
-                      //onChangeText={handleQuantityChange}
-                      keyboardType="text"
+                      value={details}
+                      onChangeText={handleDetailsChange}
                       required
                     />
                   </View>
@@ -243,8 +292,8 @@ export default function ModalDispute({ showModal, closeModal }) {
                     <TextInput
                       style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
                       placeholder="#"
-                      //value={quantityDispute}
-                      //onChangeText={handleQuantityChange}
+                      value={quantityDispute}
+                      onChangeText={handleQuantityChange}
                       keyboardType="numeric"
                       required
                     />
@@ -279,23 +328,33 @@ export default function ModalDispute({ showModal, closeModal }) {
                   </View>
                 </View>
               )}
-
+              {/* {renderContent()} */}
               {selectedValue != '' && (
+                <Button onPress={handleSubmit} style={GlobalStyles.btnPrimary}>
+                  <Text style={GlobalStyles.textBtnSecundary}>
+                    {t('disputeRecord.send')}
+                  </Text>
+                </Button>
+              )}
+              {/* {selectedValue != '' && (
                 <TouchableOpacity
                   onPress={closeModal}
-                  style={[
-                    GlobalStyles.btnPrimary,
-                    ModalStyle.space,
-                    { marginTop: 8 },
-                  ]}
+                  style={[GlobalStyles.btnPrimary, ModalStyle.space]}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
+      <ModalOpenDispute
+        showModal={showOpenDispute}
+        closeModal={closeModalSubmit}
+        Title={t('disputeRecord.modalTittle')}
+        message={t('disputeRecord.modalText')}
+        message2={t('pendingRecord.modalButton')}
+      />
     </Modal>
   )
 }

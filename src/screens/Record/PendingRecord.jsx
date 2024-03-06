@@ -547,6 +547,7 @@ function PendingRecord() {
         {/* MODAL DE DISPUTA ABIERTA */}
         <ModalOpenDispute
           showModal={showOpenDispute}
+          setShowModal={setShowOpenDispute}
           closeModal={closeModal}
           Title={t('disputeRecord.modalTittle')}
           message={t('disputeRecord.modalText')}
