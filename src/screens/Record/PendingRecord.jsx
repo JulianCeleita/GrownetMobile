@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { Feather, AntDesign } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
@@ -29,7 +29,6 @@ import { GlobalStyles } from '../../styles/Styles'
 import ModalDispute from '../../components/ModalDispute'
 import { MaterialIcons } from '@expo/vector-icons'
 
-
 function PendingRecord() {
   const navigation = useNavigation()
   const { t } = useTranslation()
@@ -57,9 +56,9 @@ function PendingRecord() {
       ...prevColors,
       [productId]: '#ee6055',
     }))
-    setTimeout(() => {
+    /*setTimeout(() => {
       navigation.navigate('disputeRecord')
-    }, 200)
+    }, 200)*/
   }
 
   useEffect(() => {
@@ -367,12 +366,7 @@ function PendingRecord() {
                       >
                         {product.name}
                       </Text>
-                      <Text
-                        style={[
-                          PendingStyle.p,
-                          { color: '#a4a4a4' },
-                        ]}
-                      >
+                      <Text style={[PendingStyle.p, { color: '#a4a4a4' }]}>
                         {product.quantity} {product.uom}
                       </Text>
                     </View>
@@ -381,21 +375,22 @@ function PendingRecord() {
                         onPress={() => {
                           handleSelectProduct(product)
                           disputePress(product.id)
+                          setShowDispute(true)
                         }}
                         style={{
                           backgroundColor: '#ee6055',
                           borderRadius: 5,
-                          ...GlobalStyles.boxShadow
+                          ...GlobalStyles.boxShadow,
                         }}
                       >
-                        <MaterialIcons name="close" size={30} color="white" />
+                        <AntDesign name="close" size={30} color="white" />
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => handlePress(product.id)}
                         style={{
                           backgroundColor: '#62c471',
                           borderRadius: 5,
-                          ...GlobalStyles.boxShadow
+                          ...GlobalStyles.boxShadow,
                         }}
                       >
                         <MaterialIcons name="check" size={30} color="white" />
@@ -557,7 +552,9 @@ function PendingRecord() {
           message={t('disputeRecord.modalText')}
           message2={t('pendingRecord.modalButton')}
         />
-        <ModalDispute showModal={showDispute} closeModal={closeModal} />
+        {selectedProduct != null && (
+          <ModalDispute showModal={showDispute} closeModal={closeModal} />
+        )}
       </ScrollView>
     </SafeAreaView>
   )
