@@ -25,6 +25,7 @@ import Favorites from '../screens/buyingProcess/Favorites'
 import Search from '../screens/buyingProcess/Search'
 import useOrderStore from '../store/useOrderStore'
 import { OrderDetailStyle } from '../styles/OrderDetailStyle'
+import { colors } from '../styles/Styles'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -348,34 +349,100 @@ function OrderStack() {
 
 const tabBarIconProps =
   (name) =>
-  ({ size, color }) => {
-    return <Ionicons name={name} size={39} color={color} />
+  ({ focused, color }) => {
+    return (
+      <>
+        <Ionicons name={name} size={39} color={color} />
+        <Ionicons
+          name={name}
+          size={39}
+          color={colors.lightGreen}
+          style={
+            !focused
+              ? { display: 'none' }
+              : { position: 'absolute', zIndex: -1, left: 1, top: 1 }
+          }
+        />
+      </>
+    )
   }
 
 const tabBarIconFavorites =
   (name) =>
   ({ focused, color }) => {
-    if (focused) {
-      return <MaterialCommunityIcons name={name} size={38} color={color} />
-    } else {
-      return <Feather name={name} size={36} color={color} />
-    }
+    return (
+      <>
+        <Feather name={name} size={36} color={color} />
+        <Feather
+          name={name}
+          size={36}
+          color={colors.lightGreen}
+          style={
+            !focused
+              ? { display: 'none' }
+              : { position: 'absolute', zIndex: -1, right: 18, top: 17 }
+          }
+        />
+      </>
+    )
   }
 
 const tabBarIconSearch =
   (name) =>
-  ({ size, color }) => {
-    return <Feather name={name} size={36} color={color} />
+  ({ focused, color }) => {
+    return (
+      <>
+        <Feather name={name} size={36} color={color} />
+        <Feather
+          name={name}
+          size={36}
+          color={colors.lightGreen}
+          style={
+            !focused
+              ? { display: 'none' }
+              : { position: 'absolute', zIndex: -1, right: 18, top: 17 }
+          }
+        />
+      </>
+    )
   }
 const tabBarIconHome =
   (name) =>
-  ({ size, color }) => {
-    return <Octicons name={name} size={35} color={color} />
+  ({ focused, color }) => {
+    return (
+      <>
+        <Octicons name={name} size={35} color={color} />
+        <Octicons
+          name={name}
+          size={35}
+          color={colors.lightGreen}
+          style={
+            !focused
+              ? { display: 'none' }
+              : { position: 'absolute', zIndex: -1, right: 21, top: 17 }
+          }
+        />
+      </>
+    )
   }
 const tabBarIconAcount =
   (name) =>
-  ({ size, color }) => {
-    return <MaterialCommunityIcons name={name} size={39} color={color} />
+  ({ focused, color }) => {
+    return (
+      <>
+        <MaterialCommunityIcons name={name} size={41} color={color} />
+        <MaterialCommunityIcons
+          name={name}
+          size={41}
+          color={colors.lightGreen}
+          style={
+            !focused
+              ? { display: 'none' }
+              : { position: 'absolute', zIndex: -1, right: 16, top: 15 }
+          }
+        />
+      </>
+    )
   }
 const CustomIconWithBadge = ({ name, count, ...props }) => {
   const IconComponent = tabBarIconProps(name)

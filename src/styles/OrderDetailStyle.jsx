@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors } from './Styles'
 
 export const OrderDetailStyle = StyleSheet.create({
   details: {
@@ -107,16 +108,18 @@ export const OrderDetailStyle = StyleSheet.create({
   ContinueText: { color: '#ffff', fontWeight: 'bold' },
   badgeContainer: {
     position: 'absolute',
-    top: -8,
+    top: -6,
     right: -10,
     width: 20,
     height: 20,
-    backgroundColor: '#EE6055',
+    backgroundColor: colors.danger,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   badgeCount: {
     color: 'white',
+    fontFamily: 'PoppinsRegular',
+    marginTop: -1,
   },
 })
