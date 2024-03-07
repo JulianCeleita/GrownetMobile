@@ -349,7 +349,7 @@ function PendingRecord() {
                 </View>
 
                 <Text style={[PendingStyle.p, { color: 'white' }]}>
-                  {detailsToShow.date_delivery && detailsToShow.date_delivery.replace(/-/g, '/')}
+                  {detailsToShow.date_delivery ? detailsToShow.date_delivery.replace(/-/g, '/') : 'Loading...'}
                 </Text>
 
               </View>
@@ -359,6 +359,7 @@ function PendingRecord() {
                   style={{
                     ...PendingStyle.receptionCard,
                     ...GlobalStyles.boxShadow,
+                    backgroundColor: checkProduct[product.id] ? '#04444f' : 'white',
                   }}
                 >
                   <View style={PendingStyle.cardProduct} key={product.id}>
