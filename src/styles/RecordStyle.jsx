@@ -92,6 +92,7 @@ export const RecordStyle = StyleSheet.create({
     marginTop: 1,
     backgroundColor: 'white',
     width: 300,
+    alignSelf: 'center',
   },
   btnTab: {
     padding: 8,

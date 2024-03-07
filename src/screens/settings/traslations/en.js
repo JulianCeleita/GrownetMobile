@@ -152,7 +152,7 @@ const enTranslations = {
   },
   stackRecord: {
     yourOrders: 'Your orders',
-    orderDetails: 'Order details',
+    orderDetails: 'Check your order',
     whatWentWrong: 'What went wrong?',
     profile: 'Profile',
   },

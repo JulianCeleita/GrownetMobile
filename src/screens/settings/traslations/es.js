@@ -153,7 +153,7 @@ const esTranslations = {
   },
   stackRecord: {
     yourOrders: 'Tus pedidos',
-    orderDetails: 'Detalles del pedido',
+    orderDetails: 'Revisa tu pedido',
     whatWentWrong: '¿Qué salió mal?',
     profile: 'Perfil',
   },

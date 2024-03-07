@@ -21,7 +21,6 @@ export const PendingStyle = StyleSheet.create({
   cardProduct: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
   },
   text: {
     fontSize: 17,
