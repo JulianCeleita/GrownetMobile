@@ -345,21 +345,31 @@ function PendingRecord() {
               )}
             </View>
           ) : (
-            <View style={[PendingStyle.receptionCard, GlobalStyles.boxShadow]}>
-              <Text style={PendingStyle.title}>
-                {t('pendingRecord.checkYourProducts')}
-              </Text>
+            <View style={{ alignItems: 'center' }}>
+              <View style={[PendingStyle.receptionCard, {
+                backgroundColor: colors.bluePrimary
+              }]}>
+                <View style={{ flexDirection: 'row', gap: 80 }}>
+                  <Text style={[PendingStyle.title, { color: 'white', marginVertical: 10 }]}>
+                    {detailsToShow.nameSuppliers}
+                  </Text>
+                  <Text style={[PendingStyle.title, { color: 'white', marginVertical: 10 }]}>
+                    {'# ' + detailsToShow.reference}
+                  </Text>
+                </View>
+
+                <Text style={[PendingStyle.p, { color: 'white' }]}>
+                  {detailsToShow.date_delivery ? detailsToShow.date_delivery.replace(/-/g, '/') : 'Loading...'}
+                </Text>
+
+              </View>
               {detailsToShow.products?.map((product) => (
                 <View
                   key={product.id}
                   style={{
-                    backgroundColor: checkProduct[product.id]
-                      ? '#04444f'
-                      : 'transparent',
-                    marginHorizontal: 10,
-                    marginBottom: 5,
-                    paddingTop: 15,
-                    borderRadius: 10,
+                    ...PendingStyle.receptionCard,
+                    ...GlobalStyles.boxShadow,
+                    backgroundColor: checkProduct[product.id] ? '#04444f' : 'white',
                   }}
                 >
                   <View style={PendingStyle.cardProduct} key={product.id}>
@@ -500,7 +510,7 @@ function PendingRecord() {
                 </View>
               )}
               <Button
-                style={GlobalStyles.btnPrimary}
+                style={[GlobalStyles.btnPrimary, { marginVertical: 25 }]}
                 onPress={(e) => onConfirmOrder(e)}
               >
                 <Text style={GlobalStyles.textBtnSecundary}>

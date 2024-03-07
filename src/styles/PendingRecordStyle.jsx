@@ -8,7 +8,9 @@ export const PendingStyle = StyleSheet.create({
     width: 350,
     borderRadius: 20,
     margin: 5,
-    paddingBottom: 20,
+    padding: 10,
+    marginHorizontal: 10,
+    marginBottom: 5,
   },
   title: {
     fontFamily: 'PoppinsSemi',
@@ -19,7 +21,6 @@ export const PendingStyle = StyleSheet.create({
   cardProduct: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
   },
   text: {
     fontSize: 17,
