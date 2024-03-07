@@ -349,7 +349,7 @@ function PendingRecord() {
                 </View>
 
                 <Text style={[PendingStyle.p, { color: 'white' }]}>
-                  {detailsToShow.date_delivery.replace(/-/g, '/')}
+                  {detailsToShow.date_delivery && detailsToShow.date_delivery.replace(/-/g, '/')}
                 </Text>
 
               </View>
