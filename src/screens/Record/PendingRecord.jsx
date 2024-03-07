@@ -25,7 +25,7 @@ import useTokenStore from '../../store/useTokenStore'
 import { PastStyle } from '../../styles/PastRecordStyle'
 import { DisputeStyle, PendingStyle } from '../../styles/PendingRecordStyle'
 import { RecordStyle } from '../../styles/RecordStyle'
-import { GlobalStyles } from '../../styles/Styles'
+import { GlobalStyles, colors } from '../../styles/Styles'
 import ModalDispute from '../../components/ModalDispute'
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -226,8 +226,18 @@ function PendingRecord() {
 
   return (
     <SafeAreaView style={RecordStyle.record}>
-      <ScrollView>
-        <View style={[RecordStyle.tabContainer, GlobalStyles.boxShadow]}>
+      <ScrollView
+        style={{
+          marginTop: -20,
+        }}
+      >
+        <View
+          style={[
+            RecordStyle.tabContainer,
+            GlobalStyles.boxShadow,
+            { marginLeft: 25 },
+          ]}
+        >
           <TouchableOpacity
             style={[
               {
@@ -378,7 +388,7 @@ function PendingRecord() {
                           setShowDispute(true)
                         }}
                         style={{
-                          backgroundColor: '#ee6055',
+                          backgroundColor: colors.lightGray,
                           borderRadius: 5,
                           ...GlobalStyles.boxShadow,
                         }}

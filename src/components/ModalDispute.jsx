@@ -330,7 +330,10 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
               )}
               {/* {renderContent()} */}
               {selectedValue != '' && (
-                <Button onPress={handleSubmit} style={GlobalStyles.btnPrimary}>
+                <Button
+                  onPress={handleSubmit}
+                  style={[GlobalStyles.btnPrimary, { marginTop: 10 }]}
+                >
                   <Text style={GlobalStyles.textBtnSecundary}>
                     {t('disputeRecord.send')}
                   </Text>

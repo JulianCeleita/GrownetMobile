@@ -93,7 +93,7 @@ function SettingsStack() {
         options={{
           title: t('stackRecord.orderDetails'),
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: 'red',
             height:
               Platform.OS === 'ios'
                 ? StatusBar.currentHeight + 110

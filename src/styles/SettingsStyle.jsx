@@ -58,10 +58,12 @@ export const SettingsStyle = StyleSheet.create({
   txtCard: {
     color: 'white',
     fontFamily: 'PoppinsSemi',
+    fontSize: 19,
   },
   txtCard2: {
     color: 'white',
     fontFamily: 'PoppinsRegular',
+    fontSize: 13,
   },
   settingButton: {
     width: 300,

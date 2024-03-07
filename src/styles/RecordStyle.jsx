@@ -6,7 +6,6 @@ export const RecordStyle = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     height: '100%',
-    paddingTop: 10
   },
   cardRecord: {
     backgroundColor: 'white',
@@ -88,8 +87,8 @@ export const RecordStyle = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     margin: 15,
-    borderRadius: 15,
     marginTop: 1,
+    borderRadius: 15,
     backgroundColor: 'white',
     width: 300,
   },
