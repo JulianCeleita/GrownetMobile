@@ -102,7 +102,8 @@ const ModalStepper = ({
                   keyboardType="numeric"
                   value={amount.toString()}
                   onChangeText={(value) => {
-                    setAmount(value)
+                    const formattedValue = value.replace(/,/g, '.')
+                    setAmount(formattedValue)
                   }}
                 />
 

@@ -33,9 +33,8 @@ const SelectQuantity = ({
         keyboardType="numeric"
         value={amount.toString()}
         onChangeText={(value) => {
-          const numericValue = parseInt(value, 10)
-
-          setAmount(isNaN(numericValue) ? '' : numericValue)
+          const formattedValue = value.replace(/,/g, '.')
+          setAmount(formattedValue)
         }}
       />
 
