@@ -17,7 +17,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
-const Suppliers = ({navigation}) => {
+const Suppliers = ({ navigation }) => {
   const { t } = useTranslation()
   const { token } = useTokenStore()
   const {
@@ -77,7 +77,7 @@ const Suppliers = ({navigation}) => {
                 key={supplier.id}
                 onPress={() => {
                   handleSupplierSelect(supplier)
-                  navigation.navigate('TabNavigator', {screen:'Favorites'})
+                  navigation.navigate('TabNavigator', { screen: 'Favorites' })
                 }}
               >
                 <ImageBackground

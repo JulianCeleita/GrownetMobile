@@ -102,9 +102,7 @@ const ModalStepper = ({
                   keyboardType="numeric"
                   value={amount.toString()}
                   onChangeText={(value) => {
-                    const numericValue = parseInt(value, 10)
-
-                    setAmount(isNaN(numericValue) ? '' : numericValue)
+                    setAmount(value)
                   }}
                 />
 
