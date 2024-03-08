@@ -34,7 +34,8 @@ const SelectQuantity = ({
         value={amount.toString()}
         onChangeText={(value) => {
           const formattedValue = value.replace(/,/g, '.')
-          setAmount(formattedValue)
+          const sanitizedValue = formattedValue.replace(/-/g, '')
+          setAmount(sanitizedValue)
         }}
       />
 
