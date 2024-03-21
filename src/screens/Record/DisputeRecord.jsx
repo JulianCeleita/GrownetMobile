@@ -82,7 +82,7 @@ function DisputeRecord() {
         <View>
           <View style={[GlobalStyles.boxShadow, DisputeStyle.cardForm]}>
             <Text style={DisputeStyle.text}>
-              {t('disputeRecord.quantityDelivered')}
+              {t('disputeRecord.quantityDefective')}
             </Text>
             <TextInput
               style={DisputeStyle.input}

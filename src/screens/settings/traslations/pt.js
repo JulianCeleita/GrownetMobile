@@ -155,6 +155,8 @@ const ptTranslations = {
     orderDetails: 'Verifique seu pedido',
     whatWentWrong: 'O que deu errado?',
     profile: 'Perfil',
+    details: 'Detalhes:',
+    whatDoYouDo: 'O que você quer fazer?',
   },
   settings: {
     title: 'Configurações',
@@ -253,7 +255,7 @@ const ptTranslations = {
     title: 'O que você está procurando?',
     text: 'Encontre facilmente o que você precisa',
     noAvailable: 'Nenhum produto disponível encontrado',
-    loading: 'Carregando'
+    loading: 'Carregando',
   },
   favorites: {
     title: 'Seus favoritos',

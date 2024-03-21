@@ -36,8 +36,7 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
   const [showOpenDispute, setShowOpenDispute] = useState(false)
   const data = [
     { label: 'Incomplete', value: 'Incomplete', motive: '1' },
-    { label: 'Incorrect', value: 'Incorrect', motive: '2' },
-    { label: 'Defective', value: 'Defective', motive: '3' },
+    { label: 'Defective', value: 'Defective', motive: '2' },
   ]
   const onToggleCheckbox = (value) => {
     setSolutionSelected(value)
@@ -155,7 +154,7 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                 <View>
                   <View style={DisputeStyle.viewDispute}>
                     <Text style={DisputeStyle.text}>
-                      {t('disputeRecord.quantityDelivered')}
+                      {t('disputeRecord.quantityDefective')}
                     </Text>
                     <TextInput
                       style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
@@ -167,7 +166,9 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                     />
                   </View>
                   <View style={DisputeStyle.viewDispute}>
-                    <Text style={DisputeStyle.text}>Details: </Text>
+                    <Text style={DisputeStyle.text}>
+                      {t('stackRecord.details')}{' '}
+                    </Text>
                     <TextInput
                       style={DisputeStyle.input}
                       placeholder="Leave your comments"
@@ -178,7 +179,7 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                   </View>
                   <View>
                     <Text style={DisputeStyle.textWrong}>
-                      What do you want to do?
+                      {t('stackRecord.whatDoYouDo')}
                     </Text>
                     <View style={DisputeStyle.optionForm}>
                       <Text style={DisputeStyle.result}>
@@ -227,11 +228,11 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                   </View>
                 </View>
               )}
-              {selectedValue.value === 'Incorrect' && (
+              {selectedValue.value === 'Incomplete' && (
                 <View>
                   <View style={DisputeStyle.viewDispute}>
                     <Text style={DisputeStyle.text}>
-                      {t('disputeRecord.quantityDelivered')}
+                      {t('disputeRecord.quantityDefective')}
                     </Text>
                     <TextInput
                       style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
@@ -243,7 +244,9 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                     />
                   </View>
                   <View style={DisputeStyle.viewDispute}>
-                    <Text style={DisputeStyle.text}>Details: </Text>
+                    <Text style={DisputeStyle.text}>
+                      {t('stackRecord.details')}{' '}
+                    </Text>
                     <TextInput
                       style={DisputeStyle.input}
                       placeholder="Leave your comments"
@@ -254,7 +257,7 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                   </View>
                   <View>
                     <Text style={DisputeStyle.textWrong}>
-                      What do you want to do?
+                      {t('stackRecord.whatDoYouDo')}
                     </Text>
                     <View style={DisputeStyle.optionForm}>
                       <Text style={DisputeStyle.result}>
@@ -283,51 +286,6 @@ export default function ModalDispute({ showModal, setShowModal, closeModal }) {
                 </View>
               )}
 
-              {selectedValue.value === 'Incomplete' && (
-                <View>
-                  <View style={DisputeStyle.viewDispute}>
-                    <Text style={DisputeStyle.text}>
-                      {t('disputeRecord.quantityDelivered')}
-                    </Text>
-                    <TextInput
-                      style={[DisputeStyle.inputNumber, { marginTop: 8 }]}
-                      placeholder="#"
-                      value={quantityDispute}
-                      onChangeText={handleQuantityChange}
-                      keyboardType="numeric"
-                      required
-                    />
-                  </View>
-                  <View>
-                    <Text style={DisputeStyle.textWrong}>
-                      What do you want to do?
-                    </Text>
-                    <View style={DisputeStyle.optionForm}>
-                      <Text style={DisputeStyle.result}>
-                        {t('disputeRecord.sendNextOrder')}
-                      </Text>
-                      <Checkbox.Item
-                        label=""
-                        status={
-                          solutionSelected === '1' ? 'checked' : 'unchecked'
-                        }
-                        onPress={() => onToggleCheckbox('1')}
-                        style={DisputeStyle.check}
-                      />
-                      <Text style={DisputeStyle.result}>
-                        {t('disputeRecord.creditNote')}
-                      </Text>
-                      <Checkbox.Item
-                        label=""
-                        status={
-                          solutionSelected === '2' ? 'checked' : 'unchecked'
-                        }
-                        onPress={() => onToggleCheckbox('2')}
-                      />
-                    </View>
-                  </View>
-                </View>
-              )}
               {/* {renderContent()} */}
               {selectedValue != '' && (
                 <Button

@@ -156,6 +156,8 @@ const esTranslations = {
     orderDetails: 'Revisa tu pedido',
     whatWentWrong: '¿Qué salió mal?',
     profile: 'Perfil',
+    details: 'Detalles:',
+    whatDoYouDo: '¿Qué quieres hacer?',
   },
   settings: {
     title: 'Configuración',
@@ -251,7 +253,7 @@ const esTranslations = {
     title: '¿Qué estás buscando?',
     text: 'Encuentra fácilmente lo que necesitas',
     noAvailable: 'No se encontraron productos disponibles',
-    loading: 'Cargando'
+    loading: 'Cargando',
   },
   favorites: {
     title: 'Tus favoritos',

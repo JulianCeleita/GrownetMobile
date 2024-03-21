@@ -155,6 +155,8 @@ const enTranslations = {
     orderDetails: 'Check your order',
     whatWentWrong: 'What went wrong?',
     profile: 'Profile',
+    details: 'Details:',
+    whatDoYouDo: 'What would you like to do?',
   },
   settings: {
     title: 'Settings',
@@ -250,7 +252,7 @@ const enTranslations = {
     title: 'What are you looking for?',
     text: 'Easily find what you need',
     noAvailable: 'No available products found',
-    loading: 'Loading'
+    loading: 'Loading',
   },
   favorites: {
     title: 'Your Favorites',

@@ -50,7 +50,6 @@ function PendingRecord() {
   const [evidences, setEvidences] = useState([])
   const [showOpenDispute, setShowOpenDispute] = useState(false)
   const [showDispute, setShowDispute] = useState(false)
-
   const disputePress = (productId) => {
     setProductColors((prevColors) => ({
       ...prevColors,
@@ -346,22 +345,38 @@ function PendingRecord() {
             </View>
           ) : (
             <View style={{ alignItems: 'center' }}>
-              <View style={[PendingStyle.receptionCard, {
-                backgroundColor: colors.bluePrimary
-              }]}>
+              <View
+                style={[
+                  PendingStyle.receptionCard,
+                  {
+                    backgroundColor: colors.bluePrimary,
+                  },
+                ]}
+              >
                 <View style={{ flexDirection: 'row', gap: 80 }}>
-                  <Text style={[PendingStyle.title, { color: 'white', marginVertical: 10 }]}>
+                  <Text
+                    style={[
+                      PendingStyle.title,
+                      { color: 'white', marginVertical: 10 },
+                    ]}
+                  >
                     {detailsToShow.nameSuppliers}
                   </Text>
-                  <Text style={[PendingStyle.title, { color: 'white', marginVertical: 10 }]}>
+                  <Text
+                    style={[
+                      PendingStyle.title,
+                      { color: 'white', marginVertical: 10 },
+                    ]}
+                  >
                     {'# ' + detailsToShow.reference}
                   </Text>
                 </View>
 
                 <Text style={[PendingStyle.p, { color: 'white' }]}>
-                  {detailsToShow.date_delivery ? detailsToShow.date_delivery.replace(/-/g, '/') : 'Loading...'}
+                  {detailsToShow.date_delivery
+                    ? detailsToShow.date_delivery.replace(/-/g, '/')
+                    : 'Loading...'}
                 </Text>
-
               </View>
               {detailsToShow.products?.map((product) => (
                 <View
@@ -369,9 +384,28 @@ function PendingRecord() {
                   style={{
                     ...PendingStyle.receptionCard,
                     ...GlobalStyles.boxShadow,
-                    backgroundColor: checkProduct[product.id] ? '#04444f' : 'white',
+                    backgroundColor: checkProduct[product.id]
+                      ? '#04444f'
+                      : 'white',
                   }}
                 >
+                  {console.log(
+                    'campos: ' +
+                      'id: ' +
+                      product.id +
+                      ' ' +
+                      'Name: ' +
+                      product.name +
+                      ' ' +
+                      'Presentation Name: ' +
+                      product.presentationName +
+                      ' ' +
+                      'Quantity: ' +
+                      product.quantity +
+                      'UOM: ' +
+                      ' ' +
+                      product.uom,
+                  )}
                   <View style={PendingStyle.cardProduct} key={product.id}>
                     <View style={PendingStyle.dispute}>
                       <Text
